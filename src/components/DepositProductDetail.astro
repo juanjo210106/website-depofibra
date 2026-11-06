@@ -7,9 +7,8 @@ const { product } = Astro.props;
 const related = depositFamilies.filter(item => item.slug !== product.slug).slice(0, 4);
 const canonical = `https://depofibra.com/depositos/${product.slug}/`;
 const firstImage = product.gallery[0];
-// El número empresarial real aún no está confirmado. No utilizar el provisional del header.
-// Configurar PUBLIC_WHATSAPP_NUMBER=34XXXXXXXXX antes del lanzamiento.
-const whatsappNumber = String(import.meta.env.PUBLIC_WHATSAPP_NUMBER ?? '').replace(/\D/g, '');
+// Número de contacto publicado para WhatsApp en la web anterior. Se puede sobrescribir en .env.
+const whatsappNumber = String(import.meta.env.PUBLIC_WHATSAPP_NUMBER || '34642129233').replace(/\D/g, '');
 const quoteMessage = (item: string) => `Hola, quisiera solicitar presupuesto de ${item}. ¿Podéis orientarme sobre disponibilidad de referencia y transporte? Mi código postal es: `;
 const whatsappHref = whatsappNumber
   ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(quoteMessage(product.quoteProduct))}`

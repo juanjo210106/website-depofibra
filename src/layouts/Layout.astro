@@ -20,12 +20,15 @@ const {
   title,
   description,
   canonical = Astro.url.href,
-  ogImage = '/images/og-default.jpg',
+  ogImage = '/images/productos/depositos-tipos.jpg',
   activeNav = 'inicio',
 } = Astro.props;
 
+const isPreview = Astro.site?.hostname === 'demo.depofibra.com';
+const publicCanonical = isPreview ? Astro.url.href : canonical;
 const siteName = 'Depofibra';
 const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const fullOgImage = ogImage ? new URL(ogImage, publicCanonical).href : undefined;
 ---
 
 <!DOCTYPE html>
@@ -35,7 +38,8 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonical} />
+  {isPreview && <meta name="robots" content="noindex, nofollow, noarchive" />}
+  <link rel="canonical" href={publicCanonical} />
   <meta name="theme-color" content="#01488e" />
 
   <!-- Open Graph -->
@@ -44,14 +48,14 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
   <meta property="og:site_name" content={siteName} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content={canonical} />
-  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:url" content={publicCanonical} />
+  {fullOgImage && <meta property="og:image" content={fullOgImage} />}
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
-  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  {fullOgImage && <meta name="twitter:image" content={fullOgImage} />}
 
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

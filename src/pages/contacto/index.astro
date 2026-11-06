@@ -22,12 +22,15 @@ import Layout from '../../layouts/Layout.astro';
               <a href="/depositos/" class="btn btn--secondary">Explorar depósitos</a>
             </div>
             <p class="contact-product-context" id="contactProductContext" hidden></p>
-            <p class="contact-demo">Formulario en fase de pruebas: todavía no envía ni registra solicitudes. Lo conectaremos antes del lanzamiento.</p>
+            <p class="contact-demo">El formulario rápido prepara un correo para que lo envíes desde tu dispositivo. También puedes llamarnos o escribirnos directamente.</p>
           </div>
           <aside class="contact-location" aria-labelledby="contact-location-heading">
             <span class="contact-location__label">UBICACIÓN</span>
             <h2 id="contact-location-heading">Casariche<span>, Sevilla</span></h2>
             <p>Atendemos consultas comerciales sobre depósitos, piscinas, fosas sépticas y cisternas desde Casariche (Sevilla).</p>
+            <div class="contact-location__rule"></div>
+            <span class="contact-location__label">CONTACTO DIRECTO</span>
+            <div class="contact-direct"><a href="tel:+34642129233">642 129 233</a><a href="mailto:depofibra21@gmail.com">depofibra21@gmail.com</a></div>
             <div class="contact-location__rule"></div>
             <span class="contact-location__label">VISITAS</span>
             <h3>Solo con cita previa</h3>
@@ -96,6 +99,9 @@ import Layout from '../../layouts/Layout.astro';
   .contact-location h2 span { color:var(--color-gray-500); }
   .contact-location p { color:var(--color-gray-600);font:400 15px/1.75 var(--font-body); }
   .contact-location__rule { border-top:1px solid var(--color-gray-200);margin:25px 0; }
+  .contact-direct {display:grid;gap:12px;margin-top:12px}
+  .contact-direct a {display:flex;align-items:center;min-height:42px;width:fit-content;color:var(--color-primary);font:800 clamp(15px,1.5vw,18px)/1.35 var(--font-body);text-decoration:underline;text-decoration-color:#cfdfec;text-underline-offset:5px;overflow-wrap:anywhere}
+  .contact-direct a:hover {color:var(--color-primary-dark)}
   .contact-location h3 { margin:10px 0;color:var(--color-dark);font:800 21px/1.25 var(--font-display);letter-spacing:-.025em; }
   .contact-prep { border-top:1px solid var(--color-gray-200);background:var(--color-gray-50); }
   .contact-prep__layout { display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(30px,7vw,110px); }

@@ -1,0 +1,89 @@
+DEPOFIBRA WEB — V38: CONTACTO + ENLACES + FORMULARIO RÁPIDO + LEGAL + BLOG
+Base: V37 (DEPOFIBRA_WEB_SRC_PUBLIC_V37.zip)
+
+INSTALACIÓN
+1. Guarda una copia de seguridad de tu src/ y public/ actuales.
+2. Detén Astro con Ctrl+C.
+3. Si tienes V37, puedes usar el ZIP reducido: respeta sus rutas.
+4. Alternativamente, copia las carpetas src/ y public/ del ZIP completo.
+5. Ejecuta npm.cmd run dev y comprueba los enlaces que aparecen abajo.
+6. Para publicar en GitHub Pages, sube la actualización a tu repositorio y lanza la compilación/deploy correspondiente.
+
+CAMBIOS
+- Formulario rápido: nombre, localidad, teléfono y categoría de producto
+  (Depósito, Piscina, Fosa séptica, Cuba/cisterna, Otra consulta), más detalles opcionales.
+- Con una ficha/producto concreto, precarga categoría y descripción en la solicitud.
+- El formulario no tiene backend: abre el cliente de correo del visitante mediante
+  mailto: dirigido a depofibra21@gmail.com. El usuario debe PULSAR ENVIAR en su correo.
+  Como alternativa, hay opción de copiar el contenido si la aplicación no se abre.
+- WhatsApp y contacto público: 642 129 233 / +34 642 129 233, con enlace a wa.me.
+  El número figuraba también como contacto WhatsApp en la web anterior.
+- Correo: depofibra21@gmail.com.
+- Facebook oficial indicado: https://www.facebook.com/profile.php?id=61589529128415
+- El Blog ahora abre el artículo al pulsar CUALQUIER PARTE de su tarjeta.
+- Se publican rutas de Aviso legal, Privacidad y Cookies con estilo Depofibra.
+- Rutas antiguas de la web: /contacto.html, /politica-privacidad.html, /cookies.html
+  muestran una redirección HTML a las nuevas páginas. GitHub Pages no genera 301.
+- La metaimagen Open Graph usa un archivo realmente presente en public/.
+- Se actualizan datos de contacto de la organización en la Home (JSON-LD).
+
+RUTAS A COMPROBAR
+/
+/contacto/
+/blog/
+/blog/<un-slug-de-articulo>/
+/depositos/vertical-base-plana/
+/aviso-legal/
+/politica-de-privacidad/
+/politica-de-cookies/
+/contacto.html
+/politica-privacidad.html
+/cookies.html
+
+IMPORTANTE — TEXTOS LEGALES
+Los documentos incluyen solo nombre comercial Depofibra y datos públicos confirmados.
+NO contienen nombre personal, DNI, costes internos ni dirección física no confirmada.
+Están MARCADOS COMO BORRADORES y noindex para evitar indexarlos como definitivos.
+ANTES DE LANZAR ES OBLIGATORIO confirmar la identificación jurídica del titular,
+los datos legalmente exigidos, la gestión de privacidad y el inventario de cookies.
+Según la LSSI, la actividad comercial debe identificar a su prestador: la marca
+no es suficiente por sí sola. Solicita revisión de una asesoría jurídica.
+La web antigua menciona "Depofibra S.L.", pero este dato no está verificado;
+se ha evitado copiarlo como una afirmación vigente.
+
+FORMULARIO / GITHUB PAGES
+GitHub Pages no envía ni almacena formularios por sí solo. El mecanismo mailto:
+requiere un correo configurado en el dispositivo y acción de envío por el usuario.
+Antes de lanzar campañas o dar por cerrado el sistema de leads, conectarlo con
+un servicio de recepción HTTPS verificable (p. ej. futura API del VPS) y antispam,
+con información de privacidad adaptada. No se afirma que llegue ninguna solicitud
+al pulsar el botón de preparación.
+
+COMPROBACIONES DE ESTA ENTREGA
+- Revisión de enlaces internos estáticos: sin rutas internas inexistentes detectadas.
+- Verificación de imágenes locales enlazadas en archivos Astro: sin rutas rotas detectadas.
+- Análisis de sintaxis JS/TS de 50 bloques de Astro: correcto.
+- Vista previa estática del modal en 320, 390 y 1366 px: sin scroll horizontal.
+- Compilación Astro completa: NO SUPERADA EN ESTE ENTORNO. El proyecto requiere
+  Node >=22.23.4 y aquí está Node 22.16.0. Revisar npm.cmd run build en tu equipo.
+
+ARCHIVOS DE LA WEB MODIFICADOS/CREADOS
+src/components/QuoteModal.astro
+src/components/BlogCard.astro
+src/components/Header.astro
+src/components/Footer.astro
+src/components/MobileNav.astro
+src/components/DepositProductDetail.astro
+src/components/LegalPage.astro (nuevo)
+src/pages/index.astro (solo contactos de datos estructurados/redes)
+src/pages/contacto/index.astro
+src/pages/aviso-legal/index.astro (nuevo)
+src/pages/politica-de-privacidad/index.astro (nuevo)
+src/pages/politica-de-cookies/index.astro (nuevo)
+src/pages/contacto.html.astro (nuevo, redirección)
+src/pages/politica-privacidad.html.astro (nuevo, redirección)
+src/pages/cookies.html.astro (nuevo, redirección)
+
+RESTO
+No se ha alterado la Home visual, hero, catálogo de productos, páginas de categoría,
+ni textos de los ocho artículos del Blog. No hay cambios en public/.
