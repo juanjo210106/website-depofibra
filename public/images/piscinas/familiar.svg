@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 390" role="img" aria-label="Esquema ilustrativo de piscina familiar">
+ <defs><linearGradient id="pool" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#95e1ef"/><stop offset="1" stop-color="#138dc3"/></linearGradient><linearGradient id="back" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f4f8fc"/><stop offset="1" stop-color="#e8f1fa"/></linearGradient></defs>
+ <rect width="640" height="390" fill="url(#back)"/>
+ <path d="M0 318C167 280 291 364 454 321S604 308 640 320" fill="none" stroke="#d7e5f1" stroke-width="2"/>
+ <ellipse cx="320" cy="323" rx="227.99999999999997" ry="19" fill="#aec9dc" opacity=".3"/>
+ <rect x="103.0" y="88.0" width="434" height="220" rx="34" fill="#ffffff" stroke="#c3d7e7" stroke-width="4"/>
+ <rect x="120.0" y="99.0" width="400" height="192" rx="22" fill="url(#pool)" stroke="#8ac5de" stroke-width="3"/>
+ <path d="M150.0 156.6 Q228.0 122.03999999999999 328.0 156.6 T494.0 156.6" fill="none" stroke="#ecffff" stroke-width="5" stroke-linecap="round" opacity=".67"/>
+ <path d="M144.0 233.39999999999998 Q248.0 200.76 344.0 233.39999999999998 T499.0 233.39999999999998" fill="none" stroke="#e5faff" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+ <path d="M142.0 135.0 V255.0" stroke="#d8f7ff" stroke-width="2" opacity="0.6"/><path d="M155.0 135.0 V255.0" stroke="#d8f7ff" stroke-width="2" opacity="0.47"/><path d="M168.0 135.0 V255.0" stroke="#d8f7ff" stroke-width="2" opacity="0.33999999999999997"/>
+ <circle cx="492.0" cy="266.0" r="7" fill="#d8faff" stroke="#70b7d6" stroke-width="2"/>
+ </svg>

@@ -1,0 +1,110 @@
+---
+/** Página de contacto preliminar. No publicar dirección ni horarios no confirmados. */
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout
+  title="Contacto y consultas comerciales | Depofibra"
+  description="Contacta con Depofibra para consultas de depósitos, piscinas, fosas y cisternas. Atención desde Casariche (Sevilla). Visitas únicamente con cita previa."
+  canonical="https://depofibra.com/contacto/"
+  activeNav="contacto"
+>
+  <div class="contact-page">
+    <section class="contact-intro">
+      <div class="container">
+        <nav class="contact-breadcrumb" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Contacto</span></nav>
+        <div class="contact-intro__layout">
+          <div>
+            <span class="eyebrow">Estamos para ayudarte</span>
+            <h1 class="heading-xl">Contacto<span>.</span></h1>
+            <p class="body-lg">¿Necesitas un depósito, una piscina, una fosa séptica o una cisterna? Indícanos qué producto buscas, la capacidad aproximada y dónde lo recibirías. Te orientamos antes de preparar el presupuesto.</p>
+            <div class="contact-actions">
+              <button class="btn btn--primary open-quote-trigger" type="button">Pedir presupuesto <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg></button>
+              <a href="/depositos/" class="btn btn--secondary">Explorar depósitos</a>
+            </div>
+            <p class="contact-product-context" id="contactProductContext" hidden></p>
+            <p class="contact-demo">Formulario en fase de pruebas: todavía no envía ni registra solicitudes. Lo conectaremos antes del lanzamiento.</p>
+          </div>
+          <aside class="contact-location" aria-labelledby="contact-location-heading">
+            <span class="contact-location__label">UBICACIÓN</span>
+            <h2 id="contact-location-heading">Casariche<span>, Sevilla</span></h2>
+            <p>Atendemos consultas comerciales sobre depósitos, piscinas, fosas sépticas y cisternas desde Casariche (Sevilla).</p>
+            <div class="contact-location__rule"></div>
+            <span class="contact-location__label">VISITAS</span>
+            <h3>Solo con cita previa</h3>
+            <p>Si quieres visitarnos, solicita una cita previamente. Te confirmaremos la disponibilidad y el punto de encuentro antes de desplazarte.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-prep section">
+      <div class="container contact-prep__layout">
+        <div>
+          <span class="eyebrow">Para atenderte mejor</span>
+          <h2 class="heading-lg">Tres datos son suficientes para empezar.</h2>
+          <p class="body-md">No necesitas conocer el modelo exacto. Facilítanos lo que sepas y estudiaremos la consulta según referencia y destino.</p>
+        </div>
+        <ol class="contact-prep__steps">
+          <li><span>01</span><div><h3>Producto y uso</h3><p>Depósito, piscina, fosa o cisterna; para qué lo necesitas y qué líquido o uso está previsto, si corresponde.</p></div></li>
+          <li><span>02</span><div><h3>Capacidad aproximada</h3><p>Indica litros, medidas o el espacio disponible, si ya los conoces.</p></div></li>
+          <li><span>03</span><div><h3>Destino de entrega</h3><p>Localidad y código postal. Los accesos y la descarga también pueden influir en la logística.</p></div></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+</Layout>
+<script>
+  // Las fichas de depósitos envían el producto y, si procede, su capacidad en la URL.
+  // El modal sigue siendo el formulario existente; no se duplica ni se afirma que ya envíe datos.
+  const params = new URLSearchParams(window.location.search);
+  const product = params.get('producto')?.trim();
+  const capacity = params.get('capacidad')?.trim();
+  const trigger = document.querySelector<HTMLButtonElement>('.contact-actions .open-quote-trigger');
+  const context = document.querySelector<HTMLElement>('#contactProductContext');
+  if (product && trigger) {
+    trigger.dataset.product = product;
+    if (context) {
+      context.textContent = `Consulta sobre: ${product}${capacity ? ` · ${capacity}` : ''}`;
+      context.hidden = false;
+    }
+    if (capacity) {
+      trigger.addEventListener('click', () => {
+        const notes = document.querySelector<HTMLTextAreaElement>('#quoteDetails');
+        const message = `Capacidad orientativa: ${capacity}.`;
+        if (notes && !notes.value.includes(message)) notes.value = [message, notes.value.trim()].filter(Boolean).join('\n');
+      }, { capture: true });
+    }
+  }
+</script>
+<style>
+  .contact-page { background:#fff; }
+  .contact-intro { padding:24px 0 68px; border-bottom:1px solid var(--color-gray-200); }
+  .contact-breadcrumb { display:flex;align-items:center;gap:9px;margin-bottom:38px;color:var(--color-gray-500);font:600 12px/1.4 var(--font-body); }
+  .contact-breadcrumb a { color:var(--color-primary); }
+  .contact-breadcrumb a:hover { text-decoration:underline; }
+  .contact-intro__layout { display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,7vw,115px);align-items:start; }
+  .contact-intro h1 { max-width:630px;margin:14px 0 20px; }
+  .contact-intro h1 span { color:var(--color-primary); }
+  .contact-intro .body-lg { max-width:630px; }
+  .contact-actions { display:flex;flex-wrap:wrap;gap:12px;margin-top:27px; }
+  .contact-product-context { margin:17px 0 0; color:var(--color-primary-dark);font:700 13px/1.5 var(--font-body); }
+  .contact-product-context[hidden]{display:none}
+  .contact-demo { max-width:490px;color:var(--color-gray-500);font:400 12px/1.65 var(--font-body);margin-top:16px; }
+  .contact-location { border-left:2px solid var(--color-primary);padding:6px 0 2px 32px;background:transparent; }
+  .contact-location__label { color:var(--color-primary);font:800 11px/1.4 var(--font-display);letter-spacing:.09em; }
+  .contact-location h2 { margin:10px 0 13px;color:var(--color-primary-dark);font:800 clamp(25px,3vw,38px)/1.13 var(--font-display);letter-spacing:-.04em; }
+  .contact-location h2 span { color:var(--color-gray-500); }
+  .contact-location p { color:var(--color-gray-600);font:400 15px/1.75 var(--font-body); }
+  .contact-location__rule { border-top:1px solid var(--color-gray-200);margin:25px 0; }
+  .contact-location h3 { margin:10px 0;color:var(--color-dark);font:800 21px/1.25 var(--font-display);letter-spacing:-.025em; }
+  .contact-prep { border-top:1px solid var(--color-gray-200);background:var(--color-gray-50); }
+  .contact-prep__layout { display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(30px,7vw,110px); }
+  .contact-prep h2 { max-width:440px;margin:14px 0 17px; }
+  .contact-prep__steps { border-top:1px solid var(--color-gray-200); }
+  .contact-prep__steps li { display:grid;grid-template-columns:44px 1fr;gap:15px;border-bottom:1px solid var(--color-gray-200);padding:20px 0; }
+  .contact-prep__steps li>span { color:var(--color-primary);background:var(--color-primary-light);font:800 12px var(--font-display);width:36px;height:36px;display:grid;place-items:center;border-radius:10px; }
+  .contact-prep__steps h3 { margin:0 0 6px;font:800 16px/1.4 var(--font-display); }
+  .contact-prep__steps p { font:400 14px/1.7 var(--font-body);color:var(--color-gray-600); }
+  @media(max-width:850px){ .contact-intro__layout,.contact-prep__layout { grid-template-columns:1fr;gap:33px; } .contact-location { border-left:0;border-top:1px solid var(--color-gray-200);padding:25px 0 0; } }
+  @media(max-width:650px){ .contact-intro { padding:17px 0 45px; } .contact-breadcrumb { margin-bottom:23px; }.contact-actions{display:grid;}.contact-actions .btn{width:100%;} }
+</style>

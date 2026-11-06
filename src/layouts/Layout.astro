@@ -1,0 +1,86 @@
+---
+/**
+ * Layout principal de Depofibra.
+ * Incluye header, navegación inferior móvil y footer.
+ */
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileNav from '../components/MobileNav.astro';
+import QuoteModal from '../components/QuoteModal.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  activeNav?: 'inicio' | 'depositos' | 'piscinas' | 'fosas' | 'cubas' | 'blog' | 'contacto';
+}
+
+const {
+  title,
+  description,
+  canonical = Astro.url.href,
+  ogImage = '/images/og-default.jpg',
+  activeNav = 'inicio',
+} = Astro.props;
+
+const siteName = 'Depofibra';
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#01488e" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Estilos globales -->
+  <style is:global>
+    @import '../styles/global.css';
+  </style>
+
+  <slot name="head" />
+</head>
+<body>
+  <a class="skip-to-content" href="#main-content">Saltar al contenido principal</a>
+
+  <Header activeNav={activeNav} />
+
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <Footer />
+  <MobileNav activeNav={activeNav} />
+  <QuoteModal />
+
+  <slot name="scripts" />
+</body>
+</html>

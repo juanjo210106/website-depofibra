@@ -1,0 +1,102 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import {blogArticles, type BlogArticle} from '../../data/blogArticles';
+import {blogPhotos} from '../../data/blogPhotos';
+export function getStaticPaths() {
+  return blogArticles.map(article=>({params:{slug:article.slug},props:{article}}));
+}
+interface Props {article:BlogArticle}
+const {article}=Astro.props;
+const canonical=`https://depofibra.com/blog/${article.slug}/`;
+const photo=blogPhotos[article.slug];
+const others=blogArticles.filter(a=>a.slug!==article.slug).slice(0,3);
+let headingIndex=0;
+const contents:{id:string;title:string}[]=[];
+const articleHtml=article.html.replace(/<h2>([\s\S]*?)<\/h2>/g, (_match,contentsHtml:string)=>{
+  const title=contentsHtml.replace(/<[^>]*>/g,'').trim();
+  const id=`apartado-${++headingIndex}`;
+  contents.push({id,title});
+  return `<h2 id="${id}">${contentsHtml}</h2>`;
+});
+---
+<Layout title={article.title} description={article.description} canonical={canonical} ogImage={photo.src} activeNav="blog">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context':'https://schema.org','@graph':[
+        {'@type':'BlogPosting',headline:article.title,description:article.description,url:canonical,
+          mainEntityOfPage:canonical,inLanguage:'es-ES',image:photo.src,
+          isAccessibleForFree:true,author:{'@type':'Organization',name:'Depofibra',url:'https://depofibra.com/'},
+          publisher:{'@type':'Organization',name:'Depofibra',url:'https://depofibra.com/'}},
+        {'@type':'BreadcrumbList',itemListElement:[
+          {'@type':'ListItem',position:1,name:'Inicio',item:'https://depofibra.com/'},
+          {'@type':'ListItem',position:2,name:'Blog',item:'https://depofibra.com/blog/'},
+          {'@type':'ListItem',position:3,name:article.title,item:canonical}
+        ]}
+      ]
+    })}/>
+  </Fragment>
+  <div class="ba-page">
+    <div class="container ba-shell">
+      <nav class="ba-crumb" aria-label="Migas de pan"><a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span><span aria-current="page">{article.category}</span></nav>
+      <header class="ba-header">
+        <span class="ba-kicker">{article.category} · DEPOFIBRA</span>
+        <h1>{article.title}</h1>
+        <p>{article.description}</p>
+        <div class="ba-meta"><span>Guía de Depofibra</span><span class="ba-meta__dot">·</span><span>{article.reading}</span><span class="ba-meta__dot">·</span><a href={article.productUrl}>Ver productos relacionados ↗</a></div>
+      </header>
+      <figure class="ba-cover">
+        <img src={photo.src} alt={photo.alt} data-fallback={photo.fallback} loading="eager" width="1440" height="780" decoding="async" fetchpriority="high"/>
+        <figcaption>Fotografía ilustrativa · <a href={photo.creditUrl} target="_blank" rel="noopener noreferrer">{photo.credit} / Pexels</a>. No representa un producto ni una instalación de Depofibra.</figcaption>
+      </figure>
+      <div class="ba-layout">
+        <article class="ba-prose" set:html={articleHtml}/>
+        <aside class="ba-aside" aria-label="Navegación y productos relacionados">
+          <nav class="ba-toc" aria-label="Apartados del artículo">
+            <span class="ba-aside__eyebrow">EN ESTA GUÍA</span>
+            {contents.slice(0,7).map((item,index)=><a href={`#${item.id}`}><span>{String(index+1).padStart(2,'0')}</span>{item.title}</a>)}
+          </nav>
+          <div class="ba-cta">
+            <span class="ba-aside__eyebrow">DE LA DUDA AL PRODUCTO</span>
+            <h2>¿Buscas una solución para tu caso?</h2>
+            <p>Consulta el catálogo y cuéntanos qué necesitas. Revisamos la referencia y las condiciones antes de presupuestar.</p>
+            <a class="ba-cta__main" href={article.productUrl}>{article.productLabel} <span aria-hidden="true">↗</span></a>
+            <a class="ba-cta__second" href="/contacto/">Contacto y presupuesto ↗</a>
+          </div>
+        </aside>
+      </div>
+      <section class="ba-related" aria-labelledby="ba-related-title">
+        <div class="ba-related__top"><div><span class="ba-kicker">SIGUE EXPLORANDO</span><h2 id="ba-related-title">Otras guías que te pueden ayudar</h2></div><a href="/blog/">Ver todo el blog ↗</a></div>
+        <div class="ba-related__grid">{others.map(item=><BlogCard article={item} compact/>)}</div>
+      </section>
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll<HTMLImageElement>('.ba-page img[data-fallback]').forEach(img=>{
+      const fallback=()=>{const src=img.dataset.fallback;if(src&&!img.src.endsWith(src)){img.src=src;const caption=img.closest('.ba-cover')?.querySelector('figcaption');if(caption)caption.textContent='Imagen ilustrativa de referencia. La fotografía editorial externa no se ha podido cargar.';}};
+      img.addEventListener('error',fallback,{once:true});
+      if(img.complete&&img.naturalWidth===0)fallback();
+    });
+  </script>
+</Layout>
+<style>
+  .ba-page{background:#fff;color:#0f172a}.ba-shell{padding:24px 0 90px}
+  .ba-crumb{display:flex;flex-wrap:wrap;gap:11px;color:#738498;font:600 12px var(--font-body)}.ba-crumb a{color:#01488e}
+  .ba-header{padding:36px 0 28px;max-width:960px}.ba-kicker,.ba-aside__eyebrow{font:800 10px/1.4 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#01488e}
+  .ba-header h1{font:800 clamp(2.2rem,5vw,3.9rem)/1.08 var(--font-display);letter-spacing:-.056em;max-width:940px;margin:13px 0 15px;color:#0f172a}
+  .ba-header>p{font:400 clamp(15px,1.4vw,18px)/1.75 var(--font-body);max-width:810px;color:#556a7f}
+  .ba-meta{display:flex;flex-wrap:wrap;align-items:center;gap:11px;margin-top:19px;font-size:12px;color:#64748b}.ba-meta a{color:#01488e;font-weight:700}.ba-meta a:hover{text-decoration:underline}
+  .ba-cover{margin:0 0 36px}.ba-cover img{width:100%;max-height:440px;aspect-ratio:2.28;object-fit:cover;border-radius:18px;background:#eaf2fb}.ba-cover figcaption{font:400 11px/1.5 var(--font-body);color:#77899a;margin:8px 4px 0}.ba-cover figcaption a{color:#01488e;text-decoration:underline;text-underline-offset:2px}
+  .ba-layout{border-top:1px solid #e5eaf0;padding-top:34px;display:grid;grid-template-columns:minmax(0,1fr) 282px;gap:clamp(28px,5vw,72px);align-items:start}
+  .ba-prose{min-width:0;max-width:770px;color:#3a4e62;font:400 16px/1.87 var(--font-body)}
+  .ba-prose :global(.intro){font-size:18px;line-height:1.73;color:#233b53}
+  .ba-prose :global(h2){scroll-margin-top:105px;font:800 clamp(20px,2.2vw,28px)/1.25 var(--font-display);letter-spacing:-.035em;color:#002d59;margin:35px 0 11px}
+  .ba-prose :global(p){margin:0 0 17px}.ba-prose :global(a){color:#01488e;text-decoration:underline;text-underline-offset:3px;font-weight:600}.ba-prose :global(a:hover){color:#002d59}
+  .ba-prose :global(ul){list-style:disc;margin:12px 0 22px;padding-left:24px}.ba-prose :global(li){margin:6px 0}.ba-prose :global(.article-summary){background:#eaf2fb;padding:22px 25px;margin:27px 0 36px;border-left:3px solid #01488e}.ba-prose :global(.article-summary strong){display:block;margin-bottom:8px;color:#002d59;font:800 14px var(--font-display)}.ba-prose :global(.article-summary ul){margin:8px 0 0}
+  .ba-prose :global(.article-faq){border-top:1px solid #dbe3eb;margin:26px 0}.ba-prose :global(.article-faq details){border-bottom:1px solid #dbe3eb}.ba-prose :global(.article-faq summary){list-style:none;cursor:pointer;padding:14px 0;color:#002d59;font-weight:700}.ba-prose :global(.article-faq details p){font-size:14px;margin-bottom:13px}
+  .ba-aside{position:sticky;top:90px;display:grid;gap:24px}.ba-toc{padding-top:4px}.ba-toc>a{display:grid;grid-template-columns:23px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid #e5eaf0;color:#34495c;font:600 12px/1.45 var(--font-body)}.ba-toc>a:first-of-type{margin-top:12px}.ba-toc>a:hover{color:#01488e}.ba-toc>a>span{color:#01488e;font:800 10px var(--font-display);padding-top:2px}
+  .ba-cta{background:#eaf2fb;border-radius:17px;padding:24px}.ba-cta h2{font:800 23px/1.22 var(--font-display);letter-spacing:-.04em;color:#002d59;margin:12px 0}.ba-cta p{font:400 13px/1.7 var(--font-body);color:#536c85}.ba-cta__main{margin-top:21px;background:#01488e;color:white;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:999px;font:800 12px/1.4 var(--font-display)}.ba-cta__main:hover{background:#002d59}.ba-cta__second{display:block;margin:13px 3px 0;color:#01488e;font:800 12px var(--font-display)}
+  .ba-related{border-top:1px solid #e5eaf0;margin-top:65px;padding-top:37px}.ba-related__top{display:flex;justify-content:space-between;align-items:end;gap:20px}.ba-related h2{font:800 clamp(24px,2.8vw,35px)/1.15 var(--font-display);letter-spacing:-.044em;margin-top:8px}.ba-related__top>a{font:800 13px var(--font-display);color:#01488e;white-space:nowrap}.ba-related__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:24px}
+  @media(max-width:900px){.ba-layout{grid-template-columns:1fr}.ba-aside{position:static;grid-template-columns:1fr 1fr}.ba-related__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:640px){.ba-shell{padding:20px 0 65px}.ba-header{padding:25px 0}.ba-header h1{font-size:clamp(2rem,7.5vw,2.75rem)}.ba-cover img{aspect-ratio:1.55;max-height:300px}.ba-prose{font-size:15px}.ba-prose :global(.intro){font-size:16px}.ba-aside{grid-template-columns:1fr}.ba-related__grid{grid-template-columns:1fr}.ba-related__top{display:block}.ba-related__top>a{display:block;margin-top:12px}.ba-related{margin-top:43px}}
+</style>

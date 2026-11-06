@@ -1,0 +1,358 @@
+---
+interface Props {
+  activeNav?: string;
+}
+
+const { activeNav = 'inicio' } = Astro.props;
+
+const navItems = [
+  { label: 'Inicio', href: '/', id: 'inicio' },
+  { label: 'Depósitos', href: '/depositos/', id: 'depositos' },
+  { label: 'Piscinas', href: '/piscinas/', id: 'piscinas' },
+  { label: 'Fosas sépticas', href: '/fosas-septicas/', id: 'fosas' },
+  { label: 'Cubas y cisternas', href: '/cubas-cisternas/', id: 'cubas' },
+  { label: 'Blog', href: '/blog/', id: 'blog' },
+  { label: 'Contacto', href: '/contacto/', id: 'contacto' },
+];
+
+const whatsappHref = 'https://wa.me/34600000000';
+// El presupuesto abre el formulario del sitio (no un ancla inexistente).
+---
+
+<header class="site-header" id="site-header">
+  <div class="header-topbar">
+    <div class="container header-topbar__inner">
+      <div class="header-topbar__item">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.11 4.18 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.77.65 2.61a2 2 0 0 1-.45 2.11L8.03 9.91a16 16 0 0 0 6.06 6.06l1.47-1.27a2 2 0 0 1 2.11-.45c.84.31 1.71.53 2.61.65A2 2 0 0 1 22 16.92z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Atención comercial · España y Portugal</span>
+      </div>
+      <div class="header-topbar__divider" aria-hidden="true"></div>
+      <div class="header-topbar__item">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 1v4m0 14v4m11-11h-4M5 12H1m18.78 7.78-2.83-2.83M7.05 7.05 4.22 4.22m15.56 0-2.83 2.83M7.05 16.95l-2.83 2.83" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Depósitos PRFV y soluciones de poliéster · Casariche, Sevilla</span>
+      </div>
+      <div class="header-topbar__divider is-desktop" aria-hidden="true"></div>
+      <a class="header-topbar__item is-link is-desktop" href="mailto:info@depofibra.com">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m22 7-10 7L2 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>info@depofibra.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <div class="header-panel">
+        <a href="/" class="header-brand" aria-label="Depofibra - Ir al inicio">
+          <span class="header-brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2.9c2.77 3.28 6.5 6.37 6.5 10.58A6.5 6.5 0 1 1 5.5 13.48C5.5 9.27 9.23 6.18 12 2.9z"/></svg>
+          </span>
+          <span class="header-brand__copy">
+            <strong>Depofibra</strong>
+            <small>Depósitos y soluciones PRFV</small>
+          </span>
+        </a>
+
+        <nav class="header-nav" id="headerNav" aria-label="Navegación principal">
+          <ul class="header-nav__list">
+            {navItems.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={['header-nav__link', { 'is-active': activeNav === item.id }]}
+                  {...(activeNav === item.id ? { 'aria-current': 'page' } : {})}
+                >
+                  <span>{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div class="header-mobile-actions">
+            <a class="header-whatsapp header-whatsapp--wide" href={whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="Abrir chat de WhatsApp">
+              <svg aria-hidden="true" viewBox="0 0 32 32"><path fill="currentColor" d="M19.11 17.32c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.41-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.46 0 1.45 1.06 2.85 1.21 3.05.15.2 2.08 3.18 5.04 4.46.7.3 1.24.49 1.67.63.7.22 1.33.19 1.83.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35Z"/><path fill="currentColor" d="M27.03 4.96A15.84 15.84 0 0 0 16.07.5C7.5.5.54 7.46.54 16.03c0 2.74.72 5.42 2.08 7.77L.5 31.5l7.9-2.07a15.47 15.47 0 0 0 7.66 1.95h.01c8.57 0 15.53-6.96 15.53-15.53 0-4.15-1.62-8.05-4.57-10.89Zm-10.96 23.8h-.01a12.9 12.9 0 0 1-6.58-1.8l-.47-.28-4.69 1.23 1.25-4.57-.31-.47a12.84 12.84 0 0 1-1.98-6.85c0-7.11 5.78-12.89 12.9-12.89 3.45 0 6.69 1.34 9.13 3.77a12.82 12.82 0 0 1 3.78 9.12c0 7.12-5.79 12.9-12.9 12.9Z"/></svg>
+              <span>WhatsApp</span>
+            </a>
+            <button class="header-budget open-quote-trigger" type="button">Pedir presupuesto <span aria-hidden="true">↗</span></button>
+          </div>
+        </nav>
+
+        <div class="header-actions">
+          <a class="header-whatsapp" href={whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="Abrir chat de WhatsApp">
+            <svg aria-hidden="true" viewBox="0 0 32 32"><path fill="currentColor" d="M19.11 17.32c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.41-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.46 0 1.45 1.06 2.85 1.21 3.05.15.2 2.08 3.18 5.04 4.46.7.3 1.24.49 1.67.63.7.22 1.33.19 1.83.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35Z"/><path fill="currentColor" d="M27.03 4.96A15.84 15.84 0 0 0 16.07.5C7.5.5.54 7.46.54 16.03c0 2.74.72 5.42 2.08 7.77L.5 31.5l7.9-2.07a15.47 15.47 0 0 0 7.66 1.95h.01c8.57 0 15.53-6.96 15.53-15.53 0-4.15-1.62-8.05-4.57-10.89Zm-10.96 23.8h-.01a12.9 12.9 0 0 1-6.58-1.8l-.47-.28-4.69 1.23 1.25-4.57-.31-.47a12.84 12.84 0 0 1-1.98-6.85c0-7.11 5.78-12.89 12.9-12.89 3.45 0 6.69 1.34 9.13 3.77a12.82 12.82 0 0 1 3.78 9.12c0 7.12-5.79 12.9-12.9 12.9Z"/></svg>
+          </a>
+          <button class="header-budget open-quote-trigger" type="button">Pedir presupuesto <span aria-hidden="true">↗</span></button>
+          <button
+            class="header-toggle"
+            id="menuToggle"
+            type="button"
+            aria-controls="headerNav"
+            aria-expanded="false"
+            aria-label="Abrir menú"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* V22: el header se desliza sin cambiar de altura al pasar el umbral de scroll.
+     La barra informativa de 36px sale de la pantalla naturalmente, sin colapsar
+     dentro del sticky (evita el efecto de rebote/atasco al empezar a bajar). */
+  .site-header {
+    position: sticky;
+    top: -36px;
+    z-index: 120;
+    width: 100%;
+    background: #fff;
+    margin: 0;
+    border-bottom: 1px solid #e2e8f0;
+    transition: box-shadow .25s ease;
+  }
+  .site-header.is-scrolled { box-shadow: 0 10px 35px rgba(0, 30, 64, .075); }
+  .header-topbar {
+    background: var(--color-primary-dark);
+    color: rgba(255,255,255,.9);
+    height: 36px;
+    overflow: hidden;
+  }
+  .header-topbar__inner {
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    font: 600 11px/1.3 var(--font-body);
+    letter-spacing: .005em;
+  }
+  .header-topbar__item { display: inline-flex; align-items: center; gap: 8px; min-width: 0; white-space: nowrap; }
+  .header-topbar__item svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .header-topbar__item span { overflow: hidden; text-overflow: ellipsis; }
+  .header-topbar__divider { display: none; }
+  .header-topbar__item.is-link { color: inherit; text-decoration: none; transition: opacity .2s ease; }
+  .header-topbar__item.is-link:hover { opacity: .75; }
+  .header-main { padding: 0; background: #fff; }
+  .header-panel {
+    min-height: 89px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(20px,2vw,34px);
+    padding: 13px 0;
+    background: #fff;
+    /* Altura constante: no modificar la geometría sticky mientras se desplaza. */
+  }
+  .header-brand { display: inline-flex; align-items: center; gap: 12px; min-width: 0; text-decoration: none; }
+  .header-brand__mark {
+    display: grid;
+    place-items: center;
+    width: 42px; height: 42px;
+    flex: none;
+    border-radius: 13px;
+    background: var(--color-primary);
+    color: #fff;
+    transition: border-radius .25s ease;
+  }
+  .header-brand__mark svg { width: 20px; height: 20px; fill: currentColor; }
+  .header-brand__copy { display: flex; flex-direction: column; min-width: 0; gap: 2px; }
+  .header-brand__copy strong { font: 800 clamp(23px, 1.9vw, 27px)/1 var(--font-display); letter-spacing: -.065em; color: var(--color-primary-dark); }
+  .header-brand__copy small { color: var(--color-gray-500); font: 500 10px/1.3 var(--font-body); white-space: nowrap; }
+  .header-nav { justify-self: center; min-width: 0; }
+  .header-nav__list { display: flex; align-items: center; justify-content: center; gap: clamp(2px, .52vw, 9px); padding: 0; list-style: none; }
+  .header-nav__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 clamp(10px, .85vw, 15px);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #4d5b6b;
+    font: 700 clamp(11px, .87vw, 13px)/1 var(--font-display);
+    white-space: nowrap;
+    transition: color .22s ease, background .22s ease;
+  }
+  .header-nav__link::after {
+    content: '';
+    position: absolute;
+    left: 11px;
+    right: 11px;
+    bottom: 5px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-primary);
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform .36s cubic-bezier(.19,1,.22,1);
+  }
+  .header-nav__link:hover { color: var(--color-primary); background: #f5f9fd; }
+  .header-nav__link:hover::after,
+  .header-nav__link:focus-visible::after,
+  .header-nav__link.is-active::after { transform: scaleX(1); }
+  .header-nav__link.is-active { color: var(--color-primary-dark); background: transparent; }
+  .header-nav__link:focus-visible, .header-budget:focus-visible, .header-whatsapp:focus-visible,
+  .header-toggle:focus-visible { outline: 3px solid #76b8f5; outline-offset: 3px; }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .header-whatsapp, .header-budget {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border-radius: 999px;
+    border: 0;
+    text-decoration: none;
+    font: 800 12px/1.2 var(--font-display);
+    cursor: pointer;
+    transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  .header-whatsapp { width: 46px; min-width: 46px; background: #25d366; color: #fff; }
+  .header-whatsapp svg { width: 23px; height: 23px; }
+  .header-whatsapp:hover { background: #20bd59; transform: translateY(-1px); }
+  .header-budget { gap: 19px; padding: 0 19px 0 23px; background: var(--color-primary-dark); color: #fff; white-space: nowrap; }
+  .header-budget > span { font: 700 18px/1 var(--font-body); }
+  .header-budget:hover { background: var(--color-primary); transform: translateY(-1px); }
+  .header-toggle { display: none; width: 44px; height: 44px; padding: 0; border: 1px solid #d9e4ee; border-radius: 50%; background: #fff; cursor: pointer; }
+  .header-toggle span { display: block; width: 18px; height: 2px; margin: 0 auto; border-radius: 3px; background: var(--color-primary-dark); transition: transform .18s ease, opacity .18s ease; }
+  .header-toggle span + span { margin-top: 4px; }
+  .header-toggle[aria-expanded='true'] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .header-toggle[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .header-toggle[aria-expanded='true'] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .header-mobile-actions { display: none; }
+  .header-whatsapp--wide { width: 100%; min-width: 0; gap: 10px; padding: 0 18px; }
+  .header-whatsapp--wide span { font-size: 13px; }
+
+  @media (max-width: 1250px) {
+    .header-panel { gap: 14px; }
+    .header-brand__copy small { display: none; }
+    .header-nav__link { padding-inline: 7px; font-size: 11.5px; }
+    .header-budget { padding-inline: 15px; gap: 11px; }
+  }
+  @media (max-width: 1060px) {
+    .header-nav__list { gap: 0; }
+    .header-nav__link { font-size: 11px; padding-inline: 5px; }
+  }
+  @media (max-width: 920px) {
+    .header-topbar__inner { justify-content: center; }
+    .header-topbar__item:nth-child(3), .header-topbar__item.is-desktop { display: none; }
+    .header-panel { grid-template-columns: minmax(0, 1fr) auto; min-height: 72px; }
+    .header-brand__copy small { display: block; }
+    /* Navegación móvil de ancho real, no lista estrecha centrada. */
+    .header-nav {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      width: 100%;
+      min-width: 0;
+      max-height: calc(100dvh - 114px - env(safe-area-inset-bottom, 0px));
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 16px clamp(20px, 5vw, 38px) 24px;
+      border-top: 1px solid #ecf1f5;
+      border-bottom: 1px solid #dce6ef;
+      background: #fff;
+      box-shadow: 0 18px 25px rgba(2, 27, 53, .1);
+      z-index: 121;
+    }
+    .header-nav.is-open { display: block; }
+    .header-nav__list {
+      display: grid;
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      justify-content: stretch;
+      gap: 3px;
+    }
+    .header-nav__list li { display: block; min-width: 0; width: 100%; }
+    .header-nav__link {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      min-height: 51px;
+      padding: 0 42px 0 17px;
+      font-size: 15px;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .header-nav__link.is-active { background: #edf4fb; color: var(--color-primary-dark); }
+    .header-nav__link::after { display: none; }
+    .header-nav__link::before {
+      content: '↗';
+      position: absolute;
+      right: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8ca2b8;
+      font: 600 17px/1 var(--font-body);
+    }
+    .header-nav__link.is-active::before { color: var(--color-primary); }
+    .header-actions { gap: 10px; }
+    .header-actions .header-budget { display: none; }
+    .header-toggle { display: grid; place-content: center; }
+    .header-mobile-actions { display: grid; width: 100%; gap: 10px; margin-top: 14px; padding-top: 17px; border-top: 1px solid #e1eaf3; }
+    .header-mobile-actions .header-whatsapp, .header-mobile-actions .header-budget { width: 100%; min-height: 49px; }
+    .header-mobile-actions .header-budget { display: inline-flex; }
+  }
+  @media (max-width: 560px) {
+    .header-topbar__inner { justify-content: center; padding-inline: 12px; }
+    .header-topbar__item { font-size: 10px; }
+    .header-brand__mark { width: 39px; height: 39px; border-radius: 12px; }
+    .header-brand__copy strong { font-size: 24px; }
+    .header-brand__copy small { font-size: 9px; }
+    .header-panel { padding-block: 10px; }
+    .header-actions .header-whatsapp { width: 42px; min-width: 42px; min-height: 42px; }
+    .header-toggle { width: 42px; height: 42px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-header, .header-topbar, .header-panel, .header-nav__link, .header-budget,
+    .header-whatsapp, .header-toggle span, .header-nav__link::after { transition: none !important; }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('site-header');
+  const menuToggle = document.getElementById('menuToggle');
+  const headerNav = document.getElementById('headerNav');
+
+  const syncHeaderState = () => {
+    if (!header) return;
+    if (window.scrollY > 24) {
+      header.classList.add('is-scrolled');
+    } else {
+      header.classList.remove('is-scrolled');
+    }
+  };
+
+  syncHeaderState();
+  window.addEventListener('scroll', syncHeaderState, { passive: true });
+
+  if (menuToggle && headerNav) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = headerNav.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+    });
+
+    headerNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        headerNav.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menú');
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!headerNav.classList.contains('is-open')) return;
+      const target = event.target;
+      if (target instanceof Node && !headerNav.contains(target) && !menuToggle.contains(target)) {
+        headerNav.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menú');
+      }
+    });
+  }
+</script>

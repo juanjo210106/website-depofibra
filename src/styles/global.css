@@ -1,0 +1,488 @@
+/*
+ * DEPOFIBRA — SISTEMA DE DISEÑO
+ * Variables CSS centralizadas, reset base y utilidades.
+ * Extraídas del prototipo HTML aprobado y adaptadas para Astro mobile-first.
+ */
+
+/* ═══════════════════════════════════════════
+   1. TOKENS DE DISEÑO
+   ═══════════════════════════════════════════ */
+:root {
+  /* Colores corporativos */
+  --color-primary: #01488e;
+  --color-primary-dark: #002d59;
+  --color-primary-light: #eaf2fb;
+  --color-whatsapp: #25d366;
+  --color-white: #ffffff;
+
+  /* Escala de grises neutros */
+  --color-dark: #0f172a;
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+
+  /* Tipografías */
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* Contenedores */
+  --content-width: 1320px;
+  --content-narrow: 920px;
+
+  /* Radios */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 18, 38, 0.1);
+  --shadow-lg: 0 14px 32px rgba(15, 23, 42, 0.1);
+  --shadow-xl: 0 25px 60px rgba(0, 0, 0, 0.2);
+
+  /* Transiciones */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s var(--ease-out);
+
+  /* Espacios de barra inferior móvil */
+  --bottom-nav-height: 64px;
+}
+
+
+/* ═══════════════════════════════════════════
+   2. RESET Y BASE
+   ═══════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-dark);
+  background: var(--color-gray-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+/* Espacio para la barra inferior en móvil */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ═══════════════════════════════════════════
+   3. FOCO ACCESIBLE
+   ═══════════════════════════════════════════ */
+:focus-visible {
+  outline: 3px solid #70b7ff;
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ═══════════════════════════════════════════
+   4. UTILIDADES
+   ═══════════════════════════════════════════ */
+.container {
+  width: min(var(--content-width), calc(100% - 40px));
+  margin-inline: auto;
+}
+
+@media (min-width: 769px) {
+  .container {
+    width: min(var(--content-width), calc(100% - 72px));
+  }
+}
+
+.container--narrow {
+  width: min(var(--content-narrow), calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-to-content {
+  position: fixed;
+  left: 16px;
+  top: -90px;
+  z-index: 500;
+  padding: 11px 17px;
+  background: var(--color-white);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-dark);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus {
+  top: 12px;
+}
+
+
+/* ═══════════════════════════════════════════
+   5. TIPOGRAFÍA
+   ═══════════════════════════════════════════ */
+.heading-xl {
+  font: 800 clamp(2rem, 7vw, 3.25rem)/1.06 var(--font-display);
+  letter-spacing: -0.04em;
+  color: var(--color-dark);
+}
+
+.heading-lg {
+  font: 800 clamp(1.75rem, 3.2vw, 2.65rem)/1.12 var(--font-display);
+  letter-spacing: -0.035em;
+  color: var(--color-dark);
+}
+
+.heading-md {
+  font: 800 clamp(1.35rem, 2.5vw, 1.85rem)/1.2 var(--font-display);
+  letter-spacing: -0.03em;
+  color: var(--color-dark);
+}
+
+.heading-sm {
+  font: 700 clamp(1rem, 1.6vw, 1.25rem)/1.3 var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--color-dark);
+}
+
+.body-lg {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-gray-600);
+}
+
+.body-md {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-gray-600);
+}
+
+.body-sm {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--color-gray-500);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font: 800 11px/1.4 var(--font-display);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+
+/* ═══════════════════════════════════════════
+   6. BOTONES
+   ═══════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 13px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font: 800 12px/1.3 var(--font-display);
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition-fast),
+              color var(--transition-fast),
+              transform var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+
+/* Variantes */
+.btn--primary {
+  color: var(--color-white);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  color: var(--color-gray-700);
+  background: transparent;
+  border-color: var(--color-gray-300);
+}
+
+.btn--secondary:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: var(--color-white);
+}
+
+.btn--white {
+  color: var(--color-primary);
+  background: var(--color-white);
+  border-color: var(--color-white);
+}
+
+.btn--white:hover {
+  background: var(--color-primary-light);
+  transform: translateY(-2px);
+}
+
+.btn--ghost {
+  color: var(--color-primary);
+  background: transparent;
+  border-color: transparent;
+  padding-inline: 4px;
+}
+
+.btn--ghost:hover {
+  background: var(--color-primary-light);
+}
+
+.btn--sm {
+  min-height: 40px;
+  padding: 9px 16px;
+  font-size: 11px;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+
+/* ═══════════════════════════════════════════
+   7. FORMULARIOS
+   ═══════════════════════════════════════════ */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-gray-700);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  color: var(--color-dark);
+  background: var(--color-gray-50);
+  font-size: 16px; /* Prevenir zoom en iOS */
+  line-height: 1.5;
+  transition: border-color var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--color-primary);
+  outline: 2px solid rgba(1, 72, 142, 0.15);
+  outline-offset: 0;
+}
+
+.form-input::placeholder {
+  color: var(--color-gray-400);
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-error {
+  margin-top: 4px;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.form-hint {
+  margin-top: 4px;
+  color: var(--color-gray-500);
+  font-size: 12px;
+}
+
+
+/* ═══════════════════════════════════════════
+   8. TARJETAS
+   ═══════════════════════════════════════════ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-xl);
+  background: var(--color-white);
+  text-decoration: none;
+  transition: transform var(--transition-smooth),
+              box-shadow var(--transition-smooth);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+
+/* ═══════════════════════════════════════════
+   9. SECCIONES
+   ═══════════════════════════════════════════ */
+.section {
+  padding: 60px 0;
+}
+
+@media (min-width: 769px) {
+  .section {
+    padding: 80px 0;
+  }
+}
+
+.section--alt {
+  background: var(--color-white);
+}
+
+.section--dark {
+  background: var(--color-primary-dark);
+  color: var(--color-white);
+}
+
+.section-header {
+  max-width: 800px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 769px) {
+  .section-header {
+    margin-bottom: 48px;
+  }
+}
+
+.section-header--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+
+/* ═══════════════════════════════════════════
+   10. MOVIMIENTO REDUCIDO
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* V19: desplazamiento vertical NATIVO, sin scroll-snap.
+   El anclaje automático de V18 podía devolver la rueda a la sección anterior
+   o hacer que pareciera bloqueada. Mantenemos solo la separación para el header. */
+html { scroll-padding-top: 88px; }

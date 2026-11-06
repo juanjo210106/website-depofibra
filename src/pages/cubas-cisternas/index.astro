@@ -1,0 +1,118 @@
+---
+import CategoryInterior from '../../components/CategoryInterior.astro';
+const page = {
+  "nav": "cubas",
+  "title": "Cubas y cisternas de poliéster",
+  "eyebrow": "CATÁLOGO DE CUBAS Y CISTERNAS",
+  "description": "Encuentra cubas y cisternas de poliéster para remolque, camión o configuraciones especiales. Consulta capacidades, accesorios y presupuesto según destino.",
+  "intro": "Cubas agrícolas, cisternas para plataforma y configuraciones especiales. Elige el formato y consulta capacidad, apoyos y transporte.",
+  "items": [
+    {
+      "id": "cuba-remolque",
+      "name": "Cuba para remolque agrícola",
+      "subtitle": "Cuba de poliéster para estudiar su montaje en remolque y los apoyos necesarios.",
+      "image": "/images/cubas/cuba-remolque.svg",
+      "visualType": "illustration",
+      "mediaCaption": "Esquema orientativo",
+      "tags": [
+        "remolque",
+        "agricola"
+      ],
+      "specification": "APLICACIÓN AGRÍCOLA",
+      "quoteProduct": "Cuba o cisterna",
+      "quoteNote": "Cuba de poliéster para remolque agrícola",
+      "detail": "Conviene confirmar las dimensiones del remolque, la carga admisible, los apoyos y la capacidad necesaria. No se presupone incluido el remolque completo."
+    },
+    {
+      "id": "cisterna-camion",
+      "name": "Cisterna para plataforma",
+      "subtitle": "Formato para montaje sobre plataforma o caja de vehículo según proyecto.",
+      "image": "/images/cubas/cisterna-camion.svg",
+      "visualType": "illustration",
+      "mediaCaption": "Esquema orientativo",
+      "tags": [
+        "camion",
+        "transporte"
+      ],
+      "specification": "PLATAFORMA / CAMIÓN",
+      "quoteProduct": "Cuba o cisterna",
+      "quoteNote": "Cisterna de poliéster para plataforma o camión",
+      "detail": "Debe comprobarse la compatibilidad con el vehículo o plataforma, la distribución de cargas, las sujeciones, los apoyos y las condiciones de circulación aplicables."
+    },
+    {
+      "id": "cuba-especial",
+      "name": "Cuba de configuración especial",
+      "subtitle": "Configuraciones y accesorios a estudiar según capacidad, uso y soporte.",
+      "image": "/images/cubas/cuba-configurable.svg",
+      "visualType": "illustration",
+      "mediaCaption": "Esquema orientativo",
+      "tags": [
+        "especial"
+      ],
+      "specification": "CONFIGURACIÓN A CONSULTAR",
+      "quoteProduct": "Cuba o cisterna",
+      "quoteNote": "Cuba o cisterna de configuración especial",
+      "detail": "Los accesorios y detalles como conexiones, escaleras o barandillas dependen de la configuración que confirme el proveedor. No se consideran incluidos por defecto."
+    }
+  ],
+  "filterGroups": [
+    {
+      "title": "Configuración",
+      "options": [
+        {
+          "id": "remolque",
+          "label": "Para remolque"
+        },
+        {
+          "id": "camion",
+          "label": "Para camión"
+        },
+        {
+          "id": "especial",
+          "label": "Especiales"
+        }
+      ]
+    }
+  ],
+  "note": "Las ilustraciones no representan referencias exactas. Las capacidades, medidas, accesorios y condiciones de suministro deben verificarse; la oferta no implica remolque ni vehículo incluidos.",
+  "guideTitle": "Antes de elegir una cuba o cisterna",
+  "guideDescription": "Una configuración correcta depende del uso, el vehículo y los apoyos. Con pocos datos concretos podemos estudiar opciones adecuadas.",
+  "guideRows": [
+    {
+      "title": "Indica dónde irá instalada",
+      "detail": "No es lo mismo una cuba para remolque que una cisterna sobre plataforma. El soporte y las sujeciones deben ser compatibles con el equipo."
+    },
+    {
+      "title": "Define capacidad y líquido",
+      "detail": "La capacidad depende de la aplicación y de la carga que admite el vehículo. Es necesario comprobar la compatibilidad del material con el líquido previsto."
+    },
+    {
+      "title": "Concreta conexiones, accesorios y entrega",
+      "detail": "Las conexiones, tapas y elementos auxiliares se comprueban por referencia. El transporte y la descarga se estudian según dimensiones, localidad y accesos."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "¿Las cubas se venden con el remolque incluido?",
+      "answer": "No debe presuponerse. La oferta puede referirse únicamente a la cuba de poliéster y sus apoyos o accesorios especificados."
+    },
+    {
+      "question": "¿Qué capacidad puedo solicitar?",
+      "answer": "El catálogo histórico incluye varias capacidades, pero hay que comprobar la gama vigente y la compatibilidad con el soporte antes de ofrecer una referencia."
+    },
+    {
+      "question": "¿Puedo elegir accesorios y conexiones?",
+      "answer": "Se pueden estudiar opciones según el modelo. Cada accesorio y su inclusión en la oferta deben confirmarse expresamente."
+    },
+    {
+      "question": "¿Qué datos necesitáis para dar presupuesto?",
+      "answer": "Tipo de montaje, líquido, capacidad aproximada, dimensiones disponibles y localidad de entrega. Si hay un vehículo concreto, es útil aportar sus características."
+    },
+    {
+      "question": "¿Atendéis entregas fuera de Andalucía?",
+      "answer": "Podemos estudiar operaciones en España y Portugal según producto, dimensiones, destino y condiciones logísticas."
+    }
+  ]
+};
+---
+<CategoryInterior {...page} />

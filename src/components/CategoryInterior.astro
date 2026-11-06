@@ -1,0 +1,224 @@
+---
+/**
+ * Depofibra · catálogo de categorías interiores.
+ * Diseño unido a la Home: productos primero, navegación simple y textos informativos después.
+ * No afirma precio, stock, plazos ni documentación técnica no verificada.
+ */
+import Layout from '../layouts/Layout.astro';
+import CategoryCatalog from './CategoryCatalog.astro';
+import CategoryFaq from './CategoryFaq.astro';
+
+interface Item {
+  id: string;
+  name: string;
+  subtitle: string;
+  image: string;
+  tags: string[];
+  detail: string;
+  quoteProduct: string;
+  quoteNote?: string;
+  specification?: string;
+  mediaCaption?: string;
+  visualType?: string;
+}
+interface FAQ { question: string; answer: string }
+interface GuideRow { title: string; detail: string }
+interface Feature { title: string; eyebrow: string; description: string; image: string; quoteProduct: string; quoteNote?: string }
+interface Props {
+  nav: string;
+  title: string;
+  eyebrow: string;
+  description: string;
+  intro: string;
+  items: Item[];
+  note: string;
+  guideTitle: string;
+  guideDescription: string;
+  guideRows: GuideRow[];
+  faqs: FAQ[];
+  feature?: Feature;
+}
+const {nav,title,eyebrow,description,intro,items,note,guideTitle,guideDescription,guideRows,faqs,feature}=Astro.props;
+const path = nav === 'piscinas' ? '/piscinas/' : nav === 'fosas' ? '/fosas-septicas/' : '/cubas-cisternas/';
+const crumbs = nav === 'piscinas' ? 'Piscinas' : nav === 'fosas' ? 'Fosas sépticas' : 'Cubas y cisternas';
+const categoryShort = nav === 'piscinas' ? 'modelos de referencia' : nav === 'fosas' ? 'sistemas' : 'configuraciones';
+const activeNav = nav as 'piscinas' | 'fosas' | 'cubas';
+const selectionTips = nav === 'piscinas'
+  ? [
+      ['Espacio y medidas', 'Mide el hueco disponible y los accesos a la parcela.'],
+      ['Profundidad y equipamiento', 'Confirma escalera, accesorios y dimensiones finales.'],
+      ['Entrega', 'Indica código postal y espacio para la maniobra.'],
+    ]
+  : nav === 'fosas'
+  ? [
+      ['Uso y usuarios', 'Indica el uso previsto y la ocupación de la instalación.'],
+      ['Tipo de tratamiento', 'Se estudia según necesidades y condiciones de vertido.'],
+      ['Terreno y acceso', 'Confirma ubicación, posibilidades de excavación y entrega.'],
+    ]
+  : [
+      ['Uso y volumen', 'Especifica qué transportarás y la capacidad aproximada.'],
+      ['Vehículo y apoyos', 'Comprueba remolque, chasis y condiciones de soporte.'],
+      ['Localidad y descarga', 'Facilita el destino y posibles limitaciones de acceso.'],
+    ];
+const catalogItems = items.map(item => ({
+  id: item.id,
+  name: item.name,
+  image: item.image,
+  href: `#detalle-${item.id}`,
+  subtitle: item.subtitle,
+  meta: item.specification,
+  alt: item.visualType === 'illustration' ? `Esquema ilustrativo orientativo de ${item.name}` : `Fotografía orientativa de ${item.name}`,
+  illustration: item.visualType === 'illustration',
+  caption: item.mediaCaption,
+  quoteProduct: item.quoteProduct,
+  quoteNote: item.quoteNote ?? item.name,
+}));
+---
+<Layout title={`${title} | Depofibra`} description={description} canonical={`https://depofibra.com${path}`} activeNav={activeNav}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context':'https://schema.org', '@type':'CollectionPage', name:title,
+      inLanguage:'es-ES', url:`https://depofibra.com${path}`,
+      mainEntity: { '@type':'ItemList', itemListElement: items.map((item,index)=>({
+        '@type':'ListItem', position:index+1, name:item.name,
+        url:`https://depofibra.com${path}#detalle-${item.id}`,
+      }))},
+    })} />
+  </Fragment>
+
+  <div class:list={['df-catalog', `df-catalog--${nav}`]}>
+    <CategoryCatalog
+      title={title}
+      eyebrow={eyebrow}
+      description={intro}
+      breadcrumb={crumbs}
+      items={catalogItems}
+      note={note}
+      countLabel={categoryShort}
+    />
+
+    <section class="df-details" aria-labelledby="df-details-heading">
+      <div class="container df-details__layout">
+        <div class="df-details__heading">
+          <span class="eyebrow">INFORMACIÓN DE CADA REFERENCIA</span>
+          <h2 class="heading-lg" id="df-details-heading">Compara antes de elegir.</h2>
+          <p>Consulta la finalidad de cada opción y qué conviene verificar antes de presupuestar.</p>
+          <div class="df-details__checklist">
+            <strong>Datos que ayudan a preparar el presupuesto</strong>
+            <ul>
+              {selectionTips.map((tip, index) => (
+                <li><span>{String(index + 1).padStart(2, '0')}</span><div><b>{tip[0]}</b><small>{tip[1]}</small></div></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div class="df-details__list">
+          {items.map((item,index)=>(
+            <article id={`detalle-${item.id}`} class="df-details__row">
+              <span>{String(index+1).padStart(2,'0')}</span>
+              <div><h3>{item.name}</h3><p>{item.detail}</p></div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {feature && <section class="df-special" aria-labelledby="df-special-heading">
+      <div class="container df-special__layout">
+        <div class="df-special__copy">
+          <span class="eyebrow">{feature.eyebrow}</span>
+          <h2 class="heading-lg" id="df-special-heading">{feature.title}</h2>
+          <p class="body-lg">{feature.description}</p>
+          <button type="button" class="btn btn--primary open-quote-trigger" data-product={feature.quoteProduct} data-note={feature.quoteNote??feature.title}>
+            Consultar esta solución <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div class="df-special__art">
+          <img src={feature.image} alt="Ilustración esquemática de separador de hidrocarburos" width="900" height="650" loading="lazy" />
+          <span>Equipo distinto de una fosa séptica</span>
+        </div>
+      </div>
+    </section>}
+
+    <section class="df-guide" id="guia" aria-labelledby="df-guide-title">
+      <div class="container df-guide__layout">
+        <div class="df-guide__intro">
+          <span class="eyebrow">INFORMACIÓN PARA DECIDIR</span>
+          <h2 class="heading-lg" id="df-guide-title">{guideTitle}</h2>
+          <p class="body-lg">{guideDescription}</p>
+          <a href="/contacto/" class="df-guide__contact">¿Tienes dudas? Hablemos <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="df-guide__rows">
+          {guideRows.map((row,index)=>(
+            <article class="df-guide__row">
+              <span>{String(index+1).padStart(2,'0')}</span>
+              <div><h3>{row.title}</h3><p>{row.detail}</p></div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CategoryFaq
+      faqs={faqs.map(({question, answer}) => ({question, answer}))}
+      title="Lo que necesitas saber antes de comprar"
+      description="Resolvemos dudas habituales para ayudarte a elegir y solicitar presupuesto."
+      id="preguntas-frecuentes"
+    />
+  </div>
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.df-special .open-quote-trigger').forEach(button => {
+    button.addEventListener('click', () => {
+      const note = button.dataset.note?.trim();
+      const details = document.querySelector<HTMLTextAreaElement>('#quoteDetails');
+      if (note && details && !details.value.includes(note)) {
+        details.value = [`Referencia consultada: ${note}`, details.value.trim()].filter(Boolean).join('\n');
+      }
+    });
+  });
+</script>
+
+<style>
+  .df-catalog {background:#fff;color:var(--color-dark)}
+  .df-details {padding:clamp(52px,6vw,76px) 0;background:#fff}
+  .df-details__layout {display:grid;grid-template-columns:.7fr 1.2fr;gap:clamp(24px,5vw,70px)}
+  .df-details__heading {position:sticky;top:114px;align-self:start}
+  .df-details__heading h2 {margin:13px 0 14px}
+  .df-details__checklist {margin-top:22px;padding-top:17px;border-top:1px solid #d8e4ef}
+  .df-details__checklist>strong {display:block;color:var(--color-primary);font:800 11px/1.4 var(--font-display);letter-spacing:.07em;text-transform:uppercase}
+  .df-details__checklist ul {display:grid;gap:14px;margin-top:16px}
+  .df-details__checklist li {display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:start}
+  .df-details__checklist li>span {color:var(--color-primary);font:800 11px/1.35 var(--font-display);padding-top:3px}
+  .df-details__checklist li b {display:block;color:var(--color-dark);font:750 13px/1.4 var(--font-display)}
+  .df-details__checklist li small {display:block;color:var(--color-gray-600);font:400 12px/1.6 var(--font-body);margin-top:2px}
+  .df-details__heading p {font-size:15px;line-height:1.75;color:var(--color-gray-600);max-width:400px}
+  .df-details__list {border-top:1px solid var(--color-gray-200)}
+  .df-details__row {scroll-margin-top:115px;display:grid;grid-template-columns:32px 1fr;gap:16px;padding:21px 0;border-bottom:1px solid var(--color-gray-200)}
+  .df-details__row>span {color:var(--color-primary);font:800 12px var(--font-display)}
+  .df-details__row h3 {font:800 17px/1.3 var(--font-display);letter-spacing:-.025em;margin-bottom:7px}
+  .df-details__row p {color:var(--color-gray-600);font-size:14px;line-height:1.75}
+  .df-special {background:var(--color-primary-light);padding:clamp(38px,5vw,62px) 0}
+  .df-special__layout {display:grid;grid-template-columns:1fr 0.8fr;gap:48px;align-items:center}
+  .df-special h2 {margin:10px 0 14px}.df-special p {max-width:650px}.df-special .btn {margin-top:20px}
+  .df-special__art {position:relative;min-width:0}.df-special__art img {width:100%;max-height:300px;object-fit:contain}.df-special__art span {display:block;margin-top:6px;color:var(--color-gray-500);font-size:11px;text-align:right}
+  .df-guide {padding:clamp(50px,7vw,86px) 0}
+  .df-guide__layout {display:grid;grid-template-columns:.85fr 1.1fr;gap:clamp(24px,6vw,80px)}
+  .df-guide__intro {position:sticky;top:114px;align-self:start}
+  .df-guide h2 {margin:12px 0 15px;max-width:550px}.df-guide p {max-width:580px}
+  .df-guide__contact {display:inline-flex;gap:16px;margin-top:20px;color:var(--color-primary);font-size:14px;font-weight:800;border-bottom:1px solid #b2c9e0;padding-bottom:6px}
+  .df-guide__rows {border-top:1px solid var(--color-gray-200)}
+  .df-guide__row {display:grid;grid-template-columns:34px 1fr;gap:18px;border-bottom:1px solid var(--color-gray-200);padding:22px 0;scroll-margin-top:110px}
+  .df-guide__row>span {color:var(--color-primary);font:800 12px var(--font-display);padding-top:4px}
+  .df-guide__row h3 {font:800 18px/1.25 var(--font-display);letter-spacing:-.025em;margin-bottom:7px}
+  .df-guide__row p {font-size:14px;line-height:1.7;color:var(--color-gray-600)}
+
+  @media(max-width:760px) {
+    .df-special__layout,.df-guide__layout,.df-details__layout{grid-template-columns:1fr;gap:22px}
+    .df-details__heading,.df-guide__intro{position:static}
+    .df-details__checklist ul{grid-template-columns:1fr 1fr;gap:12px}
+    .df-guide{padding:44px 0}
+  }
+  @media(max-width:420px){.df-details__checklist ul{grid-template-columns:1fr}}
+</style>

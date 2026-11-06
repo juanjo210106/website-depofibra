@@ -1,0 +1,159 @@
+---
+/**
+ * Sistema único de catálogo para las cuatro categorías de Depofibra.
+ * Cabecera y tarjetas idénticas; solo cambian los textos e imágenes reales de cada familia.
+ * No incorpora filtros ni precios, stock o disponibilidad sin verificar.
+ */
+interface CatalogItem {
+  id: string;
+  name: string;
+  image: string;
+  href: string;
+  subtitle?: string;
+  meta?: string;
+  alt: string;
+  illustration?: boolean;
+  caption?: string;
+  featured?: boolean;
+  quoteProduct: string;
+  quoteNote?: string;
+}
+interface Props {
+  title: string;
+  eyebrow: string;
+  description: string;
+  breadcrumb: string;
+  items: CatalogItem[];
+  note: string;
+  countLabel?: string;
+}
+const { title, eyebrow, description, breadcrumb, items, note, countLabel = 'modelos' } = Astro.props;
+---
+<div class="pc-catalog">
+  <header class="pc-intro">
+    <div class="container">
+      <nav class="pc-breadcrumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">{breadcrumb}</span>
+      </nav>
+      <span class="pc-eyebrow">{eyebrow}</span>
+      <div class="pc-intro__heading">
+        <h1>{title}</h1>
+        <p>{description}</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="pc-products" id="catalogo" aria-labelledby="pc-product-title">
+    <div class="container">
+      <div class="pc-products__heading">
+        <h2 id="pc-product-title">Explora los modelos</h2>
+        <span>{items.length} {countLabel}</span>
+      </div>
+      <div class="pc-products__grid">
+        {items.map((item, index) => (
+          <article class="pc-product" id={`producto-${item.id}`}>
+            <a class:list={['pc-product__photo', {'pc-product__photo--illustration': item.illustration}]} href={item.href} aria-label={`Ver ${item.name}`}>
+              <img src={item.image} alt={item.alt} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" width="900" height="700" />
+              {item.featured && <span class="pc-product__featured">Más consultado</span>}
+              {item.caption && <small class="pc-product__caption">{item.caption}</small>}
+              <span class="pc-product__arrow" aria-hidden="true">↗</span>
+            </a>
+            <div class="pc-product__content">
+              {item.meta && <span class="pc-product__meta">{item.meta}</span>}
+              <h3><a href={item.href}>{item.name}</a></h3>
+              {item.subtitle && <p>{item.subtitle}</p>}
+              <div class="pc-product__actions">
+                <a class="pc-product__detail" href={item.href}>{item.href.startsWith('#') ? 'Ver información' : 'Ver producto'} <span aria-hidden="true">↗</span></a>
+                <button
+                  type="button"
+                  class="pc-product__quote open-quote-trigger"
+                  data-product={item.quoteProduct}
+                  data-note={item.quoteNote ?? ''}
+                  aria-label={`Solicitar presupuesto de ${item.name}`}
+                >Pedir presupuesto <span aria-hidden="true">↗</span></button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="pc-products__note">{note}</p>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Los botones usan el formulario compartido; la selección de producto se maneja allí.
+  // La referencia concreta queda incluida en las notas cuando varias fichas comparten familia.
+  document.querySelectorAll<HTMLButtonElement>('.pc-product__quote').forEach(button => {
+    button.addEventListener('click', () => {
+      const note = button.dataset.note?.trim();
+      if (!note) return;
+      const detail = document.querySelector<HTMLTextAreaElement>('#quoteDetails');
+      if (detail) {
+        const prefix = `Referencia consultada: ${note}`;
+        if (!detail.value.includes(prefix)) detail.value = [prefix, detail.value.trim()].filter(Boolean).join('\n');
+      }
+    });
+  });
+</script>
+
+<style>
+  .pc-catalog{background:#fff;color:var(--color-dark)}
+  .pc-intro{padding:clamp(16px,2.8vw,36px) 0 clamp(15px,2.2vw,30px)}
+  .pc-breadcrumb{display:flex;align-items:center;gap:10px;color:var(--color-gray-500);font:600 12px/1.4 var(--font-body);margin-bottom:clamp(17px,2vw,25px)}
+  .pc-breadcrumb a{color:var(--color-primary)}
+  .pc-eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--color-primary);font:800 11px/1.3 var(--font-display);letter-spacing:.1em;text-transform:uppercase}
+  .pc-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--color-primary)}
+  .pc-intro__heading{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(16px,4vw,66px);align-items:end;margin-top:9px}
+  .pc-intro h1{margin:0;max-width:830px;font:800 clamp(2.05rem,4.2vw,3.6rem)/1.05 var(--font-display);letter-spacing:-.055em;color:var(--color-dark);text-wrap:balance}
+  .pc-intro p{margin:0 0 4px;color:var(--color-gray-600);font:400 clamp(14px,1.15vw,16px)/1.65 var(--font-body);max-width:560px}
+  .pc-products{padding:0 0 clamp(44px,5vw,68px)}
+  .pc-products__heading{border-top:1px solid var(--color-gray-200);padding:17px 0 19px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .pc-products__heading h2{margin:0;color:var(--color-dark);font:800 clamp(17px,1.7vw,22px)/1.2 var(--font-display);letter-spacing:-.03em}
+  .pc-products__heading>span{color:var(--color-gray-500);font:600 12px/1.4 var(--font-body)}
+  .pc-products__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.7vw,22px)}
+  .pc-product{min-width:0;display:flex;flex-direction:column}
+  .pc-product__photo{position:relative;display:block;aspect-ratio:1.36;background:#eef3f7;border-radius:18px;overflow:hidden}
+  .pc-product__photo--illustration{background:#eaf2fb}
+  .pc-product__photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .42s var(--ease-out)}
+  .pc-product__photo--illustration img{object-fit:contain;padding:12px}
+  .pc-product:hover .pc-product__photo img{transform:scale(1.035)}
+  .pc-product__featured{position:absolute;top:12px;left:12px;border-radius:99px;background:rgba(255,255,255,.95);padding:7px 10px;color:var(--color-primary-dark);font:800 10px/1 var(--font-display)}
+  .pc-product__caption{position:absolute;bottom:11px;left:11px;border-radius:5px;background:rgba(255,255,255,.94);padding:5px 8px;color:#31516e;font:600 10px/1.2 var(--font-body)}
+  .pc-product__arrow{position:absolute;right:11px;bottom:11px;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--color-primary);font:700 22px/1 var(--font-body);transition:transform .2s ease,background .2s ease,color .2s ease}
+  .pc-product:hover .pc-product__arrow{transform:translate(2px,-2px);background:var(--color-primary);color:#fff}
+  .pc-product__content{padding:15px 3px 7px;display:flex;flex-direction:column;flex:1}
+  .pc-product__meta{display:block;color:var(--color-gray-500);font:700 11px/1.4 var(--font-body);margin-bottom:6px}
+  .pc-product h3{margin:0;font:800 clamp(17px,1.7vw,22px)/1.22 var(--font-display);letter-spacing:-.035em;color:var(--color-dark)}
+  .pc-product h3 a{color:inherit}
+  .pc-product h3 a:hover{color:var(--color-primary)}
+  .pc-product__content>p{font:400 13px/1.6 var(--font-body);color:var(--color-gray-600);margin-top:7px;flex:1}
+  .pc-product__actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--color-gray-200);margin-top:auto;padding-top:12px}
+  .pc-product__detail{display:inline-flex;align-items:center;gap:7px;min-height:44px;font:800 12px/1.3 var(--font-display);color:var(--color-primary)}
+  .pc-product__detail:hover{text-decoration:underline;text-underline-offset:3px}
+  .pc-product__quote{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:0 15px;border:1px solid var(--color-primary);border-radius:999px;background:#fff;color:var(--color-primary);font:800 12px/1.2 var(--font-display);white-space:nowrap;cursor:pointer;transition:color .2s ease,background .2s ease}
+  .pc-product__quote:hover{background:var(--color-primary);color:#fff}
+  .pc-products__note{margin:18px 0 0;color:var(--color-gray-500);font:400 12px/1.7 var(--font-body)}
+  @media(max-width:1120px){.pc-products__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:760px){
+    .pc-intro{padding-top:13px;padding-bottom:13px}
+    .pc-breadcrumb{margin-bottom:12px}
+    .pc-intro__heading{grid-template-columns:1fr;gap:8px;margin-top:8px}
+    .pc-intro h1{font-size:clamp(29px,7.6vw,38px)}
+    .pc-intro p{font-size:14px;line-height:1.55;max-width:52ch}
+    .pc-products__heading{padding:11px 0 12px}
+    .pc-products__grid{gap:12px}
+    .pc-product__photo{aspect-ratio:1.12;border-radius:13px}
+    .pc-product__photo--illustration img{padding:6px}
+    .pc-product__content{padding:11px 0 5px}
+    .pc-product h3{font-size:clamp(15px,3.7vw,17px)}
+    .pc-product__content>p{font-size:12px;line-height:1.5}
+    .pc-product__actions{align-items:stretch;gap:5px;flex-direction:column;padding-top:9px}
+    .pc-product__detail{min-height:36px}
+    .pc-product__quote{min-height:44px;width:100%;padding:0 6px;font-size:12px;gap:5px}
+    .pc-product__caption{bottom:7px;left:7px;font-size:9px}
+    .pc-product__arrow{width:34px;height:34px;right:7px;bottom:7px;font-size:18px}
+  }
+  @media(max-width:350px){.pc-products__grid{grid-template-columns:1fr}.pc-product__photo{aspect-ratio:1.5}.pc-product__actions{flex-direction:row}.pc-product__quote{width:auto}}
+  @media(prefers-reduced-motion:reduce){.pc-product__photo img,.pc-product__arrow,.pc-product__quote{transition:none}}
+</style>

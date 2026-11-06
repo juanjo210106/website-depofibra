@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de piscina de dimensiones orientativas 7,1 × 3 m" viewBox="0 0 900 600">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6f9fd"/><stop offset="1" stop-color="#e8f1fa"/></linearGradient>
+      <linearGradient id="water" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a0e7f2"/><stop offset="0.52" stop-color="#44acd1"/><stop offset="1" stop-color="#03659b"/></linearGradient>
+      <filter id="shadow"><feDropShadow dx="0" dy="13" stdDeviation="14" flood-color="#005486" flood-opacity="0.17"/></filter>
+    </defs>
+    <rect width="900" height="600" fill="url(#bg)"/>
+    <g opacity=".34" fill="none" stroke="#c4d7e8" stroke-width="2"><path d="M40 86H860M40 520H860"/><path d="M74 50V550M827 50V550"/></g>
+    <g filter="url(#shadow)">
+      <rect x="126.5" y="163.3" width="647.0" height="273.4" rx="26" fill="#fff" stroke="#c3d6e4" stroke-width="4"/>
+      <rect x="139.5" y="176.3" width="621.0" height="247.4" rx="18" fill="url(#water)" stroke="#7cbbd2" stroke-width="3"/>
+    </g>
+    <path d="M184.5 262.9 Q375.5 210.9 524.5 265.4 T724.5 267.8" fill="none" stroke="#dcfbff" stroke-width="7" stroke-linecap="round" opacity=".66"/>
+    <path d="M179.5 349.5 Q381.7 314.8 524.5 347.0 T728.5 351.9" fill="none" stroke="#ecffff" stroke-width="6" stroke-linecap="round" opacity=".47"/>
+    <text x="64" y="60" fill="#51758e" font-family="Arial, sans-serif" font-size="16" letter-spacing="1.5">VISTA ESQUEMÁTICA · NO ES FOTOGRAFÍA DEL MODELO</text>
+    </svg>

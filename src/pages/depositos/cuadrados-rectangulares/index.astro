@@ -1,0 +1,7 @@
+---
+import DepositProductDetail from '../../../components/DepositProductDetail.astro';
+import { getDepositFamily } from '../../../data/depositProducts';
+const product = getDepositFamily('cuadrados-rectangulares');
+if (!product) throw new Error('Ficha de depósito no encontrada');
+---
+<DepositProductDetail product={product} />

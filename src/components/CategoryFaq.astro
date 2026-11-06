@@ -1,0 +1,81 @@
+---
+/** FAQ visual única para las cuatro categorías; una respuesta abierta a la vez. */
+interface FAQ { question: string; answer: string }
+interface Props {
+  faqs: FAQ[];
+  title?: string;
+  description?: string;
+  id?: string;
+}
+const {
+  faqs,
+  title = 'Resolvemos tus dudas antes de comprar',
+  description = 'Información útil sobre los productos, la instalación y la entrega antes de solicitar presupuesto.',
+  id = 'preguntas-frecuentes',
+} = Astro.props;
+const half = Math.ceil(faqs.length / 2);
+---
+<section class="pc-faq" id={id} aria-labelledby={`${id}-title`}>
+  <div class="container">
+    <div class="pc-faq__head">
+      <span class="pc-faq__eyebrow">PREGUNTAS FRECUENTES</span>
+      <h2 id={`${id}-title`}>{title}</h2>
+      <p>{description}</p>
+    </div>
+    <div class="pc-faq__grid">
+      {[faqs.slice(0, half), faqs.slice(half)].map(group => (
+        <div class="pc-faq__col">
+          {group.map(item => (
+            <details class="pc-faq__item" name={`pc-faq-${id}`} open={faqs[0] === item}>
+              <summary><span>{item.question}</span><span class="pc-faq__icon" aria-hidden="true"></span></summary>
+              <div class="pc-faq__answer"><p>{item.answer}</p></div>
+            </details>
+          ))}
+        </div>
+      ))}
+    </div>
+    <p class="pc-faq__foot">¿Necesitas ayuda para tu caso concreto? <a href="/contacto/">Contactar con Depofibra <span aria-hidden="true">↗</span></a></p>
+  </div>
+</section>
+<script>
+  // Compatibilidad con navegadores que no gestionen `details[name]` automáticamente.
+  document.querySelectorAll<HTMLElement>('.pc-faq').forEach(group => {
+    const items = Array.from(group.querySelectorAll<HTMLDetailsElement>('.pc-faq__item'));
+    items.forEach(item => item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      items.forEach(other => { if (other !== item) other.open = false; });
+    }));
+  });
+</script>
+<style>
+  .pc-faq{padding:clamp(48px,6vw,74px) 0 76px;background:#fff}
+  .pc-faq__head{max-width:820px;margin:0 auto 34px;text-align:center}
+  .pc-faq__eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--color-primary);font:800 11px/1.3 var(--font-display);letter-spacing:.09em}
+  .pc-faq__eyebrow::before{content:'';width:6px;height:6px;background:var(--color-primary);border-radius:50%}
+  .pc-faq__head h2{margin:12px 0 11px;font:800 clamp(1.8rem,3.1vw,2.7rem)/1.12 var(--font-display);letter-spacing:-.04em;color:var(--color-dark)}
+  .pc-faq__head p{font:400 15px/1.7 var(--font-body);color:var(--color-gray-600)}
+  .pc-faq__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .pc-faq__col{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .pc-faq__item{background:#f5f7fa;border:1px solid #e2eaf2;border-radius:13px;overflow:hidden}
+  .pc-faq__item[open]{background:#f2f7fc;border-color:#b9d2e9}
+  .pc-faq__item summary{display:flex;align-items:center;justify-content:space-between;gap:13px;padding:16px 17px;cursor:pointer;list-style:none;font:800 14px/1.5 var(--font-display);color:var(--color-dark)}
+  .pc-faq__item summary::-webkit-details-marker{display:none}
+  .pc-faq__item summary::before{content:'•';color:var(--color-primary);flex-shrink:0;margin-right:1px}
+  .pc-faq__item[open] summary{background:var(--color-primary);color:#fff}
+  .pc-faq__item[open] summary::before{color:#c9e7ff}
+  .pc-faq__icon{position:relative;display:block;width:33px;height:33px;flex-shrink:0;border:1px solid #d4e4f3;background:#fff;border-radius:50%;color:var(--color-primary);transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .25s ease,box-shadow .25s ease}
+  .pc-faq__icon::before,.pc-faq__icon::after{content:'';position:absolute;top:50%;left:50%;background:currentColor;border-radius:2px;transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .28s ease}
+  .pc-faq__icon::before{width:13px;height:2px;transform:translate(-50%,-50%)}
+  .pc-faq__icon::after{width:2px;height:13px;transform:translate(-50%,-50%) scaleY(1)}
+  .pc-faq__item:not([open]) summary:hover .pc-faq__icon{transform:rotate(90deg);border-color:#b5d3ee;box-shadow:0 4px 12px rgba(1,72,142,.12)}
+  .pc-faq__item[open] .pc-faq__icon::after{transform:translate(-50%,-50%) scaleY(0);opacity:0}
+  .pc-faq__item summary{transition:background .24s ease,color .24s ease}
+  .pc-faq__answer{padding:17px 18px 20px}
+  .pc-faq__item[open] .pc-faq__answer{animation:pc-answer-in .28s ease both}
+  @keyframes pc-answer-in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+  .pc-faq__answer p{font:400 14px/1.76 var(--font-body);color:var(--color-gray-600)}
+  .pc-faq__foot{margin-top:28px;text-align:center;font:400 14px/1.7 var(--font-body);color:var(--color-gray-600)}
+  .pc-faq__foot a{margin-left:8px;color:var(--color-primary);font-weight:800}
+  @media(max-width:760px){.pc-faq{padding:42px 0 56px}.pc-faq__grid{grid-template-columns:1fr;gap:10px}.pc-faq__head{margin-bottom:22px}.pc-faq__item summary{min-height:62px}.pc-faq__foot a{display:inline-flex}}
+  @media(prefers-reduced-motion:reduce){.pc-faq__icon,.pc-faq__icon::before,.pc-faq__icon::after,.pc-faq__item summary{transition:none}.pc-faq__item[open] .pc-faq__answer{animation:none}}
+</style>

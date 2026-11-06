@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 390" role="img" aria-label="Esquema ilustrativo de piscina alargada">
+ <defs><linearGradient id="pool" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#95e1ef"/><stop offset="1" stop-color="#138dc3"/></linearGradient><linearGradient id="back" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f4f8fc"/><stop offset="1" stop-color="#e8f1fa"/></linearGradient></defs>
+ <rect width="640" height="390" fill="url(#back)"/>
+ <path d="M0 318C167 280 291 364 454 321S604 308 640 320" fill="none" stroke="#d7e5f1" stroke-width="2"/>
+ <ellipse cx="320" cy="323" rx="250.79999999999998" ry="19" fill="#aec9dc" opacity=".3"/>
+ <rect x="83.0" y="106.0" width="474" height="184" rx="36" fill="#ffffff" stroke="#c3d7e7" stroke-width="4"/>
+ <rect x="100.0" y="117.0" width="440" height="156" rx="24" fill="url(#pool)" stroke="#8ac5de" stroke-width="3"/>
+ <path d="M130.0 163.8 Q218.8 135.72 328.8 163.8 T514.0 163.8" fill="none" stroke="#ecffff" stroke-width="5" stroke-linecap="round" opacity=".67"/>
+ <path d="M124.0 226.2 Q240.8 199.68 346.40000000000003 226.2 T519.0 226.2" fill="none" stroke="#e5faff" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+ <path d="M122.0 153.0 V237.0" stroke="#d8f7ff" stroke-width="2" opacity="0.6"/><path d="M135.0 153.0 V237.0" stroke="#d8f7ff" stroke-width="2" opacity="0.47"/><path d="M148.0 153.0 V237.0" stroke="#d8f7ff" stroke-width="2" opacity="0.33999999999999997"/>
+ <circle cx="512.0" cy="248.0" r="7" fill="#d8faff" stroke="#70b7d6" stroke-width="2"/>
+ </svg>

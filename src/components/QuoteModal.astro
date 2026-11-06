@@ -1,0 +1,280 @@
+---
+/**
+ * Modal de solicitud de presupuesto (modo demostración).
+ * Se abre desde cualquier botón con clase .open-quote-trigger
+ * El data-product precarga la selección del producto.
+ * Aviso visible de que NO envía datos reales.
+ */
+---
+
+<div
+  class="quote-overlay"
+  id="quoteModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="quoteModalTitle"
+  aria-describedby="quoteModalDesc"
+>
+  <div class="quote-card">
+    <button class="quote-close" id="quoteCloseBtn" type="button" aria-label="Cerrar formulario">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <h2 id="quoteModalTitle" class="quote-title">Solicitar presupuesto</h2>
+    <p id="quoteModalDesc" class="quote-desc">
+      Indica el producto, tu localidad y un teléfono de contacto. Este formulario es una demostración y todavía no envía datos.
+    </p>
+
+    <form id="quoteForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="quoteProduct">Producto o capacidad *</label>
+        <select class="form-select" id="quoteProduct" name="product" required>
+          <option value="" disabled selected>Selecciona un producto</option>
+          <option value="Depósito vertical de base plana 5.000 L">Depósito vertical base plana — 5.000 L</option>
+          <option value="Depósito vertical de base plana 10.000 L">Depósito vertical base plana — 10.000 L</option>
+          <option value="Depósito vertical de base plana 15.000 L">Depósito vertical base plana — 15.000 L</option>
+          <option value="Depósito vertical de base plana">Vertical de base plana — Capacidad por definir</option>
+          <option value="Depósito vertical con patas">Vertical con patas</option>
+          <option value="Depósito horizontal para enterrar">Horizontal para enterrar</option>
+          <option value="Depósito horizontal con cunas">Horizontal con cunas</option>
+          <option value="Depósito tipo vaso">Tipo vaso</option>
+          <option value="Depósito cuadrado o rectangular">Cuadrado o rectangular</option>
+          <option value="Otro depósito de poliéster">Otro depósito de poliéster</option>
+          <option value="Piscina de poliéster">Piscina de poliéster</option>
+          <option value="Fosa séptica">Fosa séptica</option>
+          <option value="Cuba o cisterna">Cuba o cisterna</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="quoteLocation">Localidad y código postal *</label>
+        <input
+          class="form-input"
+          type="text"
+          id="quoteLocation"
+          name="location"
+          placeholder="Ej.: Écija (41400), Sevilla"
+          required
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="quotePhone">Teléfono de contacto *</label>
+        <input
+          class="form-input"
+          type="tel"
+          id="quotePhone"
+          name="phone"
+          placeholder="Tu teléfono"
+          required
+          autocomplete="tel"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="quoteDetails">Uso previsto o detalles (opcional)</label>
+        <textarea
+          class="form-input"
+          id="quoteDetails"
+          name="details"
+          placeholder="Ej.: agua de riego, salida de 2 pulgadas, acceso limitado…"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <button class="btn btn--primary btn--full quote-submit" type="submit">
+        Preparar solicitud
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+      </button>
+
+      <div class="quote-demo-notice" id="quoteDemoNotice" role="status">
+        <strong>Demostración:</strong> la solicitud no se ha enviado ni almacenado. Antes de publicar esta web, se configurará un sistema de recepción seguro con verificación de privacidad y protección anti-spam.
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .quote-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0, 18, 38, 0.72);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  .quote-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .quote-card {
+    position: relative;
+    width: min(100%, 520px);
+    max-height: min(92vh, 800px);
+    overflow-y: auto;
+    padding: 28px 22px;
+    border-radius: var(--radius-xl);
+    background: var(--color-white);
+    box-shadow: var(--shadow-xl);
+    transform: translateY(12px) scale(0.97);
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .quote-overlay.is-open .quote-card {
+    transform: translateY(0) scale(1);
+  }
+
+  .quote-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-gray-100);
+    color: var(--color-gray-600);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+  }
+
+  .quote-close:hover {
+    background: var(--color-gray-200);
+  }
+
+  .quote-title {
+    margin: 0 44px 6px 0;
+    color: var(--color-primary);
+    font: 800 22px/1.25 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .quote-desc {
+    margin: 0 0 22px;
+    color: var(--color-gray-600);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .quote-submit {
+    margin-top: 4px;
+  }
+
+  .quote-demo-notice {
+    display: none;
+    margin-top: 16px;
+    padding: 14px;
+    border-left: 3px solid var(--color-primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    background: var(--color-primary-light);
+    color: var(--color-gray-700);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .quote-demo-notice.is-visible {
+    display: block;
+  }
+
+  @media (min-width: 769px) {
+    .quote-card {
+      padding: 34px 32px;
+    }
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('quoteModal');
+  const closeBtn = document.getElementById('quoteCloseBtn');
+  const form = document.getElementById('quoteForm') as HTMLFormElement;
+  const productSelect = document.getElementById('quoteProduct') as HTMLSelectElement;
+  const demoNotice = document.getElementById('quoteDemoNotice');
+  let previousFocus: HTMLElement | null = null;
+
+  function openQuoteModal(product?: string) {
+    previousFocus = document.activeElement as HTMLElement;
+
+    if (product && productSelect) {
+      const option = Array.from(productSelect.options).find(
+        (opt) => opt.value === product
+      );
+      if (option) productSelect.value = option.value;
+    }
+
+    modal?.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+
+    // Foco al botón de cerrar
+    requestAnimationFrame(() => closeBtn?.focus());
+  }
+
+  function closeQuoteModal() {
+    modal?.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (previousFocus?.focus) previousFocus.focus();
+  }
+
+  // Abrir desde cualquier botón con la clase trigger
+  document.querySelectorAll('.open-quote-trigger').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const product = (trigger as HTMLElement).dataset.product || '';
+      // Cerrar paneles móviles si están abiertos
+      document.querySelectorAll('.mobile-panel.is-open').forEach((panel) => {
+        panel.classList.remove('is-open');
+      });
+      document.body.style.overflow = '';
+      openQuoteModal(product);
+    });
+  });
+
+  // Cerrar
+  closeBtn?.addEventListener('click', closeQuoteModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeQuoteModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('is-open')) {
+      closeQuoteModal();
+    }
+  });
+
+  // Trampa de foco
+  modal?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !modal.classList.contains('is-open')) return;
+    const focusable = Array.from(
+      modal.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]'
+      )
+    ).filter((el) => el.getClientRects().length > 0);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+
+  // Submit demostración
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    demoNotice?.classList.add('is-visible');
+  });
+</script>

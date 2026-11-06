@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { blogArticles } from '../../data/blogArticles';
+import { blogPhotos } from '../../data/blogPhotos';
+const featured = blogArticles[0];
+const featurePhoto = blogPhotos[featured.slug];
+const sideArticles = [blogArticles[1], blogArticles[2], blogArticles[4], blogArticles[5]];
+const categoryOptions = [
+  { label: 'Todas las guías', value: 'todos' },
+  { label: 'Depósitos', value: 'depositos' },
+  { label: 'Fosas y saneamiento', value: 'saneamiento' },
+  { label: 'Piscinas', value: 'piscinas' },
+  { label: 'Cubas y cisternas', value: 'cubas' },
+];
+function getGroup(category: string) {
+  if (/piscin/i.test(category)) return 'piscinas';
+  if (/cuba|cisterna/i.test(category)) return 'cubas';
+  if (/saneamiento|fosa/i.test(category)) return 'saneamiento';
+  return 'depositos';
+}
+---
+<Layout title="Blog de Depofibra | Consejos sobre depósitos, fosas, piscinas y cubas" description="Guías prácticas sobre depósitos de poliéster, riego, transporte, fosas sépticas, piscinas y cubas. Resuelve tus dudas y encuentra el producto adecuado." canonical="https://depofibra.com/blog/" activeNav="blog">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context':'https://schema.org', '@type':'Blog', name:'Blog de Depofibra',
+      url:'https://depofibra.com/blog/', inLanguage:'es-ES',
+      blogPost:blogArticles.map(a=>({ '@type':'BlogPosting',headline:a.title,url:`https://depofibra.com/blog/${a.slug}/` }))
+    })}/>
+  </Fragment>
+  <div class="db-page">
+    <div class="container db-wrap">
+      <nav class="db-crumb" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Blog</span></nav>
+      <header class="db-heading">
+        <div>
+          <span class="db-eyebrow">DEPOFIBRA · GUÍAS Y CONSEJOS</span>
+          <h1>Aprende, compara y <em>elige bien.</em></h1>
+        </div>
+        <p>Respuestas claras sobre depósitos, riego, saneamiento, piscinas y transporte. Información que te ayuda a tomar decisiones antes de pedir presupuesto.</p>
+      </header>
+
+      <section class="db-lead" aria-labelledby="db-feature-title">
+        <article class="db-feature">
+          <a class="db-feature__media" href={`/blog/${featured.slug}/`} aria-label={`Leer: ${featured.title}`}>
+            <img src={featurePhoto.src} alt={featurePhoto.alt} data-fallback={featurePhoto.fallback} width="1320" height="800" loading="eager" decoding="async" fetchpriority="high" />
+            <div class="db-feature__shade">
+              <span class="db-feature__tag">GUÍA DESTACADA · {featured.category}</span>
+              <h2 id="db-feature-title">{featured.title}</h2>
+              <span class="db-feature__bottom">{featured.reading}<span aria-hidden="true">Leer guía ↗</span></span>
+            </div>
+          </a>
+        </article>
+        <aside class="db-side" aria-label="Selección de artículos">
+          <div class="db-side__head"><h2>También te interesa</h2><span>04 / Lecturas</span></div>
+          <div class="db-side__list">
+            {sideArticles.map(article => {
+              const photo=blogPhotos[article.slug];
+              return <a class="db-side__item" href={`/blog/${article.slug}/`}>
+                <span class="db-side__image"><img src={photo.src} alt={photo.alt} data-fallback={photo.fallback} width="144" height="130" loading="lazy" decoding="async" /></span>
+                <span class="db-side__copy"><small>{article.category}</small><strong>{article.title}</strong><span>{article.reading}</span></span>
+                <span class="db-side__arrow" aria-hidden="true">↗</span>
+              </a>;
+            })}
+          </div>
+        </aside>
+      </section>
+
+      <section class="db-library" id="todas-las-guias" aria-labelledby="db-library-title">
+        <div class="db-library__top">
+          <div><span class="db-eyebrow">PARA RESOLVER DUDAS REALES</span><h2 id="db-library-title">Todas nuestras guías</h2></div>
+          <p>Elige un tema o consulta todos los artículos.</p>
+        </div>
+        <div class="db-tabs" role="group" aria-label="Filtrar los artículos por tema">
+          {categoryOptions.map((filter,index)=><button class:list={['db-tab',{ 'is-current':index===0 }]} type="button" data-blog-category={filter.value} aria-pressed={index===0?'true':'false'}>{filter.label}</button>)}
+        </div>
+        <div class="db-library__meta"><span id="db-blog-count" aria-live="polite">{blogArticles.length} artículos</span><span>Lecturas prácticas · Actualizamos las guías cuando cambian los datos verificados</span></div>
+        <div class="db-grid">
+          {blogArticles.map(article=><div class="db-grid__cell" data-blog-group={getGroup(article.category)}><BlogCard article={article}/></div>)}
+        </div>
+        <p class="db-empty" hidden>No hay artículos en este tema.</p>
+      </section>
+
+      <section class="db-bottom" aria-label="Encontrar los productos de Depofibra">
+        <div><span class="db-eyebrow">DEL CONSEJO AL PRODUCTO</span><h2>¿Ya sabes qué necesitas?</h2><p>Consulta los modelos y prepara tu solicitud. Nuestro catálogo está organizado para encontrar el producto antes de leer explicaciones interminables.</p></div>
+        <nav class="db-bottom__links" aria-label="Ir a productos">
+          <a href="/depositos/">Depósitos de poliéster <span aria-hidden="true">↗</span></a>
+          <a href="/fosas-septicas/">Fosas y saneamiento <span aria-hidden="true">↗</span></a>
+          <a href="/piscinas/">Piscinas <span aria-hidden="true">↗</span></a>
+          <a href="/cubas-cisternas/">Cubas y cisternas <span aria-hidden="true">↗</span></a>
+        </nav>
+      </section>
+    </div>
+  </div>
+  <script>
+    const root=document.querySelector('.db-page');
+    if(root){
+      const filters=Array.from(root.querySelectorAll<HTMLButtonElement>('.db-tab'));
+      const items=Array.from(root.querySelectorAll<HTMLElement>('.db-grid__cell'));
+      const count=root.querySelector<HTMLElement>('#db-blog-count');
+      const empty=root.querySelector<HTMLElement>('.db-empty');
+      const show=(key:string)=>{
+        filters.forEach(f=>{const active=f.dataset.blogCategory===key;f.classList.toggle('is-current',active);f.setAttribute('aria-pressed',String(active))});
+        let n=0;items.forEach(item=>{const visible=key==='todos'||item.dataset.blogGroup===key;item.hidden=!visible;if(visible)n++});
+        if(count)count.textContent=`${n} ${n===1?'artículo':'artículos'}`;
+        if(empty)empty.hidden=n!==0;
+      };
+      filters.forEach(f=>f.addEventListener('click',()=>show(f.dataset.blogCategory||'todos')));
+      root.querySelectorAll<HTMLImageElement>('img[data-fallback]').forEach(img=>{
+        const fallback=()=>{const src=img.dataset.fallback;if(src&&!img.src.endsWith(src)){img.src=src;}};
+        img.addEventListener('error',fallback,{once:true});
+        if(img.complete&&img.naturalWidth===0)fallback();
+      });
+    }
+  </script>
+</Layout>
+<style>
+  .db-page{background:#fff;color:#0f172a}.db-wrap{padding-block:24px 84px}
+  .db-crumb{display:flex;gap:10px;font-size:12px;color:#64748b;margin-bottom:25px}.db-crumb a{color:#01488e}.db-eyebrow{display:block;font:800 10px/1.4 var(--font-display);letter-spacing:.14em;color:#01488e}
+  .db-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.58fr);gap:40px;align-items:end;margin-bottom:30px}
+  .db-heading h1{font:800 clamp(2.3rem,4.6vw,4.15rem)/1.03 var(--font-display);letter-spacing:-.06em;margin-top:11px;max-width:820px}.db-heading h1 em{font-style:normal;color:#01488e}
+  .db-heading p{font:400 15px/1.77 var(--font-body);color:#56697d;margin:0;max-width:460px;padding-bottom:6px}
+  .db-lead{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(305px,.83fr);gap:34px;align-items:start;padding-bottom:35px;border-bottom:1px solid #e4eaf0}
+  .db-feature__media{display:block;position:relative;overflow:hidden;border-radius:21px;aspect-ratio:1.52;background:#dce7ed}
+  .db-feature__media>img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .db-feature__media:hover>img{transform:scale(1.035)}
+  .db-feature__shade{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:end;padding:clamp(22px,3vw,38px);background:linear-gradient(180deg,rgba(2,21,42,0) 22%,rgba(1,22,41,.76) 78%,rgba(0,19,38,.88) 100%);color:white}
+  .db-feature__tag{width:fit-content;font:800 10px/1.4 var(--font-display);letter-spacing:.075em;text-transform:uppercase;padding:8px 12px;background:white;color:#01488e;border-radius:999px}
+  .db-feature h2{max-width:660px;font:800 clamp(25px,2.8vw,39px)/1.15 var(--font-display);letter-spacing:-.043em;margin:14px 0}
+  .db-feature__bottom{display:flex;justify-content:space-between;align-items:center;gap:15px;font:600 12px var(--font-body);color:rgba(255,255,255,.85)}.db-feature__bottom>span{font-weight:800;color:white}
+  .db-side__head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:3px 0 12px;border-bottom:1px solid #e5eaf0}
+  .db-side__head h2{font:800 22px/1.2 var(--font-display);letter-spacing:-.04em}.db-side__head>span{font:700 10px var(--font-display);color:#7f8fa0;white-space:nowrap}
+  .db-side__item{display:grid;grid-template-columns:98px 1fr 13px;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid #eef1f4;min-width:0}
+  .db-side__item:last-child{border-bottom:0}.db-side__image{aspect-ratio:1.12;overflow:hidden;border-radius:12px;background:#eaf2fb;display:block}.db-side__image img{width:100%;height:100%;object-fit:cover}
+  .db-side__copy{display:grid;gap:5px;min-width:0}.db-side__copy small{color:#01488e;font:800 10px var(--font-display)}.db-side__copy strong{color:#13233b;font:800 14px/1.3 var(--font-display);letter-spacing:-.025em}.db-side__copy>span{font:500 11px var(--font-body);color:#7b8b9e}
+  .db-side__arrow{align-self:start;color:#01488e;opacity:.55}.db-side__item:hover strong{color:#01488e}.db-side__item:hover .db-side__arrow{opacity:1}
+  .db-library{padding-top:43px}.db-library__top{display:flex;align-items:end;justify-content:space-between;gap:25px}.db-library__top h2{font:800 clamp(1.7rem,2.7vw,2.4rem)/1.12 var(--font-display);letter-spacing:-.045em;margin-top:8px}.db-library__top p{font:400 13px var(--font-body);color:#64748b;margin-bottom:3px}
+  .db-tabs{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.db-tab{cursor:pointer;border:1px solid #dfe6ed;background:white;color:#485d70;padding:11px 16px;border-radius:999px;font:700 12px/1 var(--font-display);transition:background .2s,border-color .2s,color .2s}.db-tab:hover{border-color:#01488e;color:#01488e}.db-tab.is-current{background:#002d59;border-color:#002d59;color:white}
+  .db-library__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;color:#8493a1;font-size:11px;margin:22px 0 15px}.db-library__meta span:first-child{color:#01488e;font-weight:800}
+  .db-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}.db-grid__cell[hidden]{display:none!important}.db-grid__cell>*{height:100%}.db-empty{color:#64748b;padding:30px 0}
+  .db-bottom{margin-top:65px;padding:45px 0 12px;border-top:1px solid #e4eaf0;display:grid;grid-template-columns:.94fr 1.06fr;gap:60px}
+  .db-bottom h2{font:800 clamp(1.7rem,2.8vw,2.5rem)/1.12 var(--font-display);letter-spacing:-.05em;margin:9px 0 12px}.db-bottom p{color:#64748b;line-height:1.75;font-size:14px;max-width:490px}
+  .db-bottom__links{display:grid;grid-template-columns:1fr 1fr;gap:0 25px;align-content:start}.db-bottom__links a{border-top:1px solid #dce4ed;padding:18px 0;display:flex;gap:10px;align-items:center;justify-content:space-between;font:800 13px/1.4 var(--font-display);color:#002d59}.db-bottom__links a:hover{color:#01488e}.db-bottom__links a span{color:#01488e}
+  @media(max-width:1100px){.db-lead{grid-template-columns:1.25fr 1fr;gap:22px}.db-side__item{grid-template-columns:72px 1fr 10px}.db-side__copy strong{font-size:12px}.db-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:760px){.db-wrap{padding-block:17px 56px}.db-heading{grid-template-columns:1fr;gap:10px;margin-bottom:22px}.db-heading p{max-width:680px}.db-heading h1{font-size:clamp(2.2rem,7.5vw,3.1rem)}.db-lead{grid-template-columns:1fr;gap:24px}.db-side__item{grid-template-columns:100px 1fr 14px}.db-side__copy strong{font-size:14px}.db-side__list{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.db-library__top{display:block}.db-library__top p{margin-top:10px}.db-bottom{grid-template-columns:1fr;gap:24px}.db-bottom__links{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.db-feature__media{aspect-ratio:1.14}.db-feature__shade{padding:18px}.db-feature h2{font-size:clamp(23px,6vw,29px)}.db-feature__tag{font-size:9px}.db-side__list{grid-template-columns:1fr}.db-side__item{grid-template-columns:85px 1fr 12px}.db-grid{grid-template-columns:1fr}.db-library__meta span:last-child{display:none}.db-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:7px;scrollbar-width:thin}.db-tab{white-space:nowrap;flex-shrink:0}.db-bottom__links{grid-template-columns:1fr}.db-bottom{margin-top:43px}}
+  @media(prefers-reduced-motion:reduce){.db-feature__media>img{transition:none}}
+</style>

@@ -1,0 +1,285 @@
+---
+/**
+ * Depofibra — Depósitos V28.
+ * Diseñada para hacer visibles los productos cuanto antes, sin filtros que distraigan.
+ * Las imágenes no implican disponibilidad, dimensiones ni certificaciones del modelo.
+ */
+import Layout from '../../layouts/Layout.astro';
+import CategoryCatalog from '../../components/CategoryCatalog.astro';
+import CategoryFaq from '../../components/CategoryFaq.astro';
+
+const products = [
+  {
+    id: 'vertical-base-plana',
+    name: 'Vertical de base plana',
+    type: 'Superficie · Vertical',
+    image: '/images/productos/deposito-vertical.jpg',
+    alt: 'Fotografía de referencia de depósito vertical de poliéster de base plana',
+    imageType: 'photo',
+    href: '/depositos/vertical-base-plana/',
+    quoteProduct: 'Depósito vertical de base plana',
+    filters: ['todos', 'superficie', 'vertical'],
+    featured: true,
+  },
+  {
+    id: 'horizontal-cunas',
+    name: 'Horizontal con cunas',
+    type: 'Superficie · Horizontal',
+    image: '/images/productos/deposito-horizontal.jpg',
+    alt: 'Fotografía de referencia de depósito horizontal de poliéster con apoyos',
+    imageType: 'photo',
+    href: '/depositos/horizontal-con-cunas/',
+    quoteProduct: 'Depósito horizontal con cunas',
+    filters: ['todos', 'superficie', 'horizontal'],
+  },
+  {
+    id: 'horizontal-enterrar',
+    name: 'Horizontal enterrable',
+    type: 'Enterrado · Horizontal',
+    image: '/images/depositos/horizontal-enterrar.svg',
+    alt: 'Ilustración orientativa de depósito horizontal para enterrar',
+    imageType: 'illustration',
+    href: '/depositos/horizontal-enterrable/',
+    quoteProduct: 'Depósito horizontal para enterrar',
+    filters: ['todos', 'enterrado', 'horizontal'],
+  },
+  {
+    id: 'vertical-patas',
+    name: 'Vertical con patas',
+    type: 'Superficie · Vertical',
+    image: '/images/depositos/vertical-patas.svg',
+    alt: 'Ilustración orientativa de depósito vertical con patas',
+    imageType: 'illustration',
+    href: '/depositos/vertical-con-patas/',
+    quoteProduct: 'Depósito vertical con patas',
+    filters: ['todos', 'superficie', 'vertical'],
+  },
+  {
+    id: 'vaso',
+    name: 'Tipo vaso',
+    type: 'Otros formatos',
+    image: '/images/depositos/vaso.svg',
+    alt: 'Ilustración orientativa de depósito tipo vaso',
+    imageType: 'illustration',
+    href: '/depositos/tipo-vaso/',
+    quoteProduct: 'Depósito tipo vaso',
+    filters: ['todos', 'superficie', 'otros'],
+  },
+  {
+    id: 'rectangular',
+    name: 'Cuadrado o rectangular',
+    type: 'Otros formatos',
+    image: '/images/depositos/rectangular.svg',
+    alt: 'Ilustración orientativa de depósito rectangular de poliéster',
+    imageType: 'illustration',
+    href: '/depositos/cuadrados-rectangulares/',
+    quoteProduct: 'Depósito cuadrado o rectangular',
+    filters: ['todos', 'superficie', 'otros'],
+  },
+];
+
+const formats = [
+  {
+    id: 'vertical-base-plana-info',
+    number: '01',
+    title: 'Verticales de base plana',
+    text: 'Son una de nuestras líneas prioritarias para almacenamiento de agua y riego. Antes de elegir capacidad, se comprueban la altura, el diámetro, la base de apoyo y las conexiones de la referencia concreta.',
+  },
+  {
+    id: 'horizontal-cunas',
+    number: '02',
+    title: 'Horizontales con cunas',
+    text: 'Se utilizan en superficie cuando el formato horizontal encaja mejor con el espacio. Es importante verificar la longitud disponible, el sistema de apoyos y la maniobra de entrega.',
+  },
+  {
+    id: 'horizontal-enterrar',
+    number: '03',
+    title: 'Horizontales enterrables',
+    text: 'No cualquier depósito horizontal puede enterrarse. Hay que seleccionar una referencia diseñada para ese uso y revisar las condiciones técnicas del terreno y la instalación.',
+  },
+  {
+    id: 'vertical-patas',
+    number: '04',
+    title: 'Verticales con patas',
+    text: 'Las características de la estructura de apoyo, la altura total y la estabilidad deben estudiarse según el producto y la instalación. No se presuponen medidas comunes para todos los modelos.',
+  },
+  {
+    id: 'vaso',
+    number: '05',
+    title: 'Tipo vaso',
+    text: 'Un formato distinto de los depósitos habituales cerrados. Para comprobar su adecuación conviene concretar el uso, el volumen necesario y la configuración requerida.',
+  },
+  {
+    id: 'rectangular',
+    number: '06',
+    title: 'Cuadrados y rectangulares',
+    text: 'Pueden plantearse cuando la geometría del espacio condiciona la elección. Las dimensiones exteriores y las condiciones de apoyo se confirman para cada referencia.',
+  },
+];
+
+const questions = [
+  {
+    q: '¿Qué tipo de depósito de poliéster necesito?',
+    a: 'Depende del líquido, el volumen, el espacio disponible y el tipo de instalación. Elige primero el formato en el catálogo y después revisamos contigo la referencia y sus dimensiones.',
+  },
+  {
+    q: '¿Solo trabajáis con 5.000, 10.000 y 15.000 litros?',
+    a: 'No. Son capacidades que se consultan habitualmente para algunos depósitos verticales, pero se pueden estudiar otros volúmenes según la familia de producto y la referencia disponible.',
+  },
+  {
+    q: '¿Cualquier depósito horizontal sirve para enterrar?',
+    a: 'No. Para enterrar un depósito es necesario que esté expresamente diseñado para ese uso y seguir las condiciones técnicas del fabricante y del proyecto.',
+  },
+  {
+    q: '¿Todos los depósitos son aptos para agua potable?',
+    a: 'No. Si el destino es agua de consumo humano, hay que verificar expresamente la adecuación y la documentación de la referencia elegida.',
+  },
+  {
+    q: '¿Puedo pedir presupuesto con transporte?',
+    a: 'Sí, se puede estudiar según el depósito y el destino. Indícanos el código postal y si existen dificultades de acceso. El transporte estándar no incluye la descarga salvo condición expresamente confirmada.',
+  },
+];
+const catalogItems = products.map(product => ({
+  id: product.id,
+  name: product.name,
+  image: product.image,
+  href: product.href,
+  meta: product.type,
+  alt: product.alt,
+  illustration: product.imageType === 'illustration',
+  featured: product.featured,
+  quoteProduct: product.quoteProduct,
+}));
+const categoryFaqs = questions.map(item => ({ question: item.q, answer: item.a }));
+
+---
+
+<Layout
+  title="Depósitos de poliéster: verticales, horizontales y enterrables | Depofibra"
+  description="Explora los tipos de depósitos de poliéster que comercializa Depofibra. Encuentra modelos verticales, horizontales, enterrables y especiales, y solicita presupuesto según uso y destino."
+  canonical="https://depofibra.com/depositos/"
+  activeNav="depositos"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Depósitos de poliéster | Depofibra',
+      url: 'https://depofibra.com/depositos/',
+      inLanguage: 'es-ES',
+      mainEntity: {
+        '@type': 'ItemList',
+        name: 'Tipos de depósitos de poliéster',
+        itemListElement: products.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          url: `https://depofibra.com${item.href.startsWith('/') ? item.href : `/depositos/${item.href}`}`,
+        })),
+      },
+    })} />
+  </Fragment>
+
+  <div class="deposits-page">
+    <CategoryCatalog
+      title="Depósitos de poliéster"
+      eyebrow="CATÁLOGO DE DEPÓSITOS"
+      description="Verticales, horizontales, enterrables y otros formatos de PRFV. Encuentra el depósito que necesitas y consulta opciones según capacidad, uso y destino."
+      breadcrumb="Depósitos"
+      items={catalogItems}
+      note="Fotografías de referencia e ilustraciones orientativas. Las medidas, accesorios, documentación y condiciones se confirman para cada modelo."
+      countLabel="tipos"
+    />
+
+    <!-- Contenido útil después de los productos, sin tarjetas decorativas. -->
+    <section class="dep-guide" id="guia-depositos" aria-labelledby="dep-guide-heading">
+      <div class="container dep-guide__layout">
+        <div class="dep-guide__intro">
+          <span class="eyebrow">Antes de elegir</span>
+          <h2 class="heading-lg" id="dep-guide-heading">Cada instalación necesita un formato distinto.</h2>
+          <p class="body-lg">Los depósitos de poliéster reforzado con fibra de vidrio se presentan en distintas configuraciones. Estas son las principales diferencias para encontrar una referencia adecuada, sin perder tiempo comparando modelos que no encajan.</p>
+          <div class="dep-guide__checklist" aria-label="Datos prácticos para elegir depósito">
+            <span class="dep-guide__checklist-title">Los cuatro datos que más ayudan</span>
+            <ul>
+              <li><span aria-hidden="true">01</span><div><strong>Qué líquido almacenarás</strong><small>Agua de riego, agua potable u otro uso compatible.</small></div></li>
+              <li><span aria-hidden="true">02</span><div><strong>Capacidad aproximada</strong><small>Litros necesarios y autonomía que buscas.</small></div></li>
+              <li><span aria-hidden="true">03</span><div><strong>Espacio e instalación</strong><small>Superficie o enterrado, altura y base de apoyo.</small></div></li>
+              <li><span aria-hidden="true">04</span><div><strong>Destino de entrega</strong><small>Código postal, accesos y medios de descarga.</small></div></li>
+            </ul>
+          </div>
+          <a href="/depositos/vertical-base-plana/" class="dep-text-link">Ver depósito vertical de base plana <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="dep-guide__list">
+          {formats.map((item) => (
+            <article class="dep-guide__item" id={item.id}>
+              <span class="dep-guide__num">{item.number}</span>
+              <div><h3>{item.title}</h3><p>{item.text}</p></div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="dep-help" aria-labelledby="dep-help-title">
+      <div class="container dep-help__layout">
+        <div>
+          <span class="eyebrow">Uso, capacidad y transporte</span>
+          <h2 class="heading-lg" id="dep-help-title">Lo importante no es solo cuántos litros necesitas.</h2>
+        </div>
+        <div class="dep-help__content">
+          <p class="body-lg">Para agua de riego, reserva de agua y otras aplicaciones compatibles hay que revisar también el espacio de instalación, las entradas y salidas y las condiciones de entrega. En el caso de agua potable, la aptitud y la documentación deben comprobarse para el modelo concreto.</p>
+          <p class="body-lg">Atendemos consultas desde <strong>Casariche (Sevilla)</strong> para distintas zonas de España y Portugal, según producto y logística. Para preparar un presupuesto con transporte, indícanos el modelo aproximado, la capacidad, el código postal y los accesos.</p>
+          <button class="btn btn--primary open-quote-trigger" type="button">Consultar mi depósito <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <CategoryFaq
+      faqs={categoryFaqs}
+      title="Resolvemos tus dudas antes de comprar"
+      description="Respuestas breves sobre modelos, capacidades, enterramiento y transporte."
+      id="preguntas-depositos"
+    />
+  </div>
+</Layout>
+
+
+<style>
+  .deposits-page {background:#fff}
+  .dep-guide { padding: clamp(55px, 6vw, 88px) 0; background: var(--color-gray-50); border-top: 1px solid var(--color-gray-200); }
+  .dep-guide__layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(30px, 6vw, 90px); }
+  .dep-guide__intro { position: sticky; top: 114px; align-self: start; }
+  .dep-guide__intro h2 { margin: 15px 0 16px; }
+  .dep-guide__checklist { margin-top: 24px; border-top: 1px solid #d8e4ef; padding-top: 18px; }
+  .dep-guide__checklist-title { display: block; color: var(--color-primary); font: 800 11px/1.4 var(--font-display); letter-spacing: .085em; text-transform: uppercase; }
+  .dep-guide__checklist ul { display: grid; gap: 13px; margin-top: 15px; }
+  .dep-guide__checklist li { display: grid; grid-template-columns: 28px minmax(0,1fr); align-items: start; gap: 10px; }
+  .dep-guide__checklist li>span { padding-top: 3px; color: var(--color-primary); font: 800 11px/1.3 var(--font-display); }
+  .dep-guide__checklist strong { display: block; font: 750 13px/1.4 var(--font-display); color: var(--color-dark); }
+  .dep-guide__checklist small { display: block; margin-top: 2px; color: var(--color-gray-600); font: 400 12px/1.6 var(--font-body); }
+  .dep-guide__intro .body-lg { max-width: 460px; }
+  .dep-text-link { display: inline-flex; align-items: center; gap: 14px; border-bottom: 1px solid #c3d8ee; padding-bottom: 7px; margin-top: 25px; color: var(--color-primary); font: 800 12px/1.4 var(--font-display); }
+  .dep-guide__list { border-top: 1px solid var(--color-gray-200); }
+  .dep-guide__item { transition: background-color .25s ease; }
+  .dep-guide__item:target { background: rgba(234,242,251,.52); }
+  .dep-guide__item { scroll-margin-top: 100px; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 17px; border-bottom: 1px solid var(--color-gray-200); padding: 19px 0; }
+  .dep-guide__num { color: var(--color-primary); font: 800 12px/1.4 var(--font-display); padding-top: 3px; }
+  .dep-guide__item h3 { color: var(--color-dark); font: 800 16px/1.3 var(--font-display); letter-spacing: -.02em; margin-bottom: 7px; }
+  .dep-guide__item p { color: var(--color-gray-600); font-size: 14px; line-height: 1.72; }
+  .dep-help { padding: clamp(55px, 6vw, 85px) 0; background: #fff; }
+  .dep-help__layout { display: grid; grid-template-columns: .86fr 1.14fr; gap: clamp(30px, 6vw, 90px); align-items: start; }
+  .dep-help h2 { margin-top: 14px; }
+  .dep-help__content p + p { margin-top: 18px; }
+  .dep-help__content strong { color: var(--color-dark); }
+  .dep-help__content .btn { margin-top: 25px; }
+
+  @media(max-width:760px){
+    .dep-guide__layout,.dep-help__layout{grid-template-columns:1fr;gap:22px}
+    .dep-guide{padding:44px 0}
+    .dep-guide__intro{position:static}
+    .dep-guide__checklist{margin-top:18px}
+    .dep-guide__checklist ul{grid-template-columns:1fr 1fr;gap:12px}
+    .dep-guide__checklist li{grid-template-columns:22px 1fr;gap:6px}
+  }
+  @media(max-width:420px){.dep-guide__checklist ul{grid-template-columns:1fr}}
+</style>

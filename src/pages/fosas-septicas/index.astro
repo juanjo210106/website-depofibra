@@ -1,0 +1,140 @@
+---
+import CategoryInterior from '../../components/CategoryInterior.astro';
+const page = {
+  "nav": "fosas",
+  "title": "Fosas sépticas",
+  "eyebrow": "CATÁLOGO DE SANEAMIENTO",
+  "description": "Compara fosas sépticas estancas, equipos con filtro biológico y oxidación total. Consulta presupuesto según aplicación, habitantes equivalentes y destino.",
+  "intro": "Estancas, con filtro biológico y oxidación total. Compara los tres sistemas y consulta también los separadores de hidrocarburos.",
+  "items": [
+    {
+      "id": "fosa-estanca",
+      "name": "Fosa séptica estanca",
+      "subtitle": "Almacenamiento de aguas residuales sin salida de vertido; requiere vaciado periódico.",
+      "image": "/images/fosas-septicas/estanca.svg",
+      "visualType": "illustration",
+      "mediaCaption": "Esquema orientativo",
+      "tags": [
+        "estanca",
+        "almacenamiento"
+      ],
+      "specification": "ALMACENAMIENTO SIN VERTIDO",
+      "quoteProduct": "Fosa séptica",
+      "quoteNote": "Fosa séptica estanca",
+      "detail": "Una fosa estanca almacena las aguas residuales para su retirada posterior. Debe estudiarse la capacidad, la frecuencia de vaciado, los accesos para mantenimiento y la documentación de la referencia."
+    },
+    {
+      "id": "fosa-biologica",
+      "name": "Fosa con filtro biológico",
+      "subtitle": "Sistema que incorpora tratamiento biológico. La selección depende del proyecto y del vertido.",
+      "image": "/images/fosas-septicas/filtro-biologico.svg",
+      "visualType": "illustration",
+      "mediaCaption": "Esquema orientativo",
+      "tags": [
+        "biologico",
+        "tratamiento"
+      ],
+      "specification": "TRATAMIENTO BIOLÓGICO",
+      "quoteProduct": "Fosa séptica",
+      "quoteNote": "Fosa séptica con filtro biológico",
+      "detail": "El filtro biológico incorpora una etapa de tratamiento distinta del simple almacenamiento. Es necesario conocer los habitantes equivalentes, caudal previsto y condiciones de vertido."
+    },
+    {
+      "id": "oxidacion-total",
+      "name": "Depuradora de oxidación total",
+      "subtitle": "Tratamiento biológico mediante aireación, con necesidades de electricidad y mantenimiento.",
+      "image": "/images/fosas-septicas/oxidacion-total.svg",
+      "visualType": "illustration",
+      "mediaCaption": "Esquema orientativo",
+      "tags": [
+        "oxidacion",
+        "tratamiento"
+      ],
+      "specification": "DEPURACIÓN CON AIREACIÓN",
+      "quoteProduct": "Fosa séptica",
+      "quoteNote": "Depuradora de oxidación total",
+      "detail": "La oxidación total necesita equipos de aireación y mantenimiento según fabricante. El dimensionamiento y las condiciones de vertido dependen del uso y de la normativa aplicable al proyecto."
+    }
+  ],
+  "filterGroups": [
+    {
+      "title": "Tipo de sistema",
+      "options": [
+        {
+          "id": "estanca",
+          "label": "Estancas"
+        },
+        {
+          "id": "biologico",
+          "label": "Filtro biológico"
+        },
+        {
+          "id": "oxidacion",
+          "label": "Oxidación total"
+        }
+      ]
+    },
+    {
+      "title": "Finalidad",
+      "options": [
+        {
+          "id": "almacenamiento",
+          "label": "Almacenamiento"
+        },
+        {
+          "id": "tratamiento",
+          "label": "Tratamiento biológico"
+        }
+      ]
+    }
+  ],
+  "note": "Los dibujos son orientativos. Las capacidades, habitantes equivalentes, prestaciones, documentación técnica y condiciones de suministro deben comprobarse en la referencia definitiva.",
+  "feature": {
+    "title": "Separadores de hidrocarburos",
+    "eyebrow": "OTRAS SOLUCIONES DE SANEAMIENTO",
+    "description": "Equipo específico para separar hidrocarburos del agua en aplicaciones que lo requieran. No es una fosa séptica y se estudia con criterios propios: tipo de aguas, caudal, uso y documentación técnica.",
+    "image": "/images/fosas-septicas/separador-hidrocarburos.svg",
+    "quoteProduct": "Fosa séptica",
+    "quoteNote": "Consulta específica de separador de hidrocarburos (no fosa séptica)"
+  },
+  "guideTitle": "Qué sistema necesita tu instalación",
+  "guideDescription": "No conviene elegir solo por el precio o la capacidad. El uso previsto y las condiciones de vertido condicionan el sistema.",
+  "guideRows": [
+    {
+      "title": "Diferencia almacenamiento y depuración",
+      "detail": "Una fosa estanca retiene el agua residual para su vaciado, mientras que un filtro biológico y la oxidación total incorporan procesos de tratamiento diferentes."
+    },
+    {
+      "title": "Dimensiona según el uso y el proyecto",
+      "detail": "Habitantes equivalentes, caudal previsto y características del agua son datos relevantes. Las capacidades históricas no sustituyen un dimensionamiento técnico."
+    },
+    {
+      "title": "Comprueba permisos, acceso y mantenimiento",
+      "detail": "La autorización de vertido, los accesos de vaciado y el mantenimiento deben revisarse según la ubicación y el tipo de solución propuesta."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "¿Qué diferencia hay entre fosa estanca y filtro biológico?",
+      "answer": "La estanca almacena aguas residuales sin vertido; la segunda incorpora tratamiento biológico. No son intercambiables ni tienen las mismas necesidades de mantenimiento."
+    },
+    {
+      "question": "¿Qué es una depuradora de oxidación total?",
+      "answer": "Es un equipo de tratamiento que incorpora aireación. Sus requisitos eléctricos, prestaciones y mantenimiento dependen del modelo y del proyecto."
+    },
+    {
+      "question": "¿Cómo se elige la capacidad de una fosa?",
+      "answer": "Se valora el uso, habitantes equivalentes, caudal, características del agua y las indicaciones técnicas del proyecto y del fabricante."
+    },
+    {
+      "question": "¿Un separador de hidrocarburos es una fosa séptica?",
+      "answer": "No. Son equipos con funciones y criterios de dimensionamiento diferentes. Por eso los mostramos como una solución complementaria y separada."
+    },
+    {
+      "question": "¿Puedo instalar una fosa sin más permisos?",
+      "answer": "No se debe dar por hecho. Las autorizaciones y las condiciones de vertido dependen de la instalación, la administración competente y el proyecto."
+    }
+  ]
+};
+---
+<CategoryInterior {...page} />

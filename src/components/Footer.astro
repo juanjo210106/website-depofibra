@@ -1,0 +1,94 @@
+---
+const year=new Date().getFullYear();
+---
+<footer class="df-footer" aria-label="Pie de página">
+  <div class="df-footer__lead">
+    <div class="df-footer__micro"><span>01 / HABLEMOS DE TU PROYECTO</span><span>CASARICHE · SEVILLA · ESPAÑA</span></div>
+    <div class="df-footer__pitch">
+      <h2>El depósito que buscas.<br/><em>Una respuesta clara.</em></h2>
+      <div class="df-footer__action"><p>Cuéntanos qué necesitas, cuántos litros y dónde lo recibirías. Revisamos la referencia y el transporte antes de presupuestar.</p><button class="open-quote-trigger" type="button"><span class="df-footer__action-label">Pedir presupuesto</span><span class="df-footer__action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></button></div>
+    </div>
+  </div>
+  <div class="df-footer__map">
+    <div><span class="df-footer__index">01 / CATÁLOGO</span><a href="/depositos/">Depósitos de poliéster</a><a href="/piscinas/">Piscinas</a><a href="/fosas-septicas/">Fosas sépticas</a><a href="/cubas-cisternas/">Cubas y cisternas</a></div>
+    <div><span class="df-footer__index">02 / INFORMACIÓN</span><a href="/blog/">Blog y consejos</a><a href="/#guia-eleccion">Guía de elección</a><a href="/#logistica">Entrega y transporte</a><a href="/#preguntas-frecuentes">Preguntas frecuentes</a></div>
+    <div><span class="df-footer__index">03 / DEPOFIBRA</span><p>Comercialización de depósitos y soluciones de poliéster reforzado con fibra de vidrio.</p><p>Atención comercial en España y Portugal según modelo y logística.</p></div>
+    <div><span class="df-footer__index">04 / CONECTAR</span><a href="https://www.instagram.com/depofibra/" rel="noopener noreferrer" target="_blank">Instagram ↗</a><a href="https://www.facebook.com/p/Juan-Depofibra-61589376342997/" rel="noopener noreferrer" target="_blank">Facebook ↗</a><a href="/contacto/">Contacto y citas ↗</a><button type="button" class="open-quote-trigger df-footer__textbtn">Solicitar información ↗</button></div>
+  </div>
+  <div class="df-footer__wordmark-stage" data-footer-wordmark-stage aria-hidden="true"><div class="df-footer__wordmark" data-footer-wordmark>DEPOFIBRA<span>®</span></div></div>
+  <div class="df-footer__base"><span>© {year} Depofibra · Casariche, Sevilla</span><nav aria-label="Información legal"><a href="/aviso-legal/">Aviso legal</a><a href="/politica-de-privacidad/">Privacidad</a><a href="/politica-de-cookies/">Cookies</a></nav></div>
+</footer>
+<style>
+ .df-footer{position:relative;margin:0;width:100%;overflow:clip;background:#002d59;color:#fff;font-family:var(--font-body,Inter,sans-serif)}
+ .df-footer__lead{padding:49px max(24px,calc((100vw - 1380px)/2)) 39px;background:#01488e}
+ .df-footer__micro{display:flex;justify-content:space-between;gap:20px;padding-bottom:23px;border-bottom:1px solid #ffffff55;font:800 10px var(--font-display);letter-spacing:.13em;color:#d2e4f3}
+ .df-footer__pitch{display:grid;grid-template-columns:1.55fr .6fr;gap:50px;align-items:end;padding-top:30px}
+ .df-footer__pitch h2{font:800 clamp(36px,5.3vw,86px)/.99 var(--font-display);letter-spacing:-.066em;color:#fff;margin:0}.df-footer__pitch h2 em{font-style:normal;color:#a7cae8}
+ .df-footer__action p{font-size:16px;line-height:1.7;color:#d6e6f3;max-width:340px;margin:0 0 24px}.df-footer__action button{display:inline-flex;justify-content:space-between;align-items:center;gap:18px;min-height:56px;min-width:232px;padding:7px 7px 7px 24px;border:1px solid rgba(255,255,255,.9);border-radius:999px;color:#002d59;background:#fff;font:800 14px/1.15 var(--font-display);cursor:pointer;box-shadow:0 10px 30px rgba(0,28,60,.16);transition:transform .28s ease,background .28s ease,box-shadow .28s ease}
+ .df-footer__action button:hover{background:#eaf2fb;transform:translateY(-2px);box-shadow:0 16px 36px rgba(0,23,50,.24)}
+ .df-footer__action button:active{transform:translateY(0)}
+ .df-footer__action button:focus-visible{outline:3px solid #b8e1ff;outline-offset:4px}
+ .df-footer__action .df-footer__action-label{font:inherit;white-space:nowrap}
+ .df-footer__action .df-footer__action-icon{width:42px;height:42px;display:grid;place-items:center;flex:none;border-radius:50%;background:#01488e;color:#fff;transition:transform .28s cubic-bezier(.16,1,.3,1),background .28s ease}
+ .df-footer__action .df-footer__action-icon svg{width:19px;height:19px;transition:transform .28s ease}
+ .df-footer__action button:hover .df-footer__action-icon{background:#002d59;transform:scale(1.06)}
+ .df-footer__action button:hover .df-footer__action-icon svg{transform:translateX(3px)}
+ .df-footer__map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:35px;padding:40px max(24px,calc((100vw - 1380px)/2)) 28px}.df-footer__map>div{display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-width:0}.df-footer__index{display:block;width:100%;font:800 11px var(--font-display);letter-spacing:.1em;color:#a7cee9;border-bottom:1px solid #ffffff24;padding-bottom:17px;margin-bottom:8px}.df-footer__map a,.df-footer__map p,.df-footer__textbtn{font:500 15px/1.6 var(--font-body);color:#d0dfeb;text-decoration:none;margin:0}.df-footer__map a:hover,.df-footer__textbtn:hover{color:#fff;text-decoration:underline}.df-footer__textbtn{padding:0;border:0;background:none;cursor:pointer}
+ /* V22: franja ajustada a la altura real de la palabra, sin área vacía de 400px.
+    El texto permanece pegado a su base y se despliega hacia arriba. */
+ .df-footer__wordmark-stage{position:relative;height:clamp(96px,11.5vw,185px);overflow:hidden;isolation:isolate}
+ .df-footer__wordmark{position:absolute;left:0;right:0;bottom:0;z-index:0;pointer-events:none;font:800 clamp(55px,12.5vw,225px)/.88 var(--font-display);letter-spacing:-.09em;text-align:center;white-space:nowrap;color:rgba(234,242,251,.13);user-select:none;padding:0 1.6vw 6px;opacity:0;transform:scaleY(0);transform-origin:50% 100%;will-change:transform,opacity;transition:none}
+ .df-footer__wordmark.is-scroll-driven{opacity:var(--df-wordmark-opacity,0);transform:scaleY(var(--df-wordmark-scale,0))}
+ .df-footer__wordmark span{display:inline-block;color:rgba(234,242,251,.095);font:700 clamp(13px,2vw,32px)/1 var(--font-display);vertical-align:top;letter-spacing:0;margin:0 0 0 10px}
+ .df-footer__base{position:relative;z-index:1;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:20px max(24px,calc((100vw - 1380px)/2));border-top:1px solid #ffffff40;color:#bed2e1;font-size:13px}.df-footer__base nav{display:flex;gap:23px;flex-wrap:wrap}.df-footer__base a{color:inherit;text-decoration:none}.df-footer__base a:hover{color:#fff}
+ @media(max-width:830px){.df-footer__pitch{grid-template-columns:1fr;gap:25px}.df-footer__map{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}.df-footer__wordmark{font-size:14vw}}
+ @media(max-width:480px){.df-footer__wordmark-stage{height:clamp(67px,18vw,92px)}.df-footer__wordmark{bottom:0}.df-footer__lead{padding:35px 18px}.df-footer__micro span:last-child{display:none}.df-footer__pitch h2{font-size:38px}.df-footer__map{padding:32px 20px;grid-template-columns:1fr 1fr;gap:30px 12px}.df-footer__map a,.df-footer__map p{font-size:14px}.df-footer__wordmark{font-size:14vw;padding-bottom:4vw}.df-footer__wordmark span{font-size:9px;margin-left:3px}.df-footer__base{display:block;padding:18px 20px 98px}.df-footer__base nav{margin-top:12px}}
+ @media(prefers-reduced-motion:reduce){.df-footer__wordmark,.df-footer__wordmark.is-scroll-driven{opacity:.44!important;transform:none!important;will-change:auto}.df-footer__action button,.df-footer__action-icon,.df-footer__action-icon svg{transition:none!important}}
+</style>
+
+<script>
+  const wordmark = document.querySelector<HTMLElement>('[data-footer-wordmark]');
+  const stage = document.querySelector<HTMLElement>('[data-footer-wordmark-stage]');
+  if (wordmark && stage) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let raf = 0;
+    let previous = -1;
+
+    // La palabra nace comprimida junto a la línea inferior de su franja.
+    // La propia franja proporciona recorrido de scroll, sin cubrir los enlaces.
+    const update = () => {
+      raf = 0;
+      if (reducedMotion.matches) return;
+      const viewportHeight = window.innerHeight || 1;
+      const stageTop = stage.getBoundingClientRect().top;
+      // Empieza cuando asoma la franja y se completa durante su propio recorrido.
+      // El alto fijo y compacto impide huecos, incluso al final del documento.
+      const travel = Math.min(stage.offsetHeight * 0.94, viewportHeight * 0.36);
+      const progress = Math.max(0, Math.min(1, (viewportHeight - stageTop) / Math.max(1, travel)));
+      if (Math.abs(progress - previous) < 0.002) return;
+      previous = progress;
+
+      // Un crecimiento lineal evita que aparezca de golpe al final.
+      // La base siempre queda en la misma línea (transform-origin: bottom).
+      wordmark.style.setProperty('--df-wordmark-scale', progress.toFixed(4));
+      wordmark.style.setProperty('--df-wordmark-opacity', (progress * 0.72).toFixed(4));
+    };
+    const schedule = () => { if (raf === 0) raf = requestAnimationFrame(update); };
+    const sync = () => {
+      if (reducedMotion.matches) {
+        wordmark.classList.remove('is-scroll-driven');
+        wordmark.style.removeProperty('--df-wordmark-scale');
+        wordmark.style.removeProperty('--df-wordmark-opacity');
+      } else {
+        wordmark.classList.add('is-scroll-driven');
+        previous = -1;
+        schedule();
+      }
+    };
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule, { passive: true });
+    reducedMotion.addEventListener('change', sync);
+    sync();
+  }
+</script>
