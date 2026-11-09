@@ -1,7 +1,7 @@
 /**
  * Depofibra · fichas de familias de depósitos.
  * Datos editoriales públicos, sin precios privados, stock, medidas no verificadas ni certificaciones genéricas.
- * Las imágenes son fotografías de referencia / dibujos ilustrativos ya existentes en el proyecto.
+ * Fotografías de referencia organizadas por familia: una portada y una galería por producto.
  */
 
 export type DepositFamily = {
@@ -35,9 +35,15 @@ export const depositFamilies: DepositFamily[] = [
     geometry: 'Vertical · Base plana',
     application: 'Agua y riego, según referencia',
     quoteProduct: 'Depósito vertical de base plana',
-    gallery: [
-      {src:'/images/productos/deposito-vertical.jpg',alt:'Fotografía de referencia de un depósito vertical de poliéster de base plana',kind:'Fotografía de referencia'},
-      {src:'/images/depositos/vertical-base-plana.svg',alt:'Esquema ilustrativo del formato vertical con base plana',kind:'Dibujo orientativo'},
+    gallery:[
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-blanco-escala-frontal.webp',alt:'Depósito vertical blanco de poliéster con base plana y escala de nivel frontal',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-verde-escala-frontal.webp',alt:'Depósito vertical verde de poliéster de base plana con escala frontal',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-blanco-escala-instalado.webp',alt:'Depósito vertical blanco de poliéster con escala sobre una plataforma de obra',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-verde-alto-escala.webp',alt:'Depósito vertical verde de poliéster con escala de nivel sobre base de hormigón',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-blanco-compacto-escala.webp',alt:'Depósito vertical blanco compacto con escala de nivel frontal',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-verde-escala-en-exterior.webp',alt:'Depósito vertical verde con escala de nivel instalado en una parcela',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-blanco-izado-grua.webp',alt:'Depósito vertical blanco de poliéster suspendido mediante grúa durante una maniobra',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-verdes-conjunto-diferentes-tamanos.webp',alt:'Varios depósitos verticales verdes de distintas alturas colocados en línea',kind:'Fotografía de referencia'},
     ],
     titleSeo: 'Depósitos verticales de base plana | Depofibra',
     metaDescription:'Depósitos verticales de poliéster de base plana para agua y riego. Consulta capacidades, instalación y presupuesto con transporte según destino.',
@@ -75,8 +81,10 @@ export const depositFamilies: DepositFamily[] = [
     installation:'En superficie', geometry:'Horizontal · Con apoyos', application:'Almacenamiento según uso',
     quoteProduct:'Depósito horizontal con cunas',
     gallery:[
-      {src:'/images/productos/deposito-horizontal.jpg',alt:'Fotografía de referencia de un depósito horizontal de poliéster con apoyos',kind:'Fotografía de referencia'},
-      {src:'/images/depositos/horizontal-cunas.svg',alt:'Esquema orientativo de depósito horizontal con cunas',kind:'Dibujo orientativo'},
+      {src:'/images/depositos/horizontal-con-cunas/deposito-poliester-horizontal-con-cunas-verde-vista-perspectiva.webp',alt:'Depósito horizontal verde de poliéster con apoyos visto en perspectiva',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/horizontal-con-cunas/deposito-poliester-horizontal-con-cunas-verde-vista-lateral.webp',alt:'Depósito horizontal verde con cunas de apoyo visto de lado',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/horizontal-con-cunas/deposito-poliester-horizontal-con-cunas-verde-vista-extremo.webp',alt:'Depósito horizontal verde con cunas de apoyo visto desde un extremo',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/horizontal-con-cunas/deposito-poliester-horizontal-con-cunas-blanco-en-transporte.webp',alt:'Depósito horizontal blanco con soportes durante el transporte en camión',kind:'Fotografía de referencia'},
     ],
     titleSeo:'Depósitos horizontales con cunas | Depofibra',
     metaDescription:'Consulta depósitos horizontales de poliéster con cunas para instalación en superficie. Características, condiciones de apoyo y presupuesto por destino.',
@@ -108,7 +116,12 @@ export const depositFamilies: DepositFamily[] = [
     intro:'Depósitos concebidos específicamente para instalaciones bajo tierra, con requisitos de montaje distintos de los modelos de superficie.',
     installation:'Enterrado · Bajo proyecto',geometry:'Horizontal · Enterrable',application:'Agua y otros usos compatibles',
     quoteProduct:'Depósito horizontal para enterrar',
-    gallery:[{src:'/images/depositos/horizontal-enterrar.svg',alt:'Ilustración orientativa de depósito horizontal enterrable',kind:'Dibujo orientativo'}],
+    gallery:[
+      {src:'/images/depositos/horizontal-enterrable/deposito-poliester-horizontal-enterrable-gris-registro-lateral.webp',alt:'Depósito horizontal gris de poliéster con registro lateral circular, en superficie',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/horizontal-enterrable/deposito-poliester-horizontal-enterrable-gris-lateral-cielo.webp',alt:'Vista lateral de depósito horizontal gris de poliéster con cielo azul de fondo',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/horizontal-enterrable/deposito-poliester-horizontal-enterrable-gris-vista-frontal.webp',alt:'Vista frontal de depósito horizontal gris con boca de acceso superior',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/horizontal-enterrable/deposito-poliester-horizontal-enterrable-gris-en-zanja-instalacion.webp',alt:'Depósito horizontal gris colocado en una zanja con boca de acceso superior',kind:'Fotografía de referencia'},
+    ],
     titleSeo:'Depósitos horizontales enterrables | Depofibra',
     metaDescription:'Depósitos horizontales de poliéster aptos para enterramiento según referencia. Consulta condiciones de instalación, capacidades y presupuesto.',
     highlights:[
@@ -139,7 +152,11 @@ export const depositFamilies: DepositFamily[] = [
     intro:'Formato vertical con apoyos elevados, para estudiar configuraciones que necesitan una altura o posición de salida concreta.',
     installation:'Superficie · Estructura elevada',geometry:'Vertical · Con patas',application:'Configuración según necesidad',
     quoteProduct:'Depósito vertical con patas',
-    gallery:[{src:'/images/depositos/vertical-patas.svg',alt:'Esquema orientativo de un depósito vertical con patas',kind:'Dibujo orientativo'}],
+    gallery:[
+      {src:'/images/depositos/vertical-con-patas/deposito-poliester-vertical-con-patas-verde-con-estructura-metalica.webp',alt:'Depósito vertical verde elevado sobre estructura de apoyo metálica azul',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-con-patas/deposito-poliester-vertical-con-patas-verde-con-cubierta-solar.webp',alt:'Depósito vertical verde con patas bajo una cubierta con paneles solares',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/vertical-con-patas/deposito-poliester-vertical-con-patas-verde-lateral-con-cubierta.webp',alt:'Vista lateral de depósito vertical verde elevado sobre apoyos metálicos',kind:'Fotografía de referencia'},
+    ],
     titleSeo:'Depósitos verticales con patas | Depofibra',
     metaDescription:'Consulta depósitos verticales de poliéster con patas. Configuraciones elevadas, apoyo, instalación y presupuesto según necesidades.',
     highlights:[
@@ -170,7 +187,11 @@ export const depositFamilies: DepositFamily[] = [
     intro:'Una familia distinta de los depósitos cerrados habituales, para estudiar geometrías y usos específicos.',
     installation:'Según modelo',geometry:'Tipo vaso',application:'Usos compatibles por verificar',
     quoteProduct:'Depósito tipo vaso',
-    gallery:[{src:'/images/depositos/vaso.svg',alt:'Dibujo orientativo de un depósito tipo vaso de poliéster',kind:'Dibujo orientativo'}],
+    gallery:[
+      {src:'/images/depositos/tipo-vaso/deposito-poliester-tipo-vaso-blanco-con-tapa.webp',alt:'Depósito de poliéster tipo vaso blanco con tapa superior circular',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/tipo-vaso/deposito-poliester-tipo-vaso-blanco-tronconico-con-tapa.webp',alt:'Depósito tipo vaso blanco de forma troncocónica con tapa',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/tipo-vaso/deposito-poliester-tipo-vaso-blancos-vista-interior.webp',alt:'Dos recipientes tipo vaso blancos, uno tumbado para mostrar su interior',kind:'Fotografía de referencia'},
+    ],
     titleSeo:'Depósitos tipo vaso de poliéster | Depofibra',
     metaDescription:'Depósitos tipo vaso de poliéster. Consulta configuración, capacidad y condiciones de uso antes de pedir presupuesto.',
     highlights:[
@@ -201,7 +222,10 @@ export const depositFamilies: DepositFamily[] = [
     intro:'Modelos con geometría cuadrada o rectangular para estudiar instalaciones donde el espacio condiciona la elección.',
     installation:'En superficie · Según modelo',geometry:'Cuadrado / rectangular',application:'Almacenamiento compatible',
     quoteProduct:'Depósito cuadrado o rectangular',
-    gallery:[{src:'/images/depositos/rectangular.svg',alt:'Esquema orientativo de depósito rectangular de poliéster',kind:'Dibujo orientativo'}],
+    gallery:[
+      {src:'/images/depositos/rectangulares/deposito-poliester-rectangulares-blanco-abierto-vista-interior.webp',alt:'Depósito rectangular blanco de poliéster abierto con vista de su interior',kind:'Fotografía de referencia'},
+      {src:'/images/depositos/rectangulares/deposito-poliester-rectangulares-blanco-con-junto-circular.webp',alt:'Depósito rectangular blanco de poliéster junto a otro recipiente circular',kind:'Fotografía de referencia'},
+    ],
     titleSeo:'Depósitos cuadrados y rectangulares | Depofibra',
     metaDescription:'Depósitos cuadrados y rectangulares de poliéster para espacios condicionados. Consulta modelos, accesorios y presupuesto.',
     highlights:[

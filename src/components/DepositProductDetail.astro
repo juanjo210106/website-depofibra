@@ -38,15 +38,48 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
 
       <section class="product-intro" aria-labelledby="product-name">
         <div class="product-gallery">
-          <figure class="product-gallery__stage">
-            <img src={firstImage.src} alt={firstImage.alt} class="product-gallery__main" width="1200" height="950" fetchpriority="high" decoding="async" />
-            <figcaption class="product-gallery__caption" aria-live="polite">{firstImage.kind}</figcaption>
-          </figure>
+          <div class="product-gallery__stage">
+            <div
+              class="product-gallery__viewport"
+              tabindex="0"
+              role="region"
+              aria-roledescription="carrusel"
+              aria-label={`Fotografías del producto ${product.shortName}. Desliza horizontalmente para cambiar de foto.`}
+            >
+              <div class="product-gallery__track">
+                {product.gallery.map((image, index) => (
+                  <figure class="product-gallery__slide" aria-label={`Fotografía ${index + 1} de ${product.gallery.length}`} style={`--gallery-photo:url("${image.src}")`}>
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      width="1000"
+                      height="1000"
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchpriority={index === 0 ? 'high' : 'auto'}
+                    />
+                  </figure>
+                ))}
+              </div>
+            </div>
+            {product.gallery.length > 1 && (
+              <>
+                <button class="product-gallery__arrow product-gallery__arrow--prev" type="button" aria-label="Ver fotografía anterior" data-gallery-prev>
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+                </button>
+                <button class="product-gallery__arrow product-gallery__arrow--next" type="button" aria-label="Ver fotografía siguiente" data-gallery-next>
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
+              </>
+            )}
+            <span class="product-gallery__caption" aria-live="polite">{firstImage.kind}</span>
+            <span class="product-gallery__counter" aria-live="polite">1 / {product.gallery.length}</span>
+          </div>
           {product.gallery.length > 1 && (
-            <div class="product-gallery__thumbs" role="group" aria-label="Seleccionar imagen">
+            <div class="product-gallery__thumbs" role="group" aria-label="Seleccionar fotografía">
               {product.gallery.map((image, index) => (
-                <button class:list={['product-gallery__thumb', { 'is-current': index === 0 }]} type="button" aria-label={`Mostrar imagen ${index + 1}: ${image.kind}`} aria-pressed={index === 0 ? 'true' : 'false'} data-src={image.src} data-alt={image.alt} data-kind={image.kind}>
-                  <img src={image.src} alt="" width="120" height="86" loading="lazy" />
+                <button class:list={['product-gallery__thumb', { 'is-current': index === 0 }]} type="button" aria-label={`Mostrar fotografía ${index + 1} de ${product.gallery.length}: ${image.alt}`} aria-pressed={index === 0 ? 'true' : 'false'} data-kind={image.kind}>
+                  <img src={image.src} alt="" width="96" height="96" loading="lazy" />
                 </button>
               ))}
             </div>
@@ -145,7 +178,7 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
 
       <section class="product-related" aria-labelledby="product-related-heading">
         <div class="product-related__head"><div><span class="product-eyebrow">DESCUBRE MÁS OPCIONES</span><h2 id="product-related-heading">Otros depósitos que pueden interesarte</h2></div><a href="/depositos/">Ver el catálogo completo <span aria-hidden="true">↗</span></a></div>
-        <div class="product-related__grid">{related.map(item => <a href={`/depositos/${item.slug}/`} class="product-related__item"><span class="product-related__image"><img src={item.gallery[0].src} alt={item.gallery[0].alt} width="420" height="320" loading="lazy" /></span><span class="product-related__name">{item.shortName}<span aria-hidden="true">↗</span></span><small>{item.installation}</small></a>)}</div>
+        <div class="product-related__grid">{related.map(item => <a href={`/depositos/${item.slug}/`} class="product-related__item"><span class="product-related__image" style={`--related-photo:url("${item.gallery[0].src}")`}><img src={item.gallery[0].src} alt={item.gallery[0].alt} width="420" height="320" loading="lazy" /></span><span class="product-related__name">{item.shortName}<span aria-hidden="true">↗</span></span><small>{item.installation}</small></a>)}</div>
       </section>
     </div>
   </main>
@@ -153,14 +186,65 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
 
 <script>
   document.querySelectorAll<HTMLElement>('.product-page').forEach(root => {
-    const mainImage = root.querySelector<HTMLImageElement>('.product-gallery__main');
-    const caption = root.querySelector<HTMLElement>('.product-gallery__caption');
+    const galleryViewport = root.querySelector<HTMLElement>('.product-gallery__viewport');
+    const gallerySlides = Array.from(root.querySelectorAll<HTMLElement>('.product-gallery__slide'));
     const galleryButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('.product-gallery__thumb'));
-    galleryButtons.forEach(button => button.addEventListener('click', () => {
-      if(mainImage) {mainImage.src = button.dataset.src || mainImage.src; mainImage.alt = button.dataset.alt || mainImage.alt;}
-      if(caption) caption.textContent = button.dataset.kind || '';
-      galleryButtons.forEach(item => {const active = item === button; item.classList.toggle('is-current', active); item.setAttribute('aria-pressed', String(active));});
-    }));
+    const thumbsScroller = root.querySelector<HTMLElement>('.product-gallery__thumbs');
+    const prevImage = root.querySelector<HTMLButtonElement>('[data-gallery-prev]');
+    const nextImage = root.querySelector<HTMLButtonElement>('[data-gallery-next]');
+    const caption = root.querySelector<HTMLElement>('.product-gallery__caption');
+    const counter = root.querySelector<HTMLElement>('.product-gallery__counter');
+    let currentImageIndex = 0;
+    let galleryScrollFrame = 0;
+
+    // El carrusel usa desplazamiento horizontal nativo: funciona con el dedo en móvil.
+    // Las flechas y las miniaturas mantienen sincronizada la fotografía seleccionada.
+    const updateGalleryUI = (index: number) => {
+      currentImageIndex = Math.max(0, Math.min(index, gallerySlides.length - 1));
+      galleryButtons.forEach((button, buttonIndex) => {
+        const active = buttonIndex === currentImageIndex;
+        button.classList.toggle('is-current', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      if (prevImage) prevImage.disabled = gallerySlides.length <= 1;
+      if (nextImage) nextImage.disabled = gallerySlides.length <= 1;
+      if (caption) caption.textContent = galleryButtons[currentImageIndex]?.dataset.kind || '';
+      if (counter) counter.textContent = `${currentImageIndex + 1} / ${gallerySlides.length}`;
+    };
+
+    const navigateGallery = (index: number, smooth = true) => {
+      if (!galleryViewport || gallerySlides.length === 0) return;
+      const safeIndex = ((index % gallerySlides.length) + gallerySlides.length) % gallerySlides.length;
+      galleryViewport.scrollTo({ left: safeIndex * galleryViewport.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+      updateGalleryUI(safeIndex);
+      const thumb = galleryButtons[safeIndex];
+      if (thumb && thumbsScroller) {
+        const left = Math.max(0, thumb.offsetLeft - (thumbsScroller.clientWidth - thumb.offsetWidth) / 2);
+        thumbsScroller.scrollTo({ left, behavior: smooth ? 'smooth' : 'auto' });
+      }
+    };
+
+    galleryButtons.forEach((button, index) => button.addEventListener('click', () => navigateGallery(index)));
+    prevImage?.addEventListener('click', () => navigateGallery(currentImageIndex - 1));
+    nextImage?.addEventListener('click', () => navigateGallery(currentImageIndex + 1));
+    galleryViewport?.addEventListener('scroll', () => {
+      if (galleryScrollFrame) cancelAnimationFrame(galleryScrollFrame);
+      galleryScrollFrame = requestAnimationFrame(() => {
+        if (!galleryViewport || !galleryViewport.clientWidth) return;
+        const index = Math.round(galleryViewport.scrollLeft / galleryViewport.clientWidth);
+        if (index !== currentImageIndex) {
+          updateGalleryUI(index);
+        }
+      });
+    }, { passive: true });
+    galleryViewport?.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      navigateGallery(currentImageIndex + (event.key === 'ArrowRight' ? 1 : -1));
+    });
+    if (galleryViewport && 'ResizeObserver' in window) {
+      new ResizeObserver(() => galleryViewport.scrollTo({ left: currentImageIndex * galleryViewport.clientWidth, behavior: 'auto' })).observe(galleryViewport);
+    }
 
     const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.product-tab'));
     function activateTab(tab: HTMLButtonElement, focus = false) {
@@ -228,13 +312,28 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
   .product-breadcrumb{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:22px 0 25px;font:600 12px/1.5 var(--font-body);color:#788595}
   .product-breadcrumb a{color:var(--color-primary-dark);transition:color .2s}.product-breadcrumb a:hover{color:var(--color-primary)}
   .product-intro{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(35px,5vw,75px);align-items:start}
-  .product-gallery__stage{aspect-ratio:1.18;position:relative;border-radius:18px;background:#f1f4f7;overflow:hidden;display:grid;place-items:center}
-  .product-gallery__main{width:100%;height:100%;object-fit:contain;display:block}
-  .product-gallery__caption{position:absolute;left:14px;bottom:14px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.94);color:#546579;font:600 11px/1.4 var(--font-body)}
-  .product-gallery__thumbs{display:flex;gap:10px;margin-top:12px}
-  .product-gallery__thumb{width:91px;height:74px;display:grid;place-items:center;border:1px solid #e0e7ef;background:#f4f6f9;border-radius:10px;cursor:pointer;overflow:hidden;transition:border-color .2s}
+  /* Todas las fotografías de depósito se muestran en un lienzo cuadrado uniforme, sin marco visible. */
+  .product-gallery{min-width:0}
+  /* Limita el tamaño en portátil para que la foto completa entre mejor en pantalla. */
+  .product-gallery{width:100%;max-width:clamp(430px,35vw,560px);min-width:0}
+  .product-gallery__stage{width:100%;aspect-ratio:1 / 1;position:relative;border-radius:18px;background:transparent;overflow:hidden}
+  .product-gallery__viewport{width:100%;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .product-gallery__viewport::-webkit-scrollbar{display:none}
+  .product-gallery__viewport:focus-visible{outline:3px solid var(--color-primary);outline-offset:-3px}
+  .product-gallery__track{display:flex;width:100%;height:100%}
+  .product-gallery__slide{position:relative;flex:0 0 100%;min-width:0;height:100%;margin:0;display:grid;place-items:center;scroll-snap-align:start;overflow:hidden;background:transparent}
+  .product-gallery__slide img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+  .product-gallery__arrow{position:absolute;top:50%;z-index:2;transform:translateY(-50%);width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(203,216,230,.86);border-radius:50%;background:rgba(255,255,255,.94);color:var(--color-primary-dark);box-shadow:0 4px 16px rgba(0,35,70,.09);cursor:pointer;transition:background .2s,border-color .2s,opacity .2s}
+  .product-gallery__arrow--prev{left:12px}.product-gallery__arrow--next{right:12px}
+  .product-gallery__arrow:not(:disabled):hover{background:#fff;border-color:var(--color-primary)}
+  .product-gallery__arrow:disabled{cursor:default;opacity:.32;box-shadow:none}
+  .product-gallery__arrow:focus-visible{outline:3px solid var(--color-primary);outline-offset:2px}
+  .product-gallery__caption,.product-gallery__counter{position:absolute;bottom:14px;z-index:2;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.94);color:#546579;font:600 11px/1.4 var(--font-body);pointer-events:none}
+  .product-gallery__caption{left:14px}.product-gallery__counter{right:14px;font-variant-numeric:tabular-nums}
+  .product-gallery__thumbs{position:relative;display:flex;gap:10px;margin-top:12px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;scroll-snap-type:x proximity;padding:2px 1px 8px}
+  .product-gallery__thumb{width:78px;height:78px;flex:0 0 auto;scroll-snap-align:start;display:grid;place-items:center;border:1px solid #e0e7ef;background:#fff;border-radius:10px;cursor:pointer;overflow:hidden;transition:border-color .2s}
   .product-gallery__thumb.is-current{border-color:var(--color-primary);box-shadow:0 0 0 1px var(--color-primary)}
-  .product-gallery__thumb img{width:100%;height:100%;object-fit:contain}
+  .product-gallery__thumb img{width:100%;height:100%;object-fit:cover;object-position:center}
   .product-gallery__note{font:400 11px/1.65 var(--font-body);color:#728093;margin-top:12px;max-width:64ch}
   .product-eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--color-primary);font:800 11px/1.5 var(--font-display);letter-spacing:.095em;text-transform:uppercase}
   .product-eyebrow::before{content:'';width:6px;height:6px;background:var(--color-primary);border-radius:50%;flex:none}
@@ -281,11 +380,11 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
   .product-related__head h2{font:800 clamp(1.5rem,2.5vw,2.15rem)/1.15 var(--font-display);letter-spacing:-.045em;color:#162a41;margin-top:10px}
   .product-related__head>a{color:var(--color-primary);font:700 13px/1.4 var(--font-body);white-space:nowrap}
   .product-related__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-  .product-related__item{min-width:0}.product-related__image{display:block;aspect-ratio:1.24;background:#f1f4f7;border-radius:13px;overflow:hidden}.product-related__image img{width:100%;height:100%;object-fit:contain;transition:transform .3s}.product-related__item:hover img{transform:scale(1.04)}
+  .product-related__item{min-width:0}.product-related__image{position:relative;display:block;aspect-ratio:1 / 1;background:transparent;border-radius:13px;overflow:hidden}.product-related__image img{width:100%;height:100%;object-fit:cover;object-position:center}.product-related__item:hover img{transform:none}
   .product-related__name{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;color:#162a41;font:800 14px/1.35 var(--font-display)}.product-related__name span{font-size:18px;color:var(--color-primary)}
   .product-related__item small{display:block;margin-top:5px;color:#6c7b8b;font:500 12px/1.5 var(--font-body)}
   @media(max-width:1100px){.product-intro{gap:26px}.product-actions{grid-template-columns:1fr}.product-summary h1{font-size:clamp(2rem,3.7vw,2.7rem)}}
-  @media(max-width:850px){.product-intro{grid-template-columns:1fr;max-width:650px;margin-inline:auto}.product-gallery__stage{aspect-ratio:1.45}.product-summary{padding-top:3px}.product-actions{grid-template-columns:1fr 1fr}.product-panel{grid-template-columns:1fr;gap:18px}.product-panel__title h2{max-width:32ch}.product-related__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(max-width:580px){.product-breadcrumb{padding:14px 0 17px}.product-gallery__stage{aspect-ratio:1.32;border-radius:12px}.product-gallery__thumb{width:75px;height:62px}.product-gallery__caption{font-size:10px}.product-summary h1{font-size:clamp(1.95rem,8vw,2.45rem);margin:10px 0 11px}.product-summary__specs{margin:17px 0;padding:12px 0}.product-summary__trust{gap:7px;margin-bottom:17px}.product-summary__contact{padding-top:16px}.product-actions{grid-template-columns:1fr}.product-button{min-height:50px}.product-information{margin-top:45px}.product-tabs{gap:22px}.product-tab{font-size:12px;min-height:52px}.product-panel{padding:26px 0 35px}.product-highlights{grid-template-columns:1fr;gap:15px}.product-related__head{display:block}.product-related__head>a{display:inline-flex;margin-top:12px}.product-related__grid{gap:15px 10px}.product-related__name{font-size:12px}.product-gallery__note{font-size:11px}}
-  @media(prefers-reduced-motion:reduce){.product-button,.product-button>span,.product-related__image img{transition:none}}
+  @media(max-width:850px){.product-intro{grid-template-columns:1fr;max-width:650px;margin-inline:auto}.product-gallery{max-width:none}.product-gallery__stage{aspect-ratio:1 / 1}.product-summary{padding-top:3px}.product-actions{grid-template-columns:1fr 1fr}.product-panel{grid-template-columns:1fr;gap:18px}.product-panel__title h2{max-width:32ch}.product-related__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:580px){.product-breadcrumb{padding:14px 0 17px}.product-gallery__stage{aspect-ratio:1 / 1;border-radius:12px}.product-gallery__thumb{width:66px;height:66px}.product-gallery__arrow{width:38px;height:38px}.product-gallery__arrow--prev{left:8px}.product-gallery__arrow--next{right:8px}.product-gallery__caption,.product-gallery__counter{bottom:9px;padding:5px 8px}.product-gallery__caption{left:9px}.product-gallery__counter{right:9px}.product-gallery__caption{font-size:10px}.product-summary h1{font-size:clamp(1.95rem,8vw,2.45rem);margin:10px 0 11px}.product-summary__specs{margin:17px 0;padding:12px 0}.product-summary__trust{gap:7px;margin-bottom:17px}.product-summary__contact{padding-top:16px}.product-actions{grid-template-columns:1fr}.product-button{min-height:50px}.product-information{margin-top:45px}.product-tabs{gap:22px}.product-tab{font-size:12px;min-height:52px}.product-panel{padding:26px 0 35px}.product-highlights{grid-template-columns:1fr;gap:15px}.product-related__head{display:block}.product-related__head>a{display:inline-flex;margin-top:12px}.product-related__grid{gap:15px 10px}.product-related__name{font-size:12px}.product-gallery__note{font-size:11px}}
+  @media(prefers-reduced-motion:reduce){.product-button,.product-button>span,.product-related__image img,.product-gallery__arrow{transition:none}.product-gallery__viewport{scroll-behavior:auto}}
 </style>

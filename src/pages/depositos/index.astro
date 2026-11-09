@@ -7,15 +7,14 @@
 import Layout from '../../layouts/Layout.astro';
 import CategoryCatalog from '../../components/CategoryCatalog.astro';
 import CategoryFaq from '../../components/CategoryFaq.astro';
+import { depositFamilies } from '../../data/depositProducts';
 
 const products = [
   {
     id: 'vertical-base-plana',
+    imageFamily: 'vertical-base-plana',
     name: 'Vertical de base plana',
     type: 'Superficie · Vertical',
-    image: '/images/productos/deposito-vertical.jpg',
-    alt: 'Fotografía de referencia de depósito vertical de poliéster de base plana',
-    imageType: 'photo',
     href: '/depositos/vertical-base-plana/',
     quoteProduct: 'Depósito vertical de base plana',
     filters: ['todos', 'superficie', 'vertical'],
@@ -23,55 +22,45 @@ const products = [
   },
   {
     id: 'horizontal-cunas',
+    imageFamily: 'horizontal-con-cunas',
     name: 'Horizontal con cunas',
     type: 'Superficie · Horizontal',
-    image: '/images/productos/deposito-horizontal.jpg',
-    alt: 'Fotografía de referencia de depósito horizontal de poliéster con apoyos',
-    imageType: 'photo',
     href: '/depositos/horizontal-con-cunas/',
     quoteProduct: 'Depósito horizontal con cunas',
     filters: ['todos', 'superficie', 'horizontal'],
   },
   {
     id: 'horizontal-enterrar',
+    imageFamily: 'horizontal-enterrable',
     name: 'Horizontal enterrable',
     type: 'Enterrado · Horizontal',
-    image: '/images/depositos/horizontal-enterrar.svg',
-    alt: 'Ilustración orientativa de depósito horizontal para enterrar',
-    imageType: 'illustration',
     href: '/depositos/horizontal-enterrable/',
     quoteProduct: 'Depósito horizontal para enterrar',
     filters: ['todos', 'enterrado', 'horizontal'],
   },
   {
     id: 'vertical-patas',
+    imageFamily: 'vertical-con-patas',
     name: 'Vertical con patas',
     type: 'Superficie · Vertical',
-    image: '/images/depositos/vertical-patas.svg',
-    alt: 'Ilustración orientativa de depósito vertical con patas',
-    imageType: 'illustration',
     href: '/depositos/vertical-con-patas/',
     quoteProduct: 'Depósito vertical con patas',
     filters: ['todos', 'superficie', 'vertical'],
   },
   {
     id: 'vaso',
+    imageFamily: 'tipo-vaso',
     name: 'Tipo vaso',
     type: 'Otros formatos',
-    image: '/images/depositos/vaso.svg',
-    alt: 'Ilustración orientativa de depósito tipo vaso',
-    imageType: 'illustration',
     href: '/depositos/tipo-vaso/',
     quoteProduct: 'Depósito tipo vaso',
     filters: ['todos', 'superficie', 'otros'],
   },
   {
     id: 'rectangular',
+    imageFamily: 'cuadrados-rectangulares',
     name: 'Cuadrado o rectangular',
     type: 'Otros formatos',
-    image: '/images/depositos/rectangular.svg',
-    alt: 'Ilustración orientativa de depósito rectangular de poliéster',
-    imageType: 'illustration',
     href: '/depositos/cuadrados-rectangulares/',
     quoteProduct: 'Depósito cuadrado o rectangular',
     filters: ['todos', 'superficie', 'otros'],
@@ -139,17 +128,22 @@ const questions = [
     a: 'Sí, se puede estudiar según el depósito y el destino. Indícanos el código postal y si existen dificultades de acceso. El transporte estándar no incluye la descarga salvo condición expresamente confirmada.',
   },
 ];
-const catalogItems = products.map(product => ({
-  id: product.id,
-  name: product.name,
-  image: product.image,
-  href: product.href,
-  meta: product.type,
-  alt: product.alt,
-  illustration: product.imageType === 'illustration',
-  featured: product.featured,
-  quoteProduct: product.quoteProduct,
-}));
+// Comparte la misma fotografía principal que su ficha individual.
+const catalogItems = products.map(product => {
+  const family = depositFamilies.find(item => item.slug === product.imageFamily);
+  const cover = family?.gallery[0];
+  if (!cover) throw new Error(`Falta fotografía principal para ${product.imageFamily}`);
+  return {
+    id: product.id,
+    name: product.name,
+    image: cover.src,
+    href: product.href,
+    meta: product.type,
+    alt: cover.alt,
+    featured: product.featured,
+    quoteProduct: product.quoteProduct,
+  };
+});
 const categoryFaqs = questions.map(item => ({ question: item.q, answer: item.a }));
 
 ---
@@ -187,8 +181,9 @@ const categoryFaqs = questions.map(item => ({ question: item.q, answer: item.a }
       description="Verticales, horizontales, enterrables y otros formatos de PRFV. Encuentra el depósito que necesitas y consulta opciones según capacidad, uso y destino."
       breadcrumb="Depósitos"
       items={catalogItems}
-      note="Fotografías de referencia e ilustraciones orientativas. Las medidas, accesorios, documentación y condiciones se confirman para cada modelo."
+      note="Fotografías de referencia de distintas unidades y configuraciones. Las medidas, accesorios, documentación y condiciones se confirman para cada modelo."
       countLabel="tipos"
+      squarePhotos={true}
     />
 
     <!-- Contenido útil después de los productos, sin tarjetas decorativas. -->
@@ -246,6 +241,8 @@ const categoryFaqs = questions.map(item => ({ question: item.q, answer: item.a }
 
 <style>
   .deposits-page {background:#fff}
+  /* Mostrar el depósito completo en el catálogo: algunas fotografías son verticales. */
+  :global(.deposits-page .pc-catalog .pc-products__grid .pc-product__photo img) { object-fit: contain; padding: 7px; }
   .dep-guide { padding: clamp(55px, 6vw, 88px) 0; background: var(--color-gray-50); border-top: 1px solid var(--color-gray-200); }
   .dep-guide__layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(30px, 6vw, 90px); }
   .dep-guide__intro { position: sticky; top: 114px; align-self: start; }
