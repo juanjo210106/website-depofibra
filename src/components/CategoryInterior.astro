@@ -13,6 +13,7 @@ interface Item {
   name: string;
   subtitle: string;
   image: string;
+  href?: string;
   tags: string[];
   detail: string;
   quoteProduct: string;
@@ -64,7 +65,7 @@ const catalogItems = items.map(item => ({
   id: item.id,
   name: item.name,
   image: item.image,
-  href: `#detalle-${item.id}`,
+  href: item.href ?? `#detalle-${item.id}`,
   subtitle: item.subtitle,
   meta: item.specification,
   alt: item.visualType === 'illustration' ? `Esquema ilustrativo orientativo de ${item.name}` : `Fotografía orientativa de ${item.name}`,
@@ -81,7 +82,7 @@ const catalogItems = items.map(item => ({
       inLanguage:'es-ES', url:`https://depofibra.com${path}`,
       mainEntity: { '@type':'ItemList', itemListElement: items.map((item,index)=>({
         '@type':'ListItem', position:index+1, name:item.name,
-        url:`https://depofibra.com${path}#detalle-${item.id}`,
+        url:`https://depofibra.com${item.href ?? `${path}#detalle-${item.id}`}`,
       }))},
     })} />
   </Fragment>
@@ -95,6 +96,7 @@ const catalogItems = items.map(item => ({
       items={catalogItems}
       note={note}
       countLabel={categoryShort}
+      squarePhotos={nav === 'piscinas'}
     />
 
     <section class="df-details" aria-labelledby="df-details-heading">
@@ -116,7 +118,7 @@ const catalogItems = items.map(item => ({
           {items.map((item,index)=>(
             <article id={`detalle-${item.id}`} class="df-details__row">
               <span>{String(index+1).padStart(2,'0')}</span>
-              <div><h3>{item.name}</h3><p>{item.detail}</p></div>
+              <div><h3>{item.href ? <a href={item.href}>{item.name} <span aria-hidden="true">↗</span></a> : item.name}</h3><p>{item.detail}</p></div>
             </article>
           ))}
         </div>

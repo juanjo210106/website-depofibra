@@ -1,0 +1,11 @@
+---
+import PoolProductDetail from '../../components/PoolProductDetail.astro';
+import { poolModels, type PoolModel } from '../../data/poolModels';
+
+export function getStaticPaths() {
+  return poolModels.map((model) => ({ params: { slug: model.slug }, props: { model } }));
+}
+
+const { model } = Astro.props as { model: PoolModel };
+---
+<PoolProductDetail model={model} />

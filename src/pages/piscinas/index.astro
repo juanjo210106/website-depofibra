@@ -1,126 +1,26 @@
 ---
 import CategoryInterior from '../../components/CategoryInterior.astro';
+import { poolModels } from '../../data/poolModels';
 const page = {
   "nav": "piscinas",
   "title": "Piscinas de poliéster",
   "eyebrow": "PISCINAS PREFABRICADAS",
   "description": "Consulta medidas de referencia de piscinas prefabricadas de poliéster en Depofibra. Compara dimensiones orientativas y solicita presupuesto según modelo y destino.",
   "intro": "Compara las medidas de referencia y encuentra la piscina para tu espacio. Te ayudamos a confirmar el modelo y solicitar presupuesto.",
-  "items": [
-    {
-      "id": "piscina-1",
-      "name": "Piscina 3 × 2 m",
-      "specification": "MEDIDA DE REFERENCIA",
-      "subtitle": "Profundidad anotada: 1,00 m. A confirmar antes de presupuestar.",
-      "image": "/images/piscinas/modelos-orientativos/medida-1.svg",
-      "visualType": "illustration",
-      "mediaCaption": "Esquema orientativo",
-      "tags": [
-        "corto",
-        "uniforme"
-      ],
-      "detail": "Las notas internas recogen una piscina de 3 × 2 m y profundidad de 1,00 m. Es una referencia histórica, no un modelo disponible confirmado. Antes de solicitar presupuesto conviene verificar dimensiones exteriores, profundidad, accesos de entrega y documentación del proveedor.",
-      "quoteProduct": "Piscina de poliéster",
-      "quoteNote": "Piscina 3 × 2 m (referencia histórica; medidas/profundidad por confirmar)"
-    },
-    {
-      "id": "piscina-2",
-      "name": "Piscina 4,5 × 2,5 m",
-      "specification": "MEDIDA DE REFERENCIA",
-      "subtitle": "Profundidad anotada: 1,40 m. A confirmar antes de presupuestar.",
-      "image": "/images/piscinas/modelos-orientativos/medida-2.svg",
-      "visualType": "illustration",
-      "mediaCaption": "Esquema orientativo",
-      "tags": [
-        "medio",
-        "uniforme"
-      ],
-      "detail": "Las notas internas recogen una piscina de 4,5 × 2,5 m y profundidad de 1,40 m. Es una referencia histórica, no un modelo disponible confirmado. Antes de solicitar presupuesto conviene verificar dimensiones exteriores, profundidad, accesos de entrega y documentación del proveedor.",
-      "quoteProduct": "Piscina de poliéster",
-      "quoteNote": "Piscina 4,5 × 2,5 m (referencia histórica; medidas/profundidad por confirmar)"
-    },
-    {
-      "id": "piscina-3",
-      "name": "Piscina 5 × 2,8 m",
-      "specification": "MEDIDA DE REFERENCIA",
-      "subtitle": "Profundidad anotada: 1,10 a 1,50 m. A confirmar antes de presupuestar.",
-      "image": "/images/piscinas/modelos-orientativos/medida-3.svg",
-      "visualType": "illustration",
-      "mediaCaption": "Esquema orientativo",
-      "tags": [
-        "medio",
-        "variable"
-      ],
-      "detail": "Las notas internas recogen una piscina de 5 × 2,8 m y profundidad de 1,10 a 1,50 m. Es una referencia histórica, no un modelo disponible confirmado. Antes de solicitar presupuesto conviene verificar dimensiones exteriores, profundidad, accesos de entrega y documentación del proveedor.",
-      "quoteProduct": "Piscina de poliéster",
-      "quoteNote": "Piscina 5 × 2,8 m (referencia histórica; medidas/profundidad por confirmar)"
-    },
-    {
-      "id": "piscina-4",
-      "name": "Piscina 6 × 3 m",
-      "specification": "MEDIDA DE REFERENCIA",
-      "subtitle": "Profundidad anotada: 1,20 a 1,60 m. A confirmar antes de presupuestar.",
-      "image": "/images/piscinas/modelos-orientativos/medida-4.svg",
-      "visualType": "illustration",
-      "mediaCaption": "Esquema orientativo",
-      "tags": [
-        "medio",
-        "variable"
-      ],
-      "detail": "Las notas internas recogen una piscina de 6 × 3 m y profundidad de 1,20 a 1,60 m. Es una referencia histórica, no un modelo disponible confirmado. Antes de solicitar presupuesto conviene verificar dimensiones exteriores, profundidad, accesos de entrega y documentación del proveedor.",
-      "quoteProduct": "Piscina de poliéster",
-      "quoteNote": "Piscina 6 × 3 m (referencia histórica; medidas/profundidad por confirmar)"
-    },
-    {
-      "id": "piscina-5",
-      "name": "Piscina 7,1 × 3 m",
-      "specification": "MEDIDA DE REFERENCIA",
-      "subtitle": "Profundidad anotada: 1,30 a 1,70 m. A confirmar antes de presupuestar.",
-      "image": "/images/piscinas/modelos-orientativos/medida-5.svg",
-      "visualType": "illustration",
-      "mediaCaption": "Esquema orientativo",
-      "tags": [
-        "largo",
-        "variable"
-      ],
-      "detail": "Las notas internas recogen una piscina de 7,1 × 3 m y profundidad de 1,30 a 1,70 m. Es una referencia histórica, no un modelo disponible confirmado. Antes de solicitar presupuesto conviene verificar dimensiones exteriores, profundidad, accesos de entrega y documentación del proveedor.",
-      "quoteProduct": "Piscina de poliéster",
-      "quoteNote": "Piscina 7,1 × 3 m (referencia histórica; medidas/profundidad por confirmar)"
-    }
-  ],
-  "filterGroups": [
-    {
-      "title": "Largo orientativo",
-      "options": [
-        {
-          "id": "corto",
-          "label": "Hasta 4 m"
-        },
-        {
-          "id": "medio",
-          "label": "De 4 a 6 m"
-        },
-        {
-          "id": "largo",
-          "label": "Más de 6 m"
-        }
-      ]
-    },
-    {
-      "title": "Profundidad histórica",
-      "options": [
-        {
-          "id": "uniforme",
-          "label": "Profundidad única"
-        },
-        {
-          "id": "variable",
-          "label": "Dos profundidades anotadas"
-        }
-      ]
-    }
-  ],
-  "note": "Estas cinco medidas proceden de referencias históricas internas, no de un catálogo vigente verificado. Las imágenes son esquemas genéricos, no fotografías de modelos. Confirmaremos nombres, dimensiones, profundidades y disponibilidad con cada proveedor antes de la oferta.",
+  "items": poolModels.map((model) => ({
+    id: model.slug,
+    name: model.shortName,
+    specification: "PISCINA DE POLIÉSTER",
+    subtitle: "Medida de referencia: " + model.measure + ". Consulta características y presupuesto.",
+    image: model.gallery[0].src,
+    href: `/piscinas/${model.slug}/`,
+    visualType: "photo",
+    tags: [],
+    detail: model.intro,
+    quoteProduct: "Piscina",
+    quoteNote: `Piscina ${model.measure} (modelo y dimensiones a confirmar)`,
+  })),
+  "note": "Fotografías aportadas para mostrar las cinco referencias por medida. Las medidas, profundidades, accesorios y disponibilidad deben confirmarse antes de presupuestar; la carpeta de 7 × 3 m difiere de la referencia histórica de 7,1 × 3 m.",
   "guideTitle": "Antes de elegir una piscina de poliéster",
   "guideDescription": "Un presupuesto útil empieza por comprobar que el vaso puede transportarse y acceder a la parcela, además de encajar en el espacio disponible.",
   "guideRows": [
@@ -139,12 +39,12 @@ const page = {
   ],
   "faqs": [
     {
-      "question": "¿Tenéis piscinas de 3 × 2 metros?",
-      "answer": "La documentación histórica recoge una referencia de 3 × 2 m. Antes de preparar presupuesto hay que confirmar si existe un modelo vigente con esas dimensiones y qué características incluye."
+      "question": "¿Puedo solicitar una piscina de 3 × 2 metros?",
+      "answer": "Sí, puedes consultarnos por la medida 3 × 2 m que aparece en las fotografías. Antes de darte presupuesto confirmaremos la referencia vigente, sus medidas reales y el equipamiento disponible."
     },
     {
       "question": "¿Las medidas mostradas son definitivas?",
-      "answer": "No. Son referencias históricas orientativas. Las medidas exteriores, profundidad, escalones y equipamiento deben verificarse en la ficha actual del modelo concreto."
+      "answer": "Las medidas identifican los lotes de fotografías, no sustituyen una ficha técnica. Las dimensiones exteriores, profundidad, escalones y equipamiento se confirmarán antes de presupuestar. En el lote grande aparece 7 × 3 m y en una referencia antigua, 7,1 × 3 m."
     },
     {
       "question": "¿Podéis estudiar transporte hasta mi localidad?",

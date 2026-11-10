@@ -27,10 +27,11 @@ interface Props {
   note: string;
   countLabel?: string;
   squarePhotos?: boolean;
+  containPhotos?: boolean;
 }
-const { title, eyebrow, description, breadcrumb, items, note, countLabel = 'modelos', squarePhotos = false } = Astro.props;
+const { title, eyebrow, description, breadcrumb, items, note, countLabel = 'modelos', squarePhotos = false, containPhotos = false } = Astro.props;
 ---
-<div class:list={["pc-catalog", { "pc-catalog--square-photos": squarePhotos }]}>
+<div class:list={["pc-catalog", { "pc-catalog--square-photos": squarePhotos, "pc-catalog--contain-photos": containPhotos }]}>
   <header class="pc-intro">
     <div class="container">
       <nav class="pc-breadcrumb" aria-label="Migas de pan">
@@ -121,6 +122,9 @@ const { title, eyebrow, description, breadcrumb, items, note, countLabel = 'mode
   .pc-catalog--square-photos .pc-product__photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
   .pc-catalog--square-photos .pc-product__featured,.pc-catalog--square-photos .pc-product__caption,.pc-catalog--square-photos .pc-product__arrow{z-index:2}
   .pc-catalog--square-photos .pc-product:hover .pc-product__photo img{transform:none}
+  .pc-catalog--contain-photos .pc-product__photo{background:#f6f8fb}
+  .pc-catalog--contain-photos .pc-product__photo img{object-fit:contain;object-position:center}
+  .pc-catalog--contain-photos .pc-product:hover .pc-product__photo img{transform:none}
   .pc-product__photo--illustration{background:#eaf2fb}
   .pc-product__photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .42s var(--ease-out)}
   .pc-product__photo--illustration img{object-fit:contain;padding:12px}

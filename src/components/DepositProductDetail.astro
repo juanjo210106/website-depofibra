@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { depositFamilies, type DepositFamily } from '../data/depositProducts';
+import { getDepositDimensions } from '../data/depositDimensions';
 
 interface Props { product: DepositFamily; }
 const { product } = Astro.props;
 const related = depositFamilies.filter(item => item.slug !== product.slug).slice(0, 4);
 const canonical = `https://depofibra.com/depositos/${product.slug}/`;
 const firstImage = product.gallery[0];
+const dimensionSheet = getDepositDimensions(product.slug);
+const formatDimension = (value: number) => new Intl.NumberFormat('es-ES').format(value);
 // Número de contacto publicado para WhatsApp en la web anterior. Se puede sobrescribir en .env.
 const whatsappNumber = String(import.meta.env.PUBLIC_WHATSAPP_NUMBER || '34642129233').replace(/\D/g, '');
 const quoteMessage = (item: string) => `Hola, quisiera solicitar presupuesto de ${item}. ¿Podéis orientarme sobre disponibilidad de referencia y transporte? Mi código postal es: `;
@@ -132,7 +135,7 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
       <section class="product-information" aria-label="Información del depósito">
         <div class="product-tabs" role="tablist" aria-label="Detalles del producto">
           <button type="button" class="product-tab is-active" role="tab" aria-selected="true" aria-controls="product-panel-description" id="product-tab-description" tabindex="0">Descripción</button>
-          <button type="button" class="product-tab" role="tab" aria-selected="false" aria-controls="product-panel-capacity" id="product-tab-capacity" tabindex="-1">Capacidades</button>
+          <button type="button" class="product-tab" role="tab" aria-selected="false" aria-controls="product-panel-capacity" id="product-tab-capacity" tabindex="-1">Capacidades y medidas</button>
           <button type="button" class="product-tab" role="tab" aria-selected="false" aria-controls="product-panel-installation" id="product-tab-installation" tabindex="-1">Instalación y entrega</button>
         </div>
 
@@ -145,21 +148,54 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
         </div>
 
         <div class="product-panel" id="product-panel-capacity" role="tabpanel" aria-labelledby="product-tab-capacity" tabindex="0" hidden>
-          <div class="product-panel__title"><span class="product-eyebrow">PARA TU INSTALACIÓN</span><h2>¿Qué capacidad necesitas?</h2></div>
+          <div class="product-panel__title"><span class="product-eyebrow">PARA TU INSTALACIÓN</span><h2>Capacidades y medidas.</h2></div>
           <div class="product-panel__body">
-            <p>La capacidad depende de cada modelo. Indícanos los litros aproximados para valorar la referencia adecuada; las dimensiones y el equipamiento se confirman en el presupuesto.</p>
-            {product.capacityChoices ? (
+            {dimensionSheet ? (
               <>
-                <p class="product-panel__subheading">Capacidades consultadas habitualmente:</p>
-                <div class="product-capacities" role="group" aria-label="Elegir capacidad orientativa">
-                  {product.capacityChoices.map(choice => (
-                    <button type="button" class="product-capacity" data-product-variation={choice.product} aria-pressed="false">{choice.label}</button>
-                  ))}
+                <p>Consulta las medidas orientativas de la ficha facilitada para este tipo de depósito. La referencia, los accesorios y las dimensiones definitivas deben confirmarse antes de presupuestar.</p>
+                <p class="product-dimensions__hint">Pulsa sobre una capacidad para indicar el modelo y sus medidas en tu solicitud.</p>
+                <div class="product-dimensions__wrap">
+                  <table class="product-dimensions" aria-label={`Tabla de capacidades y medidas de ${product.shortName}`}>
+                    <thead>
+                      <tr>
+                        <th scope="col">Litros</th>
+                        <th scope="col">Diámetro<br /><small>mm</small></th>
+                        <th scope="col">{dimensionSheet.mode === 'vertical' ? 'Cota de ficha*' : 'Longitud'}<br /><small>mm</small></th>
+                        {dimensionSheet.mode === 'surface-horizontal' && <th scope="col">Cunas</th>}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dimensionSheet.rows.map((dimension) => {
+                        const selected = `${product.quoteProduct} — ${formatDimension(dimension.liters)} L · diámetro ${formatDimension(dimension.diameterMm)} mm · ${dimensionSheet.mode === 'vertical' ? 'cota de ficha' : 'longitud'} ${formatDimension(dimension.longitudinalMm)} mm${dimensionSheet.mode === 'surface-horizontal' ? ` · cunas ${dimension.supports}` : ''}`;
+                        return (
+                          <tr>
+                            <th scope="row"><button class="product-dimensions__choose" type="button" data-product-variation={selected} aria-pressed="false" title="Seleccionar esta referencia para consultar presupuesto">{formatDimension(dimension.liters)} L</button></th>
+                            <td>{formatDimension(dimension.diameterMm)}</td>
+                            <td>{formatDimension(dimension.longitudinalMm)}</td>
+                            {dimensionSheet.mode === 'surface-horizontal' && <td>{dimension.supports}</td>}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
-                <p class="product-capacities__note">Son ejemplos de consulta; también puedes pedir otras capacidades.</p>
+                {dimensionSheet.mode === 'vertical' && (
+                  <p class="product-dimensions__disclaimer">* La tabla facilitada identifica esta dimensión como «longitud». Consulta la altura total del depósito vertical, incluida la boca de acceso, antes de planificar el espacio.</p>
+                )}
+                {dimensionSheet.mode === 'surface-horizontal' && (
+                  <p class="product-dimensions__disclaimer">El número de cunas procede de la tabla de referencia y puede requerir confirmación de la configuración suministrada.</p>
+                )}
+                {dimensionSheet.mode === 'buried-horizontal' && (
+                  <p class="product-dimensions__disclaimer">Medidas tomadas por equivalencia de la tabla de horizontales con cunas, según indicación de Depofibra. Esto no significa que un depósito de superficie pueda enterrarse: la referencia enterrable y sus condiciones de instalación deben verificarse expresamente.</p>
+                )}
+                <p class="product-dimensions__selected" data-size-selected hidden aria-live="polite"></p>
+                <a class="product-dimensions__quote" href={contactHref} data-contact-measures>Solicitar presupuesto de este depósito <span aria-hidden="true">↗</span></a>
               </>
             ) : (
-              <p class="product-capacities__note">Las capacidades disponibles se verifican por referencia. Puedes indicarnos los litros que necesitas al contactar.</p>
+              <>
+                <p>Las capacidades y las medidas se consultan según el modelo, el uso y la configuración solicitada. No hay una tabla única confirmada para este formato.</p>
+                <p class="product-capacities__note">Indícanos los litros aproximados y, si procede, las características de las patas metálicas u otros apoyos que necesitas.</p>
+              </>
             )}
             <label class="product-capacity-custom" for="product-custom-capacity">Otra capacidad aproximada (opcional)
               <input type="number" id="product-custom-capacity" name="capacidad" min="1" step="1" inputmode="numeric" placeholder="Ej.: 8.000 litros" />
@@ -271,6 +307,8 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
 
     const whatsapp = root.querySelector<HTMLAnchorElement>('[data-wa-cta]');
     const contact = root.querySelector<HTMLAnchorElement>('[data-contact-cta]');
+    const dimensionsContact = root.querySelector<HTMLAnchorElement>('[data-contact-measures]');
+    const sizeSelected = root.querySelector<HTMLElement>('[data-size-selected]');
     const variationButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-product-variation]'));
     const customInput = root.querySelector<HTMLInputElement>('#product-custom-capacity');
     const base = root.dataset.productName || '';
@@ -284,6 +322,7 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
       contactUrl.searchParams.set('producto', base);
       if (productText !== base) contactUrl.searchParams.set('capacidad', productText.replace(base, '').replace(/^\s*[—-]\s*/, '').trim());
       if (contact) contact.href = contactUrl.pathname + contactUrl.search;
+      if (dimensionsContact) dimensionsContact.href = contactUrl.pathname + contactUrl.search;
       if(whatsapp) {
         if(number) {
           const text = `Hola, quisiera solicitar presupuesto de ${productText}. ¿Podéis orientarme sobre la referencia y el transporte? Mi código postal es: `;
@@ -296,12 +335,18 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
     variationButtons.forEach(button => button.addEventListener('click', () => {
       variationButtons.forEach(item => {const active=item===button; item.classList.toggle('is-selected',active); item.setAttribute('aria-pressed',String(active));});
       selectedProduct = button.dataset.productVariation || base;
+      root.querySelectorAll('tr.is-selected').forEach(row => row.classList.remove('is-selected'));
+      const row = button.closest('tr');
+      if (row) row.classList.add('is-selected');
+      if (sizeSelected) { sizeSelected.hidden = !row; sizeSelected.textContent = row ? `Has seleccionado: ${selectedProduct.replace(`${base} — `, '')}` : ''; }
       if(customInput) customInput.value = '';
       updateLinks();
     }));
     customInput?.addEventListener('input', () => {
       variationButtons.forEach(item => {item.classList.remove('is-selected'); item.setAttribute('aria-pressed','false');});
       selectedProduct = base;
+      root.querySelectorAll('tr.is-selected').forEach(row => row.classList.remove('is-selected'));
+      if (sizeSelected) { sizeSelected.hidden = true; sizeSelected.textContent = ''; }
       updateLinks();
     });
   });
@@ -372,6 +417,30 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
   .product-capacity{min-height:42px;padding:9px 15px;background:#fff;color:#01488e;border:1px solid #cbd9e7;border-radius:9px;font:700 13px var(--font-body);cursor:pointer}.product-capacity:hover,.product-capacity.is-selected{border-color:#01488e;background:#eaf2fb}
   .product-capacities__note{font-size:13px!important;color:#718093!important;margin-top:13px!important}
   .product-capacity-custom{display:grid;gap:8px;max-width:320px;margin-top:23px;font:700 13px/1.5 var(--font-body);color:#34485c}.product-capacity-custom input{min-height:43px;padding:10px 13px;border:1px solid #cbd9e7;border-radius:9px;background:#fff;outline-offset:3px;font:400 14px/1.4 var(--font-body)}
+  /* Tablas técnicas legibles, sin precios. Mantienen el mismo lenguaje visual que el resto de la ficha. */
+  .product-dimensions__hint{font-size:13px!important;color:#01488e!important;margin-bottom:12px!important}
+  .product-dimensions__wrap{max-width:690px;width:100%;overflow-x:auto;border-top:1px solid #dbe6f0;border-bottom:1px solid #dbe6f0}
+  .product-dimensions{border-collapse:collapse;table-layout:fixed;width:100%;font:500 14px/1.4 var(--font-body);font-variant-numeric:tabular-nums;text-align:left}
+  .product-dimensions thead{background:#eaf2fb}
+  .product-dimensions th,.product-dimensions td{padding:11px 14px;border-bottom:1px solid #e4edf5;vertical-align:middle;text-align:left;white-space:nowrap}
+  .product-dimensions thead th{color:#01488e;font:800 12px/1.25 var(--font-display)}
+  .product-dimensions thead th small{color:#5e7690;font:600 10px/1.2 var(--font-body)}
+  .product-dimensions tbody tr:nth-child(even){background:#f7fafd}
+  .product-dimensions tbody tr.is-selected{background:#dcecff}
+  .product-dimensions tbody th{font-weight:800}
+  .product-dimensions tbody td{color:#3e5268}
+  .product-dimensions tbody tr:last-child th,.product-dimensions tbody tr:last-child td{border-bottom:0}
+  .product-dimensions__choose{border:0;background:transparent;padding:5px 0;color:#01488e;font:800 14px/1.3 var(--font-display);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  .product-dimensions__choose:hover{color:#002d59}
+  .product-dimensions__choose:focus-visible{outline:2px solid #01488e;outline-offset:3px;border-radius:2px}
+  .product-dimensions__choose[aria-pressed="true"]{color:#002d59}
+  .product-dimensions__disclaimer{max-width:690px;margin:13px 0 0!important;color:#607488!important;font-size:12px!important;line-height:1.7!important}
+  .product-dimensions__selected{max-width:690px;margin:15px 0 0!important;color:#01488e!important;font-size:13px!important;font-weight:700!important}
+  .product-dimensions__selected[hidden]{display:none}
+  .product-dimensions__quote{display:inline-flex;align-items:center;gap:12px;min-height:44px;margin-top:17px;padding:10px 17px;border:1px solid #01488e;border-radius:999px;background:#01488e;color:#fff;font:800 12px/1.3 var(--font-display);transition:background .2s}
+  .product-dimensions__quote:hover{background:#002d59}
+  @media(max-width:580px){.product-dimensions{font-size:12px}.product-dimensions th,.product-dimensions td{padding:10px 6px}.product-dimensions thead th{font-size:11px}.product-dimensions__choose{font-size:12px}.product-dimensions__quote{width:100%;justify-content:center}}
+
   .product-install-steps{list-style:none;display:grid}.product-install-steps li{display:grid;grid-template-columns:33px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid #e3eaf0}
   .product-install-steps li>span{color:var(--color-primary);font:800 12px/1.6 var(--font-display)}.product-install-steps strong{font:800 14px/1.4 var(--font-display);color:#25394c}.product-install-steps p{font:400 13px/1.7 var(--font-body);color:#607184;margin:5px 0 0}
   .product-install-note{font-size:13px!important;color:#64778a!important;margin-top:20px!important}
