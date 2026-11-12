@@ -1,0 +1,14 @@
+---
+import SecondaryProductDetail from '../../components/SecondaryProductDetail.astro';
+import { secondaryProducts, type SecondaryProduct } from '../../data/secondaryProducts';
+
+export function getStaticPaths() {
+  return secondaryProducts
+    .filter(item => item.family === 'cubas')
+    .map(item => ({ params: { slug: item.slug }, props: { product: item } }));
+}
+
+interface Props { product: SecondaryProduct }
+const { product } = Astro.props;
+---
+<SecondaryProductDetail product={product} />
