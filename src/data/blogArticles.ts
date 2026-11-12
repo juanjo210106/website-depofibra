@@ -1,12 +1,13 @@
 /** Entradas editoriales originales. Revisar y aprobar antes de publicación. */
 export interface BlogArticle {
-  slug: string; title: string; category: string; description: string;
+  slug: string; title: string; seoTitle: string; category: string; description: string;
   productUrl: string; productLabel: string; number: string; html: string;
   summary: string; reading: string;
 }
 export const blogArticles: BlogArticle[] = [
   {
     "slug": "como-elegir-deposito-poliester-riego",
+    "seoTitle": "Cómo elegir un depósito de poliéster para riego | Depofibra",
     "title": "Cómo elegir un depósito de poliéster para agua de riego",
     "category": "Depósitos de riego",
     "description": "Cómo elegir un depósito de poliéster para riego: capacidad, autonomía, instalación y descarga. Guía práctica para comparar opciones antes de pedir presupuesto.",
@@ -19,6 +20,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     "slug": "deposito-vertical-horizontal-diferencias",
+    "seoTitle": "Depósito vertical u horizontal: diferencias | Depofibra",
     "title": "Depósito vertical u horizontal: diferencias para elegir bien",
     "category": "Tipos de depósitos",
     "description": "Depósito de poliéster vertical u horizontal: cuándo conviene cada formato y qué revisar según espacio, instalación y logística.",
@@ -31,6 +33,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     "slug": "depositos-poliester-agua-potable-documentacion",
+    "seoTitle": "Depósitos de poliéster para agua potable | Depofibra",
     "title": "Depósitos de poliéster para agua potable: qué documentación pedir",
     "category": "Agua potable",
     "description": "Qué verificar antes de comprar un depósito para agua de consumo humano: aptitud del modelo, documentación y condiciones de uso.",
@@ -43,6 +46,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     "slug": "transporte-descarga-depositos-poliester",
+    "seoTitle": "Transporte y descarga de depósitos PRFV | Depofibra",
     "title": "Transporte y descarga de un depósito de poliéster: qué prever",
     "category": "Transporte y entrega",
     "description": "Accesos, medidas, medios de descarga y condiciones de entrega: lo que conviene organizar antes de recibir un depósito de poliéster.",
@@ -55,6 +59,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     "slug": "fosa-estanca-filtro-biologico-oxidacion-total",
+    "seoTitle": "Fosa estanca, filtro biológico u oxidación | Depofibra",
     "title": "Fosa estanca, filtro biológico u oxidación total: qué cambia",
     "category": "Saneamiento",
     "description": "Diferencias entre fosa estanca, filtro biológico y oxidación total: cómo orientarse y qué datos necesita el proyecto.",
@@ -67,6 +72,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     "slug": "piscina-poliester-antes-de-comprar",
+    "seoTitle": "Piscina de poliéster: antes de comprar | Depofibra",
     "title": "Piscina de poliéster: cinco comprobaciones antes de comprar",
     "category": "Piscinas de poliéster",
     "description": "Antes de comprar una piscina prefabricada de poliéster, revisa medidas, terreno, accesos, transporte y alcance del presupuesto.",
@@ -79,6 +85,7 @@ export const blogArticles: BlogArticle[] = [
   },
 {
     "slug": "cuba-cisterna-poliester-remolque-agricola",
+    "seoTitle": "Cómo elegir una cuba para remolque agrícola | Depofibra",
     "title": "Cuba o cisterna de poliéster para remolque: qué comprobar antes de pedir precio",
     "category": "Cubas y cisternas",
     "description": "Guía para elegir una cuba o cisterna de poliéster: capacidad, remolque, uso del líquido, sujeción, medidas y logística antes de solicitar presupuesto.",
@@ -91,6 +98,7 @@ export const blogArticles: BlogArticle[] = [
 },
 {
     "slug": "separador-hidrocarburos-como-elegir",
+    "seoTitle": "Separadores de hidrocarburos: cómo elegir | Depofibra",
     "title": "Separador de hidrocarburos: qué datos necesitas para elegir el equipo",
     "category": "Saneamiento",
     "description": "Qué es un separador de hidrocarburos, para qué se utiliza y qué comprobar sobre caudal, instalación, normativa y mantenimiento antes de pedir presupuesto.",

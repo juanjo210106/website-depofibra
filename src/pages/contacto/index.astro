@@ -6,6 +6,8 @@ import Layout from '../../layouts/Layout.astro';
   title="Contacto y consultas comerciales | Depofibra"
   description="Contacta con Depofibra para consultas de depósitos, piscinas, fosas y cisternas. Atención desde Casariche (Sevilla). Visitas únicamente con cita previa."
   canonical="https://depofibra.com/contacto/"
+  ogImage="/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-blanco-escala-frontal.webp"
+  ogImageAlt="Depósito vertical de poliéster de referencia de Depofibra"
   activeNav="contacto"
 >
   <div class="contact-page">
@@ -22,7 +24,7 @@ import Layout from '../../layouts/Layout.astro';
               <a href="/depositos/" class="btn btn--secondary">Explorar depósitos</a>
             </div>
             <p class="contact-product-context" id="contactProductContext" hidden></p>
-            <p class="contact-demo">El formulario rápido prepara un correo para que lo envíes desde tu dispositivo. También puedes llamarnos o escribirnos directamente.</p>
+            <p class="contact-demo">El formulario envía tu consulta a Depofibra sin abrir tu aplicación de correo. También puedes llamarnos o escribirnos directamente.</p>
           </div>
           <aside class="contact-location" aria-labelledby="contact-location-heading">
             <span class="contact-location__label">UBICACIÓN</span>
@@ -58,7 +60,7 @@ import Layout from '../../layouts/Layout.astro';
 </Layout>
 <script>
   // Las fichas de depósitos envían el producto y, si procede, su capacidad en la URL.
-  // El modal sigue siendo el formulario existente; no se duplica ni se afirma que ya envíe datos.
+  // Se utiliza el mismo formulario centralizado que en el resto de la web.
   const params = new URLSearchParams(window.location.search);
   const product = params.get('producto')?.trim();
   const capacity = params.get('capacidad')?.trim();

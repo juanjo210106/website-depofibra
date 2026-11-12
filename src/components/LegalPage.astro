@@ -3,8 +3,7 @@ import Layout from '../layouts/Layout.astro';
 interface Props { title: string; summary: string; path: string; updated?: string; }
 const { title, summary, path, updated = 'Noviembre de 2026' } = Astro.props;
 ---
-<Layout title={`${title} | Depofibra`} description={summary} canonical={`https://depofibra.com${path}`}>
-  <Fragment slot="head"><meta name="robots" content="noindex,follow" /></Fragment>
+<Layout title={`${title} | Depofibra`} description={summary} canonical={`https://depofibra.com${path}`} indexable={false}>
   <div class="legal-page">
     <div class="container">
       <nav class="legal-breadcrumb" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">{title}</span></nav>

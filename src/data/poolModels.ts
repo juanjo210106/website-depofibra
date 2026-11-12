@@ -13,11 +13,15 @@ export type PoolModel = {
   gallery: { src: string; alt: string }[];
   quoteProduct: string;
   measureConflict: boolean;
+  titleSeo: string;
+  metaDescription: string;
 };
 
 export const poolModels: PoolModel[] = [
   {
     "slug": "3x2",
+    "titleSeo": "Piscina de poliéster 3 × 2 m | Depofibra",
+    "metaDescription": "Piscina de poliéster de 3 × 2 m: fotografías y datos orientativos para comparar una opción compacta. Consulta acceso, medidas reales y presupuesto.",
     "name": "Piscina de poliéster 3 × 2 m",
     "shortName": "Piscina 3 × 2 m",
     "measure": "3 × 2 m",
@@ -38,6 +42,8 @@ export const poolModels: PoolModel[] = [
   },
   {
     "slug": "4-5x2-5",
+    "titleSeo": "Piscina de poliéster 4,5 × 2,5 m | Depofibra",
+    "metaDescription": "Consulta la piscina prefabricada de poliéster de 4,5 × 2,5 m. Descubre fotografías, opciones a confirmar y transporte según tu localidad.",
     "name": "Piscina de poliéster 4,5 × 2,5 m",
     "shortName": "Piscina 4,5 × 2,5 m",
     "measure": "4,5 × 2,5 m",
@@ -58,6 +64,8 @@ export const poolModels: PoolModel[] = [
   },
   {
     "slug": "5x2-8",
+    "titleSeo": "Piscina de poliéster 5 × 2,8 m | Depofibra",
+    "metaDescription": "Piscina de poliéster de 5 × 2,8 m: consulta fotografías de referencia, escalones y requisitos a revisar antes de pedir presupuesto con transporte.",
     "name": "Piscina de poliéster 5 × 2,8 m",
     "shortName": "Piscina 5 × 2,8 m",
     "measure": "5 × 2,8 m",
@@ -82,6 +90,8 @@ export const poolModels: PoolModel[] = [
   },
   {
     "slug": "6x3",
+    "titleSeo": "Piscina prefabricada de poliéster 6 × 3 m | Depofibra",
+    "metaDescription": "Descubre la piscina de poliéster de 6 × 3 m en fotografías de jardín. Consulta profundidad, accesos y condiciones de entrega antes de presupuestar.",
     "name": "Piscina de poliéster 6 × 3 m",
     "shortName": "Piscina 6 × 3 m",
     "measure": "6 × 3 m",
@@ -102,6 +112,8 @@ export const poolModels: PoolModel[] = [
   },
   {
     "slug": "7x3",
+    "titleSeo": "Piscina prefabricada de poliéster 7 × 3 m | Depofibra",
+    "metaDescription": "Piscina de poliéster de 7 × 3 m según lote fotográfico. Revisa la medida pendiente de confirmar, acceso a la parcela y presupuesto por destino.",
     "name": "Piscina de poliéster 7 × 3 m",
     "shortName": "Piscina 7 × 3 m",
     "measure": "7 × 3 m",

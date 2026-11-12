@@ -30,6 +30,7 @@ interface Props {
   title: string;
   eyebrow: string;
   description: string;
+  seoTitle?: string;
   intro: string;
   items: Item[];
   note: string;
@@ -39,11 +40,13 @@ interface Props {
   faqs: FAQ[];
   feature?: Feature;
 }
-const {nav,title,eyebrow,description,intro,items,note,guideTitle,guideDescription,guideRows,faqs,feature}=Astro.props;
+const {nav,title,eyebrow,description,seoTitle,intro,items,note,guideTitle,guideDescription,guideRows,faqs,feature}=Astro.props;
 const path = nav === 'piscinas' ? '/piscinas/' : nav === 'fosas' ? '/fosas-septicas/' : '/cubas-cisternas/';
 const crumbs = nav === 'piscinas' ? 'Piscinas' : nav === 'fosas' ? 'Fosas sépticas' : 'Cubas y cisternas';
 const categoryShort = nav === 'piscinas' ? 'modelos de referencia' : nav === 'fosas' ? 'sistemas' : 'configuraciones';
 const activeNav = nav as 'piscinas' | 'fosas' | 'cubas';
+const socialImage = nav === 'piscinas' ? (items[0]?.image ?? '/images/productos/categoria-piscinas.jpg') : nav === 'fosas' ? '/images/productos/categoria-fosas.jpg' : '/images/productos/deposito-horizontal.jpg';
+const socialImageAlt = nav === 'piscinas' ? 'Piscina prefabricada de poliéster de referencia' : nav === 'fosas' ? 'Equipos de saneamiento de referencia; fotografía representativa de la familia' : 'Cuba blanca horizontal de poliéster con apoyos azules; fotografía de referencia';
 const selectionTips = nav === 'piscinas'
   ? [
       ['Espacio y medidas', 'Mide el hueco disponible y los accesos a la parcela.'],
@@ -75,7 +78,7 @@ const catalogItems = items.map(item => ({
   quoteNote: item.quoteNote ?? item.name,
 }));
 ---
-<Layout title={`${title} | Depofibra`} description={description} canonical={`https://depofibra.com${path}`} activeNav={activeNav}>
+<Layout title={seoTitle ?? `${title} | Depofibra`} description={description} canonical={`https://depofibra.com${path}`} ogImage={socialImage} ogImageAlt={socialImageAlt} activeNav={activeNav}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context':'https://schema.org', '@type':'CollectionPage', name:title,

@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = 'Sobre Depofibra | Depósitos y soluciones PRFV en Casariche';
+const description = 'Conoce Depofibra: atención comercial desde Casariche (Sevilla), especializada en depósitos de poliéster, piscinas, fosas sépticas y cubas o cisternas.';
+const canonical = 'https://depofibra.com/sobre-depofibra/';
+const ogImage = '/images/depofibra_brand_assets/depofibra-og-logo.jpg';
+---
+<Layout title={title} description={description} canonical={canonical} activeNav="sobre" ogImage={ogImage}>
+  <div class="about-page">
+    <section class="about-hero container">
+      <div class="about-hero__copy">
+        <span class="about-eyebrow">DEPOFIBRA · CASARICHE · SEVILLA</span>
+        <h1>Sobre Depofibra</h1>
+        <p class="about-lead">Depofibra es un proyecto comercial especializado en <strong>depósitos y soluciones de poliéster reforzado con fibra de vidrio (PRFV)</strong>. Ayudamos a particulares, explotaciones agrícolas, instaladores y profesionales a encontrar el producto que mejor encaja con su necesidad.</p>
+      </div>
+      <div class="about-hero__aside">
+        <figure class="about-hero__photo">
+          <img src="/images/depositos/vertical-base-plana/deposito-poliester-vertical-base-plana-blanco-escala-frontal.webp" alt="Depósito vertical blanco de poliéster de referencia del catálogo de Depofibra" width="800" height="800" loading="eager" decoding="async" />
+          <figcaption>Imagen de referencia de un depósito vertical de poliéster.</figcaption>
+        </figure>
+        <div>
+          <span>Especialidad principal</span>
+          <p>Depósitos de poliéster, con prioridad comercial en los modelos verticales de base plana de 5.000, 10.000 y 15.000 litros.</p>
+        </div>
+        <div>
+          <span>Ubicación</span>
+          <p>Atención comercial desde Casariche (Sevilla), con suministro y estudio de transporte en España y Portugal según modelo y condiciones logísticas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-block about-block--grid container">
+      <div>
+        <span class="about-section-label">QUÉ HACEMOS</span>
+        <h2>Orientación clara antes de presupuestar</h2>
+      </div>
+      <div class="about-richtext">
+        <p>Depofibra no se presenta como fabricante. Nuestra función es <strong>seleccionar, orientar y presupuestar</strong> productos de poliéster reforzado con fibra de vidrio de acuerdo con la necesidad del cliente, el espacio disponible, el uso previsto y el destino de entrega.</p>
+        <p>Trabajamos especialmente con familias como <strong>depósitos de poliéster</strong>, <strong>piscinas prefabricadas</strong>, <strong>fosas sépticas</strong> y <strong>cubas o cisternas</strong>. Cada consulta se revisa de forma individual para comprobar la referencia, la logística y la información que conviene confirmar antes del pedido.</p>
+      </div>
+    </section>
+
+    <section class="about-steps container" aria-labelledby="about-how-we-work">
+      <div class="about-steps__head">
+        <span class="about-section-label">CÓMO TRABAJAMOS</span>
+        <h2 id="about-how-we-work">Un proceso sencillo y realista</h2>
+      </div>
+      <div class="about-steps__grid">
+        <article>
+          <span>01</span>
+          <h3>Escuchamos la necesidad</h3>
+          <p>Capacidad aproximada, uso, ubicación, código postal y condicionantes del acceso o de la instalación.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Revisamos la referencia</h3>
+          <p>Comprobamos qué formato o modelo encaja mejor y qué datos técnicos deben confirmarse antes del presupuesto.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Estudiamos el transporte</h3>
+          <p>Valoramos la entrega según el destino y recordamos que la descarga no se incluye en el transporte estándar salvo confirmación expresa.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Respondemos con criterio</h3>
+          <p>El objetivo es dar una respuesta comercial clara, útil y ajustada a la realidad del producto y la logística disponible.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-block about-block--split container">
+      <div>
+        <span class="about-section-label">POR QUÉ DEPOFIBRA</span>
+        <h2>Menos ruido y más información útil</h2>
+      </div>
+      <div class="about-values">
+        <article>
+          <h3>Información clara</h3>
+          <p>No damos por cerrados datos que deban verificarse. Antes de presupuestar, preferimos comprobar medidas, accesorios y condiciones reales.</p>
+        </article>
+        <article>
+          <h3>Enfoque comercial práctico</h3>
+          <p>Buscamos que el cliente llegue rápido al producto adecuado y pueda pedir presupuesto sin perderse en información irrelevante.</p>
+        </article>
+        <article>
+          <h3>Atención cercana</h3>
+          <p>La atención comercial se realiza desde Casariche (Sevilla), con foco en responder con rapidez y criterio.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-cta container">
+      <div>
+        <span class="about-section-label">SIGUIENTE PASO</span>
+        <h2>Si ya sabes qué necesitas, te ayudamos a concretarlo</h2>
+        <p>Indícanos el producto, la capacidad aproximada y el destino. Revisaremos la referencia y el transporte antes de preparar el presupuesto.</p>
+      </div>
+      <div class="about-cta__actions">
+        <a href="/contacto/" class="about-button about-button--primary">Ir a contacto <span aria-hidden="true">↗</span></a>
+        <a href="/depositos/" class="about-button">Ver depósitos <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .about-page{background:#f6f8fb;color:#142234;padding:26px 0 72px}
+  .about-hero{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:end;padding:18px 0 34px;border-bottom:1px solid #d8e0e7}
+  .about-eyebrow,.about-section-label{display:inline-block;font:800 11px/1.3 var(--font-display);letter-spacing:.14em;color:#01488e}
+  .about-hero h1,.about-block h2,.about-steps__head h2,.about-cta h2{margin:10px 0 0;font:800 clamp(42px,6vw,82px)/.97 var(--font-display);letter-spacing:-.07em;color:#0f1f3a}
+  .about-lead{max-width:760px;margin:24px 0 0;font-size:18px;line-height:1.8;color:#4a5d70}
+  .about-hero__aside{display:grid;gap:18px}
+  .about-hero__photo{margin:0;overflow:hidden;background:#eaf2fb;border-radius:18px}
+  .about-hero__photo img{display:block;width:100%;height:auto;aspect-ratio:1.4/1;object-fit:cover}
+  .about-hero__photo figcaption{padding:8px 12px;font-size:12px;color:#5f7181}
+  .about-hero__aside div,.about-cta{background:#fff;border:1px solid #dbe4ec;border-radius:28px;padding:24px 24px 26px;box-shadow:0 12px 32px rgba(0,29,57,.05)}
+  .about-hero__aside span{display:block;font:800 12px var(--font-display);letter-spacing:.08em;color:#01488e;text-transform:uppercase;margin-bottom:10px}
+  .about-hero__aside p{margin:0;color:#506173;line-height:1.8;font-size:15px}
+  .about-block{padding:48px 0 0}
+  .about-block--grid,.about-block--split,.about-cta{display:grid;grid-template-columns:.78fr 1fr;gap:42px;align-items:start}
+  .about-richtext p,.about-values p,.about-cta p{margin:0 0 18px;color:#536678;line-height:1.85;font-size:16px}
+  .about-values{display:grid;gap:18px}
+  .about-values article{padding:20px 0;border-top:1px solid #dbe4ec}
+  .about-values h3,.about-steps h3{margin:0 0 10px;font:800 22px/1.15 var(--font-display);letter-spacing:-.04em;color:#0f1f3a}
+  .about-steps{padding:52px 0 0}
+  .about-steps__head{max-width:760px}
+  .about-steps__head h2{font-size:clamp(34px,4.2vw,56px)}
+  .about-steps__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:26px}
+  .about-steps__grid article{background:#fff;border:1px solid #dbe4ec;border-radius:26px;padding:22px 22px 24px;box-shadow:0 12px 28px rgba(0,29,57,.04)}
+  .about-steps__grid span{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:42px;border-radius:999px;background:#eaf2fb;color:#01488e;font:800 13px var(--font-display);margin-bottom:16px}
+  .about-steps__grid p{margin:0;color:#586a7b;line-height:1.75;font-size:15px}
+  .about-cta{margin-top:54px;align-items:center}
+  .about-cta h2{font-size:clamp(30px,4vw,52px)}
+  .about-cta__actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:flex-start;align-items:center}
+  .about-button{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:999px;border:1px solid #bfd2e3;text-decoration:none;color:#01488e;font:800 15px var(--font-display);background:#fff;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+  .about-button:hover{transform:translateY(-1px);background:#f5f9fd;border-color:#01488e}
+  .about-button--primary{background:#01488e;color:#fff;border-color:#01488e}
+  .about-button--primary:hover{background:#002d59;border-color:#002d59}
+  @media (max-width: 900px){
+    .about-hero,.about-block--grid,.about-block--split,.about-cta{grid-template-columns:1fr;gap:24px}
+    .about-steps__grid{grid-template-columns:1fr}
+  }
+  @media (max-width: 640px){
+    .about-page{padding:18px 0 48px}
+    .about-hero{padding-top:6px}
+    .about-lead{font-size:16px;line-height:1.75}
+    .about-hero__aside div,.about-steps__grid article,.about-cta{border-radius:22px}
+  }
+</style>

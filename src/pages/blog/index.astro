@@ -20,7 +20,7 @@ function getGroup(category: string) {
   return 'depositos';
 }
 ---
-<Layout title="Blog de Depofibra | Consejos sobre depósitos, fosas, piscinas y cubas" description="Guías prácticas sobre depósitos de poliéster, riego, transporte, fosas sépticas, piscinas y cubas. Resuelve tus dudas y encuentra el producto adecuado." canonical="https://depofibra.com/blog/" activeNav="blog">
+<Layout title="Blog de Depofibra | Consejos sobre depósitos, fosas, piscinas y cubas" description="Guías prácticas sobre depósitos de poliéster, riego, transporte, fosas sépticas, piscinas y cubas. Resuelve tus dudas y encuentra el producto adecuado." canonical="https://depofibra.com/blog/" ogImage={featurePhoto.src} ogImageAlt={featurePhoto.alt} activeNav="blog">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context':'https://schema.org', '@type':'Blog', name:'Blog de Depofibra',

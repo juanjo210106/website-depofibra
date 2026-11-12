@@ -1,7 +1,8 @@
 ---
 /**
- * Solicitud rápida: sin backend, prepara un correo en el dispositivo del cliente.
- * No asegura recepción ni almacenamiento. Se mantiene el contexto de producto.
+ * Formulario centralizado: envio HTTPS por FormSubmit, compatible con GitHub Pages.
+ * Activar una sola vez el destinatario por correo antes de recibir solicitudes.
+ * Los mensajes se presentan mediante la plantilla tabla del proveedor.
  */
 ---
 
@@ -15,23 +16,55 @@
     <h2 id="quoteModalTitle" class="quote-title">Pedir presupuesto</h2>
     <p id="quoteModalDesc" class="quote-desc">Cuatro datos para empezar. Te ayudamos a encontrar el producto adecuado.</p>
 
-    <form id="quoteForm">
+    <!-- Alternativa directa al formulario: una llamada telefónica. -->
+    <div class="quote-call" aria-label="Llamar sin rellenar el formulario">
+      <div class="quote-call__intro">¿Prefieres hablar directamente con nosotros?</div>
+      <a class="quote-call__link" href="tel:+34642129233" aria-label="Llamar ahora a Depofibra al 642 129 233">
+        <span class="quote-call__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <span class="quote-call__text"><strong>Llamar ahora · 642 129 233</strong><small>Abre la llamada, sin rellenar el formulario</small></span>
+        <span class="quote-call__arrow" aria-hidden="true">↗</span>
+      </a>
+      <div class="quote-call__divider"><span>O envía tu consulta por escrito</span></div>
+    </div>
+
+    <form id="quoteForm" method="POST" action="https://formsubmit.co/depofibra21@gmail.com" accept-charset="UTF-8">
+      <!-- FormSubmit: destinatario verificado por correo; tabla ordenada y asunto identificable. -->
+      <input type="hidden" name="_subject" id="quoteSubject" value="DEPOFIBRA | Nueva solicitud de presupuesto" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="true" />
+      <input type="hidden" name="_next" id="quoteNext" value="" disabled />
+      <input type="hidden" name="Referencia consultada" id="quoteReference" value="" />
+      <input type="hidden" name="Página de origen" id="quoteOrigin" value="" />
+      <div class="quote-honeypot" aria-hidden="true">
+        <label for="quoteWebsite">No rellenar este campo</label>
+        <input type="text" id="quoteWebsite" name="_honey" tabindex="-1" autocomplete="off" />
+      </div>
       <div class="quote-fields">
         <div class="form-group">
           <label class="form-label" for="quoteName">Nombre *</label>
-          <input class="form-input" type="text" id="quoteName" name="nombre" placeholder="¿Cómo te llamas?" autocomplete="name" maxlength="90" required />
+          <input class="form-input" type="text" id="quoteName" name="Nombre" placeholder="¿Cómo te llamas?" autocomplete="name" maxlength="90" required />
         </div>
         <div class="form-group">
           <label class="form-label" for="quoteLocation">Localidad *</label>
-          <input class="form-input" type="text" id="quoteLocation" name="localidad" placeholder="Ej.: Écija (Sevilla)" autocomplete="address-level2" maxlength="100" required />
+          <input class="form-input" type="text" id="quoteLocation" name="Localidad" placeholder="Ej.: Écija (Sevilla)" autocomplete="address-level2" maxlength="100" required />
         </div>
         <div class="form-group">
           <label class="form-label" for="quotePhone">Teléfono *</label>
-          <input class="form-input" type="tel" id="quotePhone" name="telefono" placeholder="Tu teléfono de contacto" autocomplete="tel" inputmode="tel" maxlength="24" required />
+          <input class="form-input" type="tel" id="quotePhone" name="Teléfono" placeholder="Tu teléfono de contacto" autocomplete="tel" inputmode="tel" maxlength="24" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="quoteEmail">Correo electrónico (opcional)</label>
+          <input class="form-input" type="email" id="quoteEmail" name="email" placeholder="tu@correo.com" autocomplete="email" maxlength="150" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="quotePostal">Código postal (opcional)</label>
+          <input class="form-input" type="text" id="quotePostal" name="Código postal" placeholder="Ej.: 41580" inputmode="numeric" autocomplete="postal-code" maxlength="12" />
         </div>
         <div class="form-group">
           <label class="form-label" for="quoteProduct">¿Qué necesitas? *</label>
-          <select class="form-select" id="quoteProduct" name="producto" required>
+          <select class="form-select" id="quoteProduct" name="Producto" required>
             <option value="" disabled selected>Selecciona una opción</option>
             <option value="Depósito">Depósito</option>
             <option value="Piscina">Piscina</option>
@@ -46,25 +79,18 @@
         <summary>¿Quieres añadir algún detalle? <span aria-hidden="true">+</span></summary>
         <div class="form-group">
           <label class="form-label" for="quoteDetails">Capacidad, medidas o información útil (opcional)</label>
-          <textarea class="form-input" id="quoteDetails" name="detalles" rows="2" maxlength="600" placeholder="Por ejemplo, depósito de 10.000 litros para riego..."></textarea>
+          <textarea class="form-input" id="quoteDetails" name="Detalles de la solicitud" rows="2" maxlength="600" placeholder="Por ejemplo, depósito de 10.000 litros para riego..."></textarea>
         </div>
       </details>
 
-      <p class="quote-privacy">Usaremos la información que nos envíes para responder a tu consulta. <a href="/politica-de-privacidad/" target="_blank" rel="noopener noreferrer">Consulta la política de privacidad</a>.</p>
+      <p class="quote-privacy">Utilizaremos tus datos para responder a esta consulta mediante un servicio externo de envío. <a href="/politica-de-privacidad/" target="_blank" rel="noopener noreferrer">Política de privacidad</a>.</p>
 
       <button class="btn btn--primary btn--full quote-submit" type="submit">
-        Preparar correo de consulta
+        Enviar solicitud a Depofibra
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
-      <p class="quote-method">Se abrirá tu aplicación de correo con los datos escritos. <strong>Tendrás que pulsar «Enviar».</strong></p>
-
-      <div class="quote-followup" id="quoteFollowup" role="status" hidden>
-        <p>Si no se ha abierto el correo, copia tu consulta y envíala a <a href="mailto:depofibra21@gmail.com">depofibra21@gmail.com</a>.</p>
-        <button type="button" id="quoteCopy" class="quote-copy">Copiar consulta</button>
-        <span id="quoteCopyStatus" aria-live="polite"></span>
-      </div>
+      <p class="quote-method">No necesitas abrir tu correo. Para evitar spam, podría aparecer una comprobación de seguridad.</p>
     </form>
-    <div class="quote-direct">¿Prefieres llamar? <a href="tel:+34642129233">642 129 233</a></div>
   </div>
 </div>
 
@@ -78,6 +104,7 @@
   .quote-eyebrow{display:block;color:var(--color-primary);font:800 10px/1.2 var(--font-display);letter-spacing:.1em;margin-bottom:10px}
   .quote-title{color:var(--color-primary-dark);font:800 clamp(23px,3vw,29px)/1.13 var(--font-display);letter-spacing:-.04em;margin:0 42px 8px 0}
   .quote-desc{color:var(--color-gray-600);font:400 14px/1.6 var(--font-body);margin-bottom:20px;max-width:350px}
+  .quote-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
   .quote-fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}
   .quote-fields .form-group{min-width:0}
   .quote-fields .form-label,.quote-more .form-label{display:block;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--color-gray-700)}
@@ -97,13 +124,21 @@
   .quote-submit{min-height:50px;justify-content:center;margin:0}
   .quote-submit svg{height:18px;width:18px}
   .quote-method{font:400 11px/1.55 var(--font-body);color:var(--color-gray-500);margin:10px 0 0;text-align:center}
-  .quote-followup{margin-top:12px;padding:13px 14px;border-radius:12px;background:var(--color-primary-light);color:var(--color-gray-700);font:400 12px/1.65 var(--font-body)}
-  .quote-followup[hidden]{display:none}
-  .quote-followup a{color:var(--color-primary);text-decoration:underline}
-  .quote-copy{display:inline-flex;align-items:center;justify-content:center;min-height:36px;margin-top:8px;padding:7px 12px;border:1px solid #b9cde2;border-radius:999px;background:#fff;color:var(--color-primary);font-weight:800;cursor:pointer}
-  #quoteCopyStatus{margin-left:10px;font-size:12px}
-  .quote-direct{text-align:center;border-top:1px solid var(--color-gray-200);margin-top:15px;padding-top:14px;color:var(--color-gray-600);font:500 12px/1.5 var(--font-body)}
-  .quote-direct a{color:var(--color-primary);font-weight:800;margin-left:5px}
+  /* Llamada directa: alternativa visible al formulario, también en móvil. */
+  .quote-call{margin:16px 0 18px}
+  .quote-call__intro{color:var(--color-primary-dark);font:800 12px/1.4 var(--font-display);margin:0 0 9px}
+  .quote-call__link{display:flex;align-items:center;gap:12px;min-height:70px;padding:12px 14px;border:1px solid #9fc3e0;border-radius:14px;background:#edf5fc;color:#002d59;text-decoration:none;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+  .quote-call__link:hover{background:#e3f0fb;border-color:#01488e;transform:translateY(-1px)}
+  .quote-call__link:focus-visible{outline:3px solid #78b7f4;outline-offset:2px}
+  .quote-call__icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:50%;background:#01488e;color:#fff}
+  .quote-call__icon svg{width:21px;height:21px}
+  .quote-call__text{flex:1;display:grid;gap:3px;min-width:0}
+  .quote-call__text strong{font:800 13px/1.25 var(--font-display);letter-spacing:-.015em}
+  .quote-call__text small{font:500 11px/1.35 var(--font-body);color:#536d85}
+  .quote-call__arrow{font:800 17px/1 var(--font-display);color:#01488e;flex:none}
+  .quote-call__divider{display:flex;align-items:center;gap:10px;margin:15px 0 0;color:#657789;font:600 11px/1.4 var(--font-body);text-align:center}
+  .quote-call__divider::before,.quote-call__divider::after{content:"";height:1px;flex:1;background:#d5e0ea}
+  .quote-call__divider span{flex:none}
   @media(max-width:530px){.quote-overlay{padding:8px}.quote-card{padding:24px 18px;border-radius:20px}.quote-fields{grid-template-columns:1fr;gap:10px}.quote-desc{margin-bottom:15px}.quote-title{margin-bottom:8px}.quote-fields .form-input,.quote-fields .form-select{min-height:44px}.quote-more{margin-top:12px}}
   @media(prefers-reduced-motion:reduce){.quote-overlay,.quote-card,.quote-more summary span{transition:none}}
 </style>
@@ -114,11 +149,11 @@
   const form = document.getElementById('quoteForm') as HTMLFormElement | null;
   const category = document.getElementById('quoteProduct') as HTMLSelectElement | null;
   const details = document.getElementById('quoteDetails') as HTMLTextAreaElement | null;
-  const followup = document.getElementById('quoteFollowup');
-  const copyButton = document.getElementById('quoteCopy');
-  const copyStatus = document.getElementById('quoteCopyStatus');
+  const quoteReference = document.getElementById('quoteReference') as HTMLInputElement | null;
+  const quoteOrigin = document.getElementById('quoteOrigin') as HTMLInputElement | null;
+  const quoteSubject = document.getElementById('quoteSubject') as HTMLInputElement | null;
+  const quoteNext = document.getElementById('quoteNext') as HTMLInputElement | null;
   let previousFocus: HTMLElement | null = null;
-  let composed = '';
 
   function getCategory(value: string): string {
     const text = value.toLowerCase();
@@ -131,13 +166,9 @@
 
   function openQuoteModal(product?: string, note?: string) {
     previousFocus = document.activeElement as HTMLElement;
-    followup?.setAttribute('hidden','');
-    if (copyStatus) copyStatus.textContent = '';
-    if (product && category) {
-      category.value = getCategory(product);
-      const context = `Producto consultado: ${product}`;
-      if(details && !details.value.includes(context)) details.value = [context, details.value.trim()].filter(Boolean).join('\n');
-    }
+    if (quoteReference) quoteReference.value = product?.trim() || '';
+    if (quoteOrigin) quoteOrigin.value = window.location.href;
+    if (product && category) category.value = getCategory(product);
     if (note && details && !details.value.includes(note)) details.value = [details.value.trim(), note].filter(Boolean).join('\n');
     modal?.classList.add('is-open');
     modal?.setAttribute('aria-hidden','false');
@@ -174,24 +205,21 @@
     else if(!event.shiftKey && document.activeElement === last) {event.preventDefault(); first.focus();}
   });
 
+  // FormSubmit hace POST por HTTPS, sin depender del programa de correo del usuario.
+  // La confirmacion y el antispam los gestiona el proveedor; la direccion del
+  // destinatario debe activarse por correo antes de permitir solicitudes reales.
   form?.addEventListener('submit', event => {
-    event.preventDefault();
-    if (!form.checkValidity()) {form.reportValidity();return;}
-    const data = new FormData(form);
-    const name = String(data.get('nombre') || '').trim();
-    const location = String(data.get('localidad') || '').trim();
-    const phone = String(data.get('telefono') || '').trim();
-    const product = String(data.get('producto') || '').trim();
-    const note = String(data.get('detalles') || '').trim();
-    composed = [`Nombre: ${name}`, `Localidad: ${location}`, `Teléfono: ${phone}`, `Consulta: ${product}`, note ? `Detalles: ${note}` : '', '', 'Enviado desde depofibra.com'].filter(Boolean).join('\n');
-    const subject = `Consulta de presupuesto · ${product} · ${location}`;
-    const url = `mailto:depofibra21@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(composed)}`;
-    followup?.removeAttribute('hidden');
-    window.location.href = url;
-  });
-  copyButton?.addEventListener('click', async () => {
-    if(!composed) return;
-    try {await navigator.clipboard.writeText(composed);if(copyStatus)copyStatus.textContent='Copiada';}
-    catch {if(copyStatus)copyStatus.textContent='Selecciona el texto en tu correo para copiarlo.';}
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      form.reportValidity();
+      return;
+    }
+    if (quoteOrigin) quoteOrigin.value = window.location.href;
+    if (quoteNext) {
+      quoteNext.value = new URL('/solicitud-enviada/', window.location.origin).href;
+      quoteNext.disabled = false;
+    }
+    const selectedProduct = category?.selectedOptions?.[0]?.textContent?.trim() || 'Consulta comercial';
+    if (quoteSubject) quoteSubject.value = `DEPOFIBRA | Nueva solicitud - ${selectedProduct}`;
   });
 </script>

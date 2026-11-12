@@ -13,22 +13,29 @@ interface Props {
   description: string;
   canonical?: string;
   ogImage?: string;
-  activeNav?: 'inicio' | 'depositos' | 'piscinas' | 'fosas' | 'cubas' | 'blog' | 'contacto';
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  indexable?: boolean;
+  activeNav?: 'inicio' | 'depositos' | 'piscinas' | 'fosas' | 'cubas' | 'blog' | 'contacto' | 'sobre';
 }
 
 const {
   title,
   description,
   canonical = Astro.url.href,
-  ogImage = '/images/productos/depositos-tipos.jpg',
+  ogImage = '/images/depofibra_brand_assets/depofibra-og-logo.jpg',
+  ogImageAlt = 'Logotipo oficial de Depofibra',
+  ogType = 'website',
+  indexable = true,
   activeNav = 'inicio',
 } = Astro.props;
 
-const isPreview = Astro.site?.hostname === 'demo.depofibra.com';
+const isPreview = Astro.site?.hostname !== 'depofibra.com'; // Solo depofibra.com puede indexarse.
 const publicCanonical = isPreview ? Astro.url.href : canonical;
 const siteName = 'Depofibra';
 const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 const fullOgImage = ogImage ? new URL(ogImage, publicCanonical).href : undefined;
+const robotsContent = isPreview ? 'noindex, nofollow, noarchive' : indexable ? 'index, follow, max-image-preview:large' : 'noindex, follow';
 ---
 
 <!DOCTYPE html>
@@ -38,24 +45,34 @@ const fullOgImage = ogImage ? new URL(ogImage, publicCanonical).href : undefined
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
-  {isPreview && <meta name="robots" content="noindex, nofollow, noarchive" />}
+  <meta name="robots" content={robotsContent} />
   <link rel="canonical" href={publicCanonical} />
   <meta name="theme-color" content="#01488e" />
 
+  <!-- Favicon Depofibra: isotipo oficial en el círculo de degradado azul aprobado -->
+  <link rel="icon" type="image/x-icon" href="/images/depofibra_brand_assets/favicon-depofibra-circulo-v3.ico" />
+  <link rel="shortcut icon" href="/images/depofibra_brand_assets/favicon-depofibra-circulo-v3.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/depofibra_brand_assets/favicon-depofibra-circulo-v3-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/depofibra_brand_assets/favicon-depofibra-circulo-v3-32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/images/depofibra_brand_assets/favicon-depofibra-circulo-v3-48.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/depofibra_brand_assets/favicon-depofibra-circulo-v3-180.png" />
+
   <!-- Open Graph -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType} />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content={siteName} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={publicCanonical} />
   {fullOgImage && <meta property="og:image" content={fullOgImage} />}
+  {fullOgImage && <meta property="og:image:alt" content={ogImageAlt} />}
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
   {fullOgImage && <meta name="twitter:image" content={fullOgImage} />}
+  {fullOgImage && <meta name="twitter:image:alt" content={ogImageAlt} />}
 
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

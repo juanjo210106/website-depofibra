@@ -1,0 +1,10 @@
+---
+import CapacityLanding from '../../../components/CapacityLanding.astro';
+import { capacityLandings } from '../../../data/capacityLandings';
+
+export function getStaticPaths() {
+  return capacityLandings.map(landing => ({ params: { capacidad: landing.slug }, props: { landing } }));
+}
+const { landing } = Astro.props;
+---
+<CapacityLanding landing={landing} />

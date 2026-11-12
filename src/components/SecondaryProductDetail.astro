@@ -1,4 +1,5 @@
 ---
+import WhatsAppIcon from './WhatsAppIcon.astro';
 /**
  * Ficha informativa compartida para Fosas y Cubas.
  * Mantiene la identidad de las fichas actuales sin atribuir datos no confirmados.
@@ -18,10 +19,11 @@ const whatsappMessage = `Hola, quisiera información y presupuesto de ${product.
 const whatsappHref = whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}` : '/contacto/';
 ---
 <Layout
-  title={`${product.title} | Depofibra`}
-  description={`${product.summary} Consulta modelos y condiciones de suministro con Depofibra.`}
+  title={product.titleSeo}
+  description={product.metaDescription}
   canonical={canonical}
   ogImage={product.image}
+  ogImageAlt={product.imageAlt}
   activeNav={product.family}
 >
   <Fragment slot="head">
@@ -64,7 +66,7 @@ const whatsappHref = whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${en
             <p>Indícanos el uso previsto y la localidad de entrega. Revisaremos la referencia y las condiciones de suministro.</p>
             <div class="secondary-actions">
               <button class="secondary-button secondary-button--primary open-quote-trigger" type="button" data-product={product.quoteProduct} data-note={`Referencia consultada: ${product.title}`}>Pedir presupuesto <span aria-hidden="true">↗</span></button>
-              <a class="secondary-button secondary-button--outline" href={whatsappHref} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp <span aria-hidden="true">↗</span></a>
+              <a class="secondary-button secondary-button--outline" href={whatsappHref} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={20} /> Consultar por WhatsApp <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>

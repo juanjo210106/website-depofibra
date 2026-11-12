@@ -1,4 +1,5 @@
 ---
+import WhatsAppIcon from './WhatsAppIcon.astro';
 import Layout from '../layouts/Layout.astro';
 import { depositFamilies, type DepositFamily } from '../data/depositProducts';
 import { getDepositDimensions } from '../data/depositDimensions';
@@ -10,6 +11,9 @@ const canonical = `https://depofibra.com/depositos/${product.slug}/`;
 const firstImage = product.gallery[0];
 const dimensionSheet = getDepositDimensions(product.slug);
 const formatDimension = (value: number) => new Intl.NumberFormat('es-ES').format(value);
+const featuredLiters = [5000, 10000, 15000];
+const featuredRows = dimensionSheet?.rows.filter((row) => featuredLiters.includes(row.liters)) ?? [];
+const hasFeaturedRows = product.slug === 'vertical-base-plana' && featuredRows.length > 0;
 // Número de contacto publicado para WhatsApp en la web anterior. Se puede sobrescribir en .env.
 const whatsappNumber = String(import.meta.env.PUBLIC_WHATSAPP_NUMBER || '34642129233').replace(/\D/g, '');
 const quoteMessage = (item: string) => `Hola, quisiera solicitar presupuesto de ${item}. ¿Podéis orientarme sobre disponibilidad de referencia y transporte? Mi código postal es: `;
@@ -112,13 +116,13 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
             <div class="product-actions">
               {whatsappHref ? (
                 <a class="product-button product-button--whatsapp" href={whatsappHref} target="_blank" rel="noopener noreferrer" data-wa-cta>
-                  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M19.11 17.32c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.41-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.46 0 1.45 1.06 2.85 1.21 3.05.15.2 2.08 3.18 5.04 4.46.7.3 1.24.49 1.67.63.7.22 1.33.19 1.83.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35Z"/><path d="M27.03 4.96A15.84 15.84 0 0 0 16.07.5C7.5.5.54 7.46.54 16.03c0 2.74.72 5.42 2.08 7.77L.5 31.5l7.9-2.07a15.47 15.47 0 0 0 7.66 1.95h.01c8.57 0 15.53-6.96 15.53-15.53 0-4.15-1.62-8.05-4.57-10.89Zm-10.96 23.8h-.01a12.9 12.9 0 0 1-6.58-1.8l-.47-.28-4.69 1.23 1.25-4.57-.31-.47a12.84 12.84 0 0 1-1.98-6.85c0-7.11 5.78-12.89 12.9-12.89 3.45 0 6.69 1.34 9.13 3.77a12.82 12.82 0 0 1 3.78 9.12c0 7.12-5.79 12.9-12.9 12.9Z"/></svg>
+                  <WhatsAppIcon size={20} />
                   Consultar por WhatsApp
                   <span aria-hidden="true">↗</span>
                 </a>
               ) : (
                 <a class="product-button product-button--whatsapp product-button--pending" href={contactHref} title="WhatsApp pendiente de conectar: mientras tanto, utiliza Contacto" data-wa-cta>
-                  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M19.11 17.32c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.41-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.46 0 1.45 1.06 2.85 1.21 3.05.15.2 2.08 3.18 5.04 4.46.7.3 1.24.49 1.67.63.7.22 1.33.19 1.83.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35Z"/><path d="M27.03 4.96A15.84 15.84 0 0 0 16.07.5C7.5.5.54 7.46.54 16.03c0 2.74.72 5.42 2.08 7.77L.5 31.5l7.9-2.07a15.47 15.47 0 0 0 7.66 1.95h.01c8.57 0 15.53-6.96 15.53-15.53 0-4.15-1.62-8.05-4.57-10.89Zm-10.96 23.8h-.01a12.9 12.9 0 0 1-6.58-1.8l-.47-.28-4.69 1.23 1.25-4.57-.31-.47a12.84 12.84 0 0 1-1.98-6.85c0-7.11 5.78-12.89 12.9-12.89 3.45 0 6.69 1.34 9.13 3.77a12.82 12.82 0 0 1 3.78 9.12c0 7.12-5.79 12.9-12.9 12.9Z"/></svg>
+                  <WhatsAppIcon size={20} />
                   Consultar por WhatsApp
                   <span aria-hidden="true">↗</span>
                 </a>
@@ -130,6 +134,40 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
             {!whatsappHref && <p class="product-summary__pending">WhatsApp pendiente de activar: por ahora este acceso te lleva a Contacto.</p>}
           </div>
         </div>
+      </section>
+
+      <section class="product-quickhelp" aria-labelledby="product-quickhelp-heading">
+        <div class="product-quickhelp__lead">
+          <span class="product-eyebrow">ANTES DE PEDIR PRESUPUESTO</span>
+          <h2 id="product-quickhelp-heading">Qué conviene tener claro</h2>
+          <p>Cuanto más concreto sea el dato de partida, más fácil será orientar la referencia y el transporte. En depósitos, lo más útil suele ser indicar litros aproximados, uso, código postal y condicionantes del acceso.</p>
+        </div>
+        <div class="product-quickhelp__grid">
+          <article><strong>Capacidad</strong><p>Indica los litros aproximados que necesitas. Si estás comparando varias opciones, menciona el rango.</p></article>
+          <article><strong>Uso previsto</strong><p>No todos los formatos encajan igual. Es importante saber para qué se va a utilizar y qué líquido contendrá.</p></article>
+          <article><strong>Destino y acceso</strong><p>El código postal y cualquier limitación de acceso ayudan a valorar el transporte antes del presupuesto.</p></article>
+          <article><strong>Instalación</strong><p>Si irá en superficie, enterrado o con necesidades especiales, conviene indicarlo desde el inicio.</p></article>
+        </div>
+        {hasFeaturedRows && (
+          <div class="product-featured">
+            <div class="product-featured__head">
+              <div>
+                <span class="product-eyebrow">CAPACIDADES DE REFERENCIA</span>
+                <h3>Tres capacidades para comparar</h3>
+              </div>
+              <p>Referencias orientativas de 5.000, 10.000 y 15.000 litros. Las medidas pueden variar según modelo y deben confirmarse con la ficha vigente antes del pedido.</p>
+            </div>
+            <div class="product-featured__grid">
+              {featuredRows.map((row) => (
+                <article>
+                  <span>{formatDimension(row.liters)} L</span>
+                  <strong>Ø {formatDimension(row.diameterMm)} mm</strong>
+                  <p>Cota de ficha: {formatDimension(row.longitudinalMm)} mm</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       <section class="product-information" aria-label="Información del depósito">
@@ -456,4 +494,25 @@ const contactHref = `/contacto/?producto=${encodeURIComponent(product.quoteProdu
   @media(max-width:850px){.product-intro{grid-template-columns:1fr;max-width:650px;margin-inline:auto}.product-gallery{max-width:none}.product-gallery__stage{aspect-ratio:1 / 1}.product-summary{padding-top:3px}.product-actions{grid-template-columns:1fr 1fr}.product-panel{grid-template-columns:1fr;gap:18px}.product-panel__title h2{max-width:32ch}.product-related__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media(max-width:580px){.product-breadcrumb{padding:14px 0 17px}.product-gallery__stage{aspect-ratio:1 / 1;border-radius:12px}.product-gallery__thumb{width:66px;height:66px}.product-gallery__arrow{width:38px;height:38px}.product-gallery__arrow--prev{left:8px}.product-gallery__arrow--next{right:8px}.product-gallery__caption,.product-gallery__counter{bottom:9px;padding:5px 8px}.product-gallery__caption{left:9px}.product-gallery__counter{right:9px}.product-gallery__caption{font-size:10px}.product-summary h1{font-size:clamp(1.95rem,8vw,2.45rem);margin:10px 0 11px}.product-summary__specs{margin:17px 0;padding:12px 0}.product-summary__trust{gap:7px;margin-bottom:17px}.product-summary__contact{padding-top:16px}.product-actions{grid-template-columns:1fr}.product-button{min-height:50px}.product-information{margin-top:45px}.product-tabs{gap:22px}.product-tab{font-size:12px;min-height:52px}.product-panel{padding:26px 0 35px}.product-highlights{grid-template-columns:1fr;gap:15px}.product-related__head{display:block}.product-related__head>a{display:inline-flex;margin-top:12px}.product-related__grid{gap:15px 10px}.product-related__name{font-size:12px}.product-gallery__note{font-size:11px}}
   @media(prefers-reduced-motion:reduce){.product-button,.product-button>span,.product-related__image img,.product-gallery__arrow{transition:none}.product-gallery__viewport{scroll-behavior:auto}}
+
+  /* Información de elección: integrada en la estética existente, sin rediseñar la ficha */
+  .product-quickhelp{margin:38px 0 0;padding:30px 0 18px;border-top:1px solid #dbe5ee}
+  .product-quickhelp__lead{display:grid;grid-template-columns:.8fr 1fr;gap:36px;align-items:end}
+  .product-quickhelp__lead h2{font:800 clamp(25px,3vw,38px)/1.1 var(--font-display);letter-spacing:-.045em;color:#13233b;margin:7px 0 0}
+  .product-quickhelp__lead p{margin:0;color:#5b6c7e;font:400 15px/1.75 var(--font-body)}
+  .product-quickhelp__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:28px}
+  .product-quickhelp__grid article{border-top:2px solid #01488e;padding:13px 4px 8px 0}
+  .product-quickhelp__grid strong{font:800 16px/1.25 var(--font-display);color:#15253b}
+  .product-quickhelp__grid p{margin:9px 0 0;font:400 13px/1.7 var(--font-body);color:#637384}
+  .product-featured{border-top:1px solid #dbe5ee;margin-top:30px;padding-top:23px}
+  .product-featured__head{display:grid;grid-template-columns:.8fr 1fr;gap:36px;align-items:end}
+  .product-featured__head h3{margin:7px 0 0;color:#13233b;font:800 clamp(21px,2.2vw,29px)/1.2 var(--font-display);letter-spacing:-.035em}
+  .product-featured__head p{margin:0;color:#607284;font:400 13px/1.65 var(--font-body)}
+  .product-featured__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+  .product-featured__grid article{background:#f4f8fc;border:1px solid #dce6ef;padding:15px;border-radius:12px}
+  .product-featured__grid span{display:block;color:#01488e;font:800 14px var(--font-display);margin-bottom:6px}
+  .product-featured__grid strong{display:block;font:700 13px var(--font-display);color:#152a40}
+  .product-featured__grid p{margin:4px 0 0;color:#677b8a;font:400 12px/1.55 var(--font-body)}
+  @media(max-width:900px){.product-quickhelp__lead,.product-featured__head{grid-template-columns:1fr;gap:12px}.product-quickhelp__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-featured__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:580px){.product-quickhelp{margin-top:25px;padding-top:23px}.product-quickhelp__grid{gap:10px 16px}.product-quickhelp__grid strong{font-size:14px}.product-featured__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product-featured__grid article{padding:12px 10px}.product-featured__head h3{font-size:22px}}
 </style>

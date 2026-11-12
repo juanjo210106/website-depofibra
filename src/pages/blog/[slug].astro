@@ -20,7 +20,7 @@ const articleHtml=article.html.replace(/<h2>([\s\S]*?)<\/h2>/g, (_match,contents
   return `<h2 id="${id}">${contentsHtml}</h2>`;
 });
 ---
-<Layout title={article.title} description={article.description} canonical={canonical} ogImage={photo.src} activeNav="blog">
+<Layout title={article.seoTitle} description={article.description} canonical={canonical} ogImage={photo.src} ogImageAlt={photo.alt} ogType="article" activeNav="blog">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context':'https://schema.org','@graph':[

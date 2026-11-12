@@ -1,0 +1,160 @@
+---
+/** Fichas SEO discretas de capacidades. No se incorporan al menú global. */
+import Layout from '../layouts/Layout.astro';
+import { capacityLandings, type CapacityLanding as CapacityLandingData } from '../data/capacityLandings';
+import { verticalFlatBaseDimensions } from '../data/depositDimensions';
+
+interface Props { landing: CapacityLandingData }
+const { landing } = Astro.props;
+const formatNumber = (n: number) => new Intl.NumberFormat('es-ES').format(n);
+const measures = verticalFlatBaseDimensions.filter(row => row.liters === landing.liters);
+const otherLandings = capacityLandings.filter(item => item.slug !== landing.slug);
+const pathname = `/depositos/vertical-base-plana/${landing.slug}/`;
+const canonical = `https://depofibra.com${pathname}`;
+const schemaOrigin = Astro.site?.origin ?? 'https://demo.depofibra.com';
+const url = new URL(pathname, schemaOrigin).href;
+const imageUrl = new URL(landing.image, schemaOrigin).href;
+const contactHref = `/contacto/?producto=${encodeURIComponent('Depósito vertical de base plana')}&capacidad=${encodeURIComponent(String(landing.liters) + ' litros')}`;
+const waNumber = String(import.meta.env.PUBLIC_WHATSAPP_NUMBER || '34642129233').replace(/\D/g, '');
+const waMessage = `Hola, estoy interesado en un depósito vertical de poliéster de ${formatNumber(landing.liters)} litros. ¿Podéis confirmarme el modelo, las dimensiones y el transporte a mi código postal?`;
+const waHref = waNumber ? `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}` : contactHref;
+---
+<Layout title={landing.titleSeo} description={landing.metaDescription} canonical={canonical} ogImage={landing.image} ogImageAlt={landing.imageAlt} activeNav="depositos">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        { '@type': 'BreadcrumbList', itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', schemaOrigin).href },
+          { '@type': 'ListItem', position: 2, name: 'Depósitos de poliéster', item: new URL('/depositos/', schemaOrigin).href },
+          { '@type': 'ListItem', position: 3, name: 'Vertical de base plana', item: new URL('/depositos/vertical-base-plana/', schemaOrigin).href },
+          { '@type': 'ListItem', position: 4, name: `${formatNumber(landing.liters)} litros`, item: url },
+        ] },
+        { '@type': 'WebPage', '@id': url, url, name: landing.h1, inLanguage: 'es-ES',
+          description: landing.metaDescription, primaryImageOfPage: { '@type': 'ImageObject', url: imageUrl } },
+      ],
+    })} />
+  </Fragment>
+
+  <div class="cap-page">
+    <div class="container">
+      <nav class="cap-breadcrumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a><span aria-hidden="true">/</span>
+        <a href="/depositos/">Depósitos</a><span aria-hidden="true">/</span>
+        <a href="/depositos/vertical-base-plana/">Vertical de base plana</a><span aria-hidden="true">/</span>
+        <span aria-current="page">{formatNumber(landing.liters)} L</span>
+      </nav>
+
+      <section class="cap-hero" aria-labelledby="cap-title">
+        <div class="cap-hero__text">
+          <span class="cap-eyebrow">DEPÓSITOS DE POLIÉSTER · BASE PLANA</span>
+          <h1 id="cap-title">{landing.h1}</h1>
+          <p class="cap-lead">{landing.lead}</p>
+          <div class="cap-facts" aria-label="Resumen de la capacidad">
+            <div><span>Capacidad nominal</span><strong>{formatNumber(landing.liters)} litros</strong></div>
+            <div><span>Equivalencia</span><strong>{landing.cubicMeters} m³</strong></div>
+            <div><span>Instalación</span><strong>En superficie</strong></div>
+          </div>
+          <div class="cap-actions">
+            <a class="cap-btn cap-btn--primary" href={contactHref}>Pedir presupuesto <span aria-hidden="true">↗</span></a>
+            <a class="cap-btn cap-btn--secondary" href={waHref} target={waNumber ? '_blank' : undefined} rel={waNumber ? 'noopener noreferrer' : undefined}>Consultar por WhatsApp <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="cap-small">Presupuesto sujeto a modelo, uso y lugar de entrega. Transporte estándar sin descarga incluida.</p>
+        </div>
+        <figure class="cap-hero__photo">
+          <img src={landing.image} alt={landing.imageAlt} width="1000" height="1000" decoding="async" loading="eager" fetchpriority="high" />
+          <figcaption>Fotografía de la familia de depósitos verticales. No identifica necesariamente una unidad de {formatNumber(landing.liters)} litros.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cap-section cap-section--measures" aria-labelledby="cap-measures-title">
+        <div class="cap-section__heading">
+          <span class="cap-eyebrow">MEDIDAS DE REFERENCIA</span>
+          <h2 id="cap-measures-title">Dimensiones a contrastar antes del pedido</h2>
+          <p>Estas cotas proceden de la documentación de trabajo facilitada para esta familia. Son referencias orientativas, no una confirmación de disponibilidad ni un plano técnico actualizado.</p>
+        </div>
+        <div class="cap-measures">
+          <table>
+            <caption class="sr-only">Cotas orientativas para {formatNumber(landing.liters)} litros</caption>
+            <thead><tr><th scope="col">Capacidad</th><th scope="col">Diámetro de ficha</th><th scope="col">Segunda cota*</th></tr></thead>
+            <tbody>{measures.map(measure => (
+              <tr><th scope="row">{formatNumber(measure.liters)} L</th><td>{formatNumber(measure.diameterMm)} mm</td><td>{formatNumber(measure.longitudinalMm)} mm</td></tr>
+            ))}</tbody>
+          </table>
+          <p>* La tabla original denomina «longitud» a la segunda cota del depósito vertical. <strong>No se considera altura total verificada</strong>; es necesario comprobar altura exterior, tapa y accesorios con el proveedor.</p>
+        </div>
+      </section>
+
+      <section class="cap-section cap-section--decision" aria-labelledby="cap-decision-title">
+        <div class="cap-section__heading">
+          <span class="cap-eyebrow">PARA ELEGIR CON CRITERIO</span>
+          <h2 id="cap-decision-title">{landing.decisionTitle}</h2>
+          {landing.decisionParagraphs.map(paragraph => <p>{paragraph}</p>)}
+        </div>
+        <div class="cap-checklist">
+          <h3>Datos útiles para tu presupuesto</h3>
+          <ol>{landing.checklist.map((item, index) => (
+            <li><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{item.title}</strong><p>{item.detail}</p></div></li>
+          ))}</ol>
+        </div>
+      </section>
+
+      <section class="cap-section cap-section--faq" aria-labelledby="cap-faq-title">
+        <div class="cap-section__heading"><span class="cap-eyebrow">DUDAS HABITUALES</span><h2 id="cap-faq-title">Antes de solicitar un depósito de {formatNumber(landing.liters)} litros</h2></div>
+        <div class="cap-faq">{landing.faqs.map(item => (
+          <details><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>
+        ))}</div>
+      </section>
+
+      <section class="cap-bottom" aria-labelledby="cap-next-title">
+        <div>
+          <span class="cap-eyebrow">OTRAS OPCIONES</span>
+          <h2 id="cap-next-title">Compara capacidades y configuraciones</h2>
+          <p>¿Necesitas otro volumen o una geometría diferente? Consulta las referencias de la familia y nuestras guías de elección.</p>
+          <div class="cap-links">
+            {otherLandings.map(other => <a href={`/depositos/vertical-base-plana/${other.slug}/`}>{formatNumber(other.liters)} litros <span aria-hidden="true">↗</span></a>)}
+            <a href="/depositos/vertical-base-plana/">Todos los verticales de base plana <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="cap-reading">
+          <h3>Te puede ayudar</h3>
+          <a href="/blog/como-elegir-deposito-poliester-riego/">Cómo elegir un depósito para riego <span aria-hidden="true">↗</span></a>
+          <a href="/blog/transporte-descarga-depositos-poliester/">Transporte y descarga: qué debes saber <span aria-hidden="true">↗</span></a>
+          <a href="/depositos/">Ver catálogo completo de depósitos <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .cap-page{background:#fff;color:var(--color-dark);padding:0 0 clamp(52px,6vw,84px)}
+  .cap-breadcrumb{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:23px 0 27px;color:var(--color-gray-500);font:600 12px/1.5 var(--font-body)}
+  .cap-breadcrumb a{color:var(--color-primary)}.cap-breadcrumb a:hover{text-decoration:underline}
+  .cap-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,4vw,64px);align-items:center;padding-bottom:clamp(50px,6vw,78px)}
+  .cap-eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--color-primary);font:800 11px/1.5 var(--font-display);letter-spacing:.09em}
+  .cap-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--color-primary)}
+  .cap-hero h1{font:800 clamp(2.25rem,4.3vw,3.9rem)/1.08 var(--font-display);letter-spacing:-.055em;margin:14px 0 19px;max-width:15ch;color:#111d30;text-wrap:balance}
+  .cap-lead{font:400 clamp(15px,1.25vw,18px)/1.75 var(--font-body);color:#526477;max-width:58ch}
+  .cap-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border-block:1px solid #e2e9f1;padding:19px 0;margin:28px 0}
+  .cap-facts div{display:grid;gap:4px}.cap-facts span{font:500 11px/1.4 var(--font-body);color:#758599}.cap-facts strong{font:750 13px/1.4 var(--font-body);color:#193653}
+  .cap-actions{display:flex;gap:10px;flex-wrap:wrap}.cap-btn{display:inline-flex;gap:14px;align-items:center;justify-content:center;padding:14px 20px;min-height:49px;border-radius:999px;font:800 12px/1.4 var(--font-display);text-decoration:none;transition:background .2s}
+  .cap-btn--primary{background:var(--color-primary);color:#fff}.cap-btn--primary:hover{background:var(--color-primary-dark)}
+  .cap-btn--secondary{border:1px solid #bad0e4;color:var(--color-primary-dark)}.cap-btn--secondary:hover{background:#eaf2fb}
+  .cap-small{font:400 11px/1.65 var(--font-body);color:#738294;margin-top:13px;max-width:57ch}
+  .cap-hero__photo{margin:0;min-width:0}.cap-hero__photo img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#f4f7fb;border-radius:16px}
+  .cap-hero__photo figcaption{font:400 11px/1.6 var(--font-body);color:#778699;margin-top:10px}
+  .cap-section{border-top:1px solid #e1e9f0;padding:clamp(40px,5vw,66px) 0;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,76px)}
+  .cap-section__heading h2,.cap-bottom h2{font:800 clamp(1.6rem,2.7vw,2.35rem)/1.15 var(--font-display);letter-spacing:-.04em;color:#111d30;margin:12px 0 17px}
+  .cap-section__heading p,.cap-bottom p{font:400 14px/1.8 var(--font-body);color:#536477;margin:0 0 12px}
+  .cap-measures{min-width:0}.cap-measures table{border-collapse:collapse;width:100%;font:600 13px/1.5 var(--font-body);color:#203a55;text-align:left}.cap-measures th,.cap-measures td{padding:14px 12px;border-bottom:1px solid #e1e9f0;text-align:left}.cap-measures thead{background:#eaf2fb}.cap-measures tbody th{font-weight:800}.cap-measures p{margin-top:14px;color:#708196;font:400 12px/1.7 var(--font-body)}
+  .cap-checklist{border-top:1px solid #e1e9f0}.cap-checklist h3{padding:15px 0;font:800 15px/1.4 var(--font-display)}.cap-checklist ol{margin:0;padding:0;list-style:none}.cap-checklist li{display:grid;grid-template-columns:35px 1fr;gap:13px;padding:14px 0;border-top:1px solid #e8edf4}.cap-checklist li>span{font:800 12px/1.7 var(--font-display);color:var(--color-primary)}.cap-checklist strong{font:750 14px/1.5 var(--font-display);color:#1d3249}.cap-checklist li p{font:400 13px/1.6 var(--font-body);color:#617286;margin:4px 0 0}
+  .cap-faq{border-top:1px solid #e1e9f0}.cap-faq details{border-bottom:1px solid #e1e9f0}.cap-faq summary{list-style:none;cursor:pointer;padding:18px 2px;display:flex;align-items:center;justify-content:space-between;gap:20px;font:750 14px/1.5 var(--font-display);color:#1a344e}.cap-faq summary::-webkit-details-marker{display:none}.cap-faq summary span{font-size:22px;font-weight:400;color:var(--color-primary)}.cap-faq details[open] summary span{transform:rotate(45deg)}.cap-faq details p{font:400 13px/1.75 var(--font-body);color:#536477;margin:0 0 18px;max-width:65ch}
+  .cap-bottom{border-top:1px solid #e1e9f0;padding-top:clamp(40px,5vw,70px);display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(24px,5vw,80px)}
+  .cap-links{display:flex;gap:10px 20px;flex-wrap:wrap;margin-top:22px}.cap-links a{font:750 12px/1.4 var(--font-display);color:var(--color-primary);text-decoration:underline;text-underline-offset:4px}
+  .cap-reading{border-top:1px solid #e1e9f0}.cap-reading h3{font:800 15px/1.4 var(--font-display);padding:15px 0}.cap-reading a{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #e1e9f0;padding:15px 0;color:#244669;font:650 13px/1.5 var(--font-body)}.cap-reading a:hover{color:var(--color-primary)}
+  @media(max-width:900px){.cap-hero{grid-template-columns:1fr 0.8fr;gap:25px}.cap-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:740px){.cap-breadcrumb{padding:15px 0 22px}.cap-hero{grid-template-columns:1fr;gap:24px}.cap-hero h1{max-width:none;font-size:clamp(2rem,8vw,2.9rem)}.cap-hero__photo{max-width:570px}.cap-section,.cap-bottom{grid-template-columns:1fr;gap:20px}.cap-facts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:410px){.cap-facts{grid-template-columns:repeat(2,minmax(0,1fr))}.cap-actions{flex-direction:column;align-items:stretch}.cap-btn{width:100%}.cap-measures table{font-size:12px}.cap-measures th,.cap-measures td{padding:12px 7px}}
+  @media(prefers-reduced-motion:reduce){.cap-btn{transition:none}}
+</style>
