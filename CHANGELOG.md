@@ -8,6 +8,18 @@ Registro de cambios del proyecto web `website-depofibra`.
 
 Aquí se documentarán las modificaciones que todavía no hayan sido verificadas y publicadas.
 
+## v0.9.4 — 2026-11-13 — Preparada, pendiente de publicación y verificación
+
+**Tipo:** Corrección visual / favicon.
+
+- Se corrige el recorte del borde azul orgánico de v0.9.3: el fondo difuminado vuelve a caber entero en el lienzo y conserva un margen transparente.
+- Se aumenta la presencia del isotipo blanco de forma independiente al fondo, sin alterar su trazado.
+- Se generan nuevos favicons `favicon-depofibra-humo-v6-*` en 16, 32, 48, 64, 180, 192 y 512 píxeles, además de `favicon.ico` y archivos de respaldo en `public/`.
+- Se actualizan únicamente las referencias de favicon en `Layout.astro` para evitar caché de versiones anteriores.
+- Se conservan sin cambios los contenidos comerciales, el diseño de las páginas, el logotipo de cabecera, formularios y metadatos SEO.
+
+**Validación:** se ha verificado visualmente el fondo orgánico completo y que los bordes de los iconos no contienen píxeles opacos. La comprobación en navegador tras despliegue está pendiente.
+
 ## v0.9.3 — 2026-11-13 — Preparada, pendiente de publicación y validación
 
 **Tipo:** Corrección visual / favicon.
