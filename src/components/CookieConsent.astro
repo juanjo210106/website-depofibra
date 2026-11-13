@@ -1,0 +1,166 @@
+---
+/**
+ * Depofibra - preferencias de cookies/almacenamiento (versión inicial).
+ * Sin integración de Analytics, GTM, Clarity o píxeles: no se disparan estadísticas.
+ * IMPORTANTE: al conectar un proveedor real, aumentar CONSENT_VERSION,
+ * informar de destinatarios/finalidades y volver a pedir consentimiento.
+ * No se remiten datos personales ni preferencias al servidor.
+ */
+---
+
+<section class="dfcc" id="dfcc-banner" aria-label="Preferencias de cookies" hidden>
+  <div class="dfcc__heading">
+    <p class="dfcc__eyebrow">PRIVACIDAD · DEPOFIBRA</p>
+    <h2>Tu privacidad, a tu elección</h2>
+  </div>
+  <p class="dfcc__intro">
+    Guardamos tu elección en este navegador. En esta versión no utilizamos herramientas de
+    analítica ni publicidad. Cuando incorporemos estadísticas, te pediremos permiso nuevamente.
+    <a href="/politica-de-cookies/">Política de cookies</a>.
+  </p>
+  <div class="dfcc__options" id="dfcc-options" hidden>
+    <div class="dfcc__option">
+      <div>
+        <strong>Almacenamiento técnico</strong>
+        <span>Necesario para recordar tus preferencias. Siempre activo.</span>
+      </div>
+      <span class="dfcc__necessary">Siempre activo</span>
+    </div>
+    <label class="dfcc__option" for="dfcc-analytics">
+      <div>
+        <strong>Preferencia de estadísticas</strong>
+        <span>Inactiva: no se recoge actividad en esta versión. Se solicitará nuevo permiso al activarla.</span>
+      </div>
+      <input id="dfcc-analytics" type="checkbox" aria-describedby="dfcc-analytics-note" />
+    </label>
+    <p id="dfcc-analytics-note" class="dfcc__note">Esta preferencia no activa ninguna herramienta ni permite seguimiento futuro sin un nuevo aviso.</p>
+  </div>
+  <div class="dfcc__actions">
+    <button type="button" class="dfcc__action" id="dfcc-reject">Rechazar opcionales</button>
+    <button type="button" class="dfcc__action" id="dfcc-accept">Aceptar opcionales</button>
+    <button type="button" class="dfcc__personalize" id="dfcc-customize" aria-controls="dfcc-options" aria-expanded="false">Personalizar</button>
+    <button type="button" class="dfcc__save" id="dfcc-save" hidden>Guardar preferencias</button>
+  </div>
+</section>
+
+<style>
+  .dfcc[hidden], .dfcc__options[hidden], .dfcc__save[hidden] { display:none !important; }
+  .dfcc { position:fixed; z-index:11000; bottom:18px; left:18px; width:min(540px,calc(100vw - 36px));
+    padding:23px 26px 22px; background:#fff; color:#17324e; border:1px solid #d2e0ef; border-radius:16px;
+    box-shadow:0 10px 38px rgba(0,38,76,.14); font-family:Inter,Arial,sans-serif; }
+  .dfcc__eyebrow { margin:0 0 7px; color:#01488e; font:700 10px/1.4 Inter,Arial,sans-serif; letter-spacing:.11em; }
+  .dfcc h2 { margin:0; color:#002d59; font-family:'Plus Jakarta Sans',Inter,Arial,sans-serif; font-size:19px;
+    font-weight:800; letter-spacing:-.035em; line-height:1.3; }
+  .dfcc__intro { margin:10px 0 18px; color:#456079; font-size:13px; line-height:1.7; }
+  .dfcc a { color:#01488e; font-weight:700; text-underline-offset:3px; }
+  .dfcc__actions { display:flex; flex-wrap:wrap; gap:9px; align-items:center; }
+  .dfcc__action { flex:1 1 175px; min-height:43px; padding:10px 13px; border-radius:7px; border:1px solid #01488e;
+    color:#fff; background:#01488e; font:700 12px/1.4 Inter,Arial,sans-serif; cursor:pointer; }
+  .dfcc__action:hover { background:#002d59; }
+  .dfcc__personalize { padding:9px 5px; border:0; background:none; color:#01488e; font:700 12px Inter,Arial,sans-serif;
+    text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .dfcc__save { min-height:40px; padding:8px 14px; border:1px solid #01488e; background:#eaf2fb; color:#002d59;
+    border-radius:7px; font:700 12px Inter,Arial,sans-serif; cursor:pointer; }
+  .dfcc button:focus-visible, .dfcc a:focus-visible, .dfcc input:focus-visible,
+  :global(.dfcc-footer-link:focus-visible) { outline:3px solid #5eb4e6; outline-offset:3px; }
+  .dfcc__options { border-top:1px solid #e3ebf4; padding:12px 0 0; margin-bottom:14px; }
+  .dfcc__option { display:flex; justify-content:space-between; gap:16px; align-items:center; padding:9px 0; }
+  .dfcc__option div { display:flex; flex-direction:column; gap:4px; }
+  .dfcc__option strong { font-size:12px; color:#002d59; }
+  .dfcc__option span { font-size:11px; line-height:1.5; color:#657a90; }
+  .dfcc__necessary { flex:none; }
+  .dfcc__option input { width:19px; height:19px; accent-color:#01488e; flex:none; }
+  .dfcc__note { margin:4px 0 0; color:#687d91; font-size:11px; line-height:1.5; }
+  :global(.dfcc-footer-link) { background:transparent; border:0; padding:0; margin:0; color:inherit; cursor:pointer;
+    font:inherit; text-decoration:underline; text-underline-offset:3px; }
+  @media (max-width:740px) {
+    .dfcc { left:12px; width:calc(100vw - 24px); bottom:calc(var(--bottom-nav-height, 76px) + env(safe-area-inset-bottom, 0px) + 12px);
+      padding:19px 18px 17px; border-radius:14px; max-height:70vh; overflow-y:auto; }
+    .dfcc h2 { font-size:17px; }
+    .dfcc__intro { font-size:12px; }
+    .dfcc__action { flex:1 1 135px; font-size:11px; }
+  }
+  @media (prefers-reduced-motion:reduce) { .dfcc, .dfcc button { scroll-behavior:auto; transition:none; } }
+</style>
+
+<script>
+  // Versión de consentimiento: NO reutilizar la elección para nuevos servicios
+  // estadísticos sin actualizar el texto, categoría y versión del consentimiento.
+  const CONSENT_VERSION = 'depofibra-cookies-v1-no-analytics';
+  const STORAGE_KEY = 'depofibra-cookie-preferences';
+
+  interface CookieChoice { version:string; necessary:true; analytics:boolean; savedAt:string; }
+  const banner = document.getElementById('dfcc-banner');
+  const options = document.getElementById('dfcc-options');
+  const analyticsBox = document.getElementById('dfcc-analytics') as HTMLInputElement | null;
+  const customize = document.getElementById('dfcc-customize');
+  const saveBtn = document.getElementById('dfcc-save');
+  const rejectBtn = document.getElementById('dfcc-reject');
+  const acceptBtn = document.getElementById('dfcc-accept');
+
+  function currentChoice(): CookieChoice | null {
+    try {
+      const item = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if (item && item.version === CONSENT_VERSION && typeof item.analytics === 'boolean') return item;
+    } catch { /* Si el navegador impide almacenamiento, pedir de nuevo en otra visita */ }
+    return null;
+  }
+
+  function announce(choice:CookieChoice | null) {
+    // Se entrega el estado a futuras integraciones, sin cargar trackers.
+    window.dispatchEvent(new CustomEvent('depofibra:consent', {detail:{necessary:true,analytics:choice?.analytics === true,consentVersion:CONSENT_VERSION}}));
+  }
+
+  function hideBanner() {
+    if (banner) banner.hidden = true;
+    if (options) options.hidden = true;
+    if (saveBtn) saveBtn.hidden = true;
+    customize?.setAttribute('aria-expanded','false');
+    document.querySelector<HTMLElement>('.dfcc-footer-link')?.focus({preventScroll:true});
+  }
+
+  function storeChoice(analytics:boolean) {
+    const choice:CookieChoice = {version:CONSENT_VERSION,necessary:true,analytics,savedAt:new Date().toISOString()};
+    try {localStorage.setItem(STORAGE_KEY,JSON.stringify(choice));} catch { /* El sitio sigue funcionando sin localStorage */ }
+    announce(choice);
+    hideBanner();
+  }
+
+  function showBanner() {
+    if (!banner) return;
+    banner.hidden = false;
+    if (analyticsBox) analyticsBox.checked = currentChoice()?.analytics === true;
+  }
+
+  // Enlace discreto dentro del pie de página existente, sin modificar Footer.astro.
+  const footerNav = document.querySelector('footer nav[aria-label="Información legal"]');
+  if (footerNav && !footerNav.querySelector('.dfcc-footer-link')) {
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'dfcc-footer-link';
+    control.textContent = 'Configurar cookies';
+    control.addEventListener('click', () => {
+      showBanner();
+      customize?.focus({preventScroll:true});
+    });
+    footerNav.appendChild(control);
+  }
+
+  rejectBtn?.addEventListener('click',()=>storeChoice(false));
+  acceptBtn?.addEventListener('click',()=>storeChoice(true));
+  customize?.addEventListener('click',()=>{
+    if (!options) return;
+    options.hidden = !options.hidden;
+    customize.setAttribute('aria-expanded',String(!options.hidden));
+    if (saveBtn) saveBtn.hidden = options.hidden;
+    if (!options.hidden) analyticsBox?.focus();
+  });
+  saveBtn?.addEventListener('click',()=>storeChoice(analyticsBox?.checked===true));
+  window.addEventListener('keydown',(event)=>{
+    if(event.key==='Escape' && banner && !banner.hidden && currentChoice()) hideBanner();
+  });
+
+  const initial = currentChoice();
+  if (initial) announce(initial);
+  else { announce(null); showBanner(); }
+</script>

@@ -1,0 +1,26 @@
+URL_ANTIGUA,URL_NUEVA,TIPO_ACTUAL,OBSERVACION
+https://depofibra.com/productos.html,https://depofibra.com/,HTML meta refresh / JS (NO 301 HTTP),Menu web antigua
+https://depofibra.com/depositos-verticales.html,https://depofibra.com/depositos/vertical-base-plana/,HTML meta refresh / JS (NO 301 HTTP),Menu web antigua
+https://depofibra.com/depositos-horizontales.html,https://depofibra.com/depositos/,HTML meta refresh / JS (NO 301 HTTP),Menu web antigua; destino categoría depósito por varias familias
+https://depofibra.com/piscinas.html,https://depofibra.com/piscinas/,HTML meta refresh / JS (NO 301 HTTP),Menu web antigua
+https://depofibra.com/fosas.html,https://depofibra.com/fosas-septicas/,HTML meta refresh / JS (NO 301 HTTP),Menu web antigua
+https://depofibra.com/cisternas.html,https://depofibra.com/cubas-cisternas/,HTML meta refresh / JS (NO 301 HTTP),Menu web antigua
+https://depofibra.com/sobre-nosotros.html,https://depofibra.com/sobre-depofibra/,HTML meta refresh / JS (NO 301 HTTP),Menu web antigua
+https://depofibra.com/aviso-legal.html,https://depofibra.com/aviso-legal/,HTML meta refresh / JS (NO 301 HTTP),Pie antiguo; página legal nueva sin cambios
+https://depofibra.com/accesibilidad.html,https://depofibra.com/contacto/,HTML meta refresh / JS (NO 301 HTTP),Sin pagina equivalente; revisar 301 real en el futuro
+https://depofibra.com/depositos-poliester-madrid.html,https://depofibra.com/depositos/,HTML meta refresh / JS (NO 301 HTTP),Landing geográfica antigua
+https://depofibra.com/fosas-septicas-sevilla.html,https://depofibra.com/fosas-septicas/,HTML meta refresh / JS (NO 301 HTTP),Landing geográfica antigua
+https://depofibra.com/piscinas-poliester-badajoz.html,https://depofibra.com/piscinas/,HTML meta refresh / JS (NO 301 HTTP),Landing geográfica antigua
+https://depofibra.com/depositos-poliester-valencia.html,https://depofibra.com/depositos/,HTML meta refresh / JS (NO 301 HTTP),Landing geográfica antigua
+https://depofibra.com/depositos-agua-murcia.html,https://depofibra.com/depositos/,HTML meta refresh / JS (NO 301 HTTP),Landing geográfica antigua
+https://depofibra.com/depositos-poliester-jaen.html,https://depofibra.com/depositos/,HTML meta refresh / JS (NO 301 HTTP),Landing geográfica antigua
+https://depofibra.com/depositos-poliester-cordoba.html,https://depofibra.com/depositos/,HTML meta refresh / JS (NO 301 HTTP),Landing geográfica antigua
+https://depofibra.com/depositos-piscinas-alicante.html,https://depofibra.com/,HTML meta refresh / JS (NO 301 HTTP),Landing mixta antigua: depósitos y piscinas
+https://depofibra.com/blog/blog.html,https://depofibra.com/blog/,HTML meta refresh / JS (NO 301 HTTP),Indice antiguo
+https://depofibra.com/blog/guia-tecnica-prfv.html,https://depofibra.com/depositos/,HTML meta refresh / JS (NO 301 HTTP),Artículo antiguo sin articulo equivalente específico
+https://depofibra.com/blog/normativa-fosas-septicas-2026.html,https://depofibra.com/fosas-septicas/,HTML meta refresh / JS (NO 301 HTTP),Artículo antiguo sin guía legal equivalente actual
+https://depofibra.com/blog/mantenimiento-piscina-poliester.html,https://depofibra.com/piscinas/,HTML meta refresh / JS (NO 301 HTTP),Artículo antiguo sin guía de mantenimiento equivalente
+https://depofibra.com/blog/precio-fosa-septica-poliester.html,https://depofibra.com/fosas-septicas/,HTML meta refresh / JS (NO 301 HTTP),Artículo antiguo sin guía de precios equivalente
+https://depofibra.com/contacto.html,https://depofibra.com/contacto/,HTML meta refresh ya existente (NO 301 HTTP),Ya existe src/pages/contacto.html.astro
+https://depofibra.com/cookies.html,https://depofibra.com/politica-de-cookies/,HTML meta refresh ya existente (NO 301 HTTP),Ya existe src/pages/cookies.html.astro
+https://depofibra.com/politica-privacidad.html,https://depofibra.com/politica-de-privacidad/,HTML meta refresh ya existente (NO 301 HTTP),Ya existe src/pages/politica-privacidad.html.astro

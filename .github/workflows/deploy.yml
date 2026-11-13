@@ -1,4 +1,4 @@
-name: Publicar demo de Depofibra en GitHub Pages
+name: Publicar web de Depofibra (demo o producción)
 
 on:
   push:
@@ -25,6 +25,10 @@ jobs:
         uses: withastro/action@v6
         with:
           node-version: 24
+        env:
+          # Sin variable configurada permanece la demo; SOLO el propietario
+          # activa producción creando la variable del repositorio en GitHub.
+          DEPOFIBRA_SITE_URL: ${{ vars.DEPOFIBRA_SITE_URL || 'https://demo.depofibra.com' }}
 
   deploy:
     needs: build

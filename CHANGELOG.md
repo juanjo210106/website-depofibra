@@ -1,3 +1,15 @@
+## v0.10.0 — 2026-11-13 — Preparada para publicación, pendiente de integración
+
+**Tipo:** Funcionalidad y preparación de migración.
+
+- Incorporado un sistema ligero de preferencias de cookies con decisiones al mismo nivel, personalización y reapertura desde el pie de página. No se activan herramientas de seguimiento ni se envían estadísticas al servidor en esta versión.
+- Añadida la configuración opcional `DEPOFIBRA_SITE_URL` al workflow de GitHub Actions. Por defecto, continúa la demo `https://demo.depofibra.com`; **NO** cambia automáticamente al dominio principal.
+- Preparadas 22 rutas de compatibilidad HTML/JS para direcciones de la antigua web y mapa de otras 3 rutas que ya existían.
+- Incorporado plan de cambio de dominio y pendientes de validación. GitHub Pages **no** genera redirecciones 301 HTTP configurables por ruta; se documenta esta limitación.
+- Sin cambios en páginas legales, fotografía, diseño aprobado, textos comerciales, formularios, logotipos ni favicon.
+
+**Estado:** archivos preparados y comprobados estáticamente. Pendiente de compilación con GitHub Actions, pruebas del banner y validación del despliegue en la demo.
+
 # Historial de cambios — DEPOFIBRA
 
 Registro de cambios del proyecto web `website-depofibra`.

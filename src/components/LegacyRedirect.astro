@@ -1,0 +1,29 @@
+---
+/**
+ * Compatibilidad de enlaces de la web antigua.
+ * GitHub Pages NO soporta reglas HTTP 301 por ruta: esta transición usa
+ * redirección HTML inmediata y rel canonical hasta disponer de proxy/servidor.
+ * No añadir estas páginas al menú ni al sitemap.
+ */
+interface Props { destination:string; title:string; }
+const { destination, title } = Astro.props;
+const finalUrl = new URL(destination, 'https://depofibra.com').href;
+const isPreview = Astro.site?.hostname !== 'depofibra.com';
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {isPreview && <meta name="robots" content="noindex, follow" />}
+    <meta http-equiv="refresh" content={`0; url=${destination}`} />
+    <link rel="canonical" href={finalUrl} />
+    <title>{title} | Depofibra</title>
+    <script is:inline define:vars={{destination}}>
+      window.location.replace(destination + window.location.search + window.location.hash);
+    </script>
+  </head>
+  <body style="font-family:Arial,sans-serif; padding:35px; color:#002d59;">
+    <p>Esta página ha cambiado de dirección. <a href={destination} style="color:#01488e;">Continuar a {title}</a>.</p>
+  </body>
+</html>
