@@ -8,6 +8,18 @@ Registro de cambios del proyecto web `website-depofibra`.
 
 Aquí se documentarán las modificaciones que todavía no hayan sido verificadas y publicadas.
 
+## v0.9.3 — 2026-11-13 — Preparada, pendiente de publicación y validación
+
+**Tipo:** Corrección visual / favicon.
+
+- Se reajusta el encuadre del favicon para que el isotipo se vea más grande y legible en pestañas del navegador.
+- Se generan nuevos recursos `favicon-depofibra-humo-v5-*` y se actualizan también las rutas v4/v3 por compatibilidad.
+- Se actualiza `src/layouts/Layout.astro` a las rutas `v5` para forzar la renovación de caché del navegador.
+- Se regeneran `favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, `icon-192.png` e `icon-512.png`.
+- No se modifican contenidos, formularios, diseño de páginas ni SEO.
+
+**Validación:** comprobada la mejora visual del 16x16, 32x32 y 48x48 en las vistas previas generadas. Pendiente de verificar en la demo después del `Push origin`.
+
 ## v0.9.2 — 2026-11-13 — Preparada, pendiente de publicación y validación
 
 **Tipo:** Corrección visual / identidad de marca.
