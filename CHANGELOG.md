@@ -8,6 +8,18 @@ Registro de cambios del proyecto web `website-depofibra`.
 
 Aquí se documentarán las modificaciones que todavía no hayan sido verificadas y publicadas.
 
+## v0.9.2 — 2026-11-13 — Preparada, pendiente de publicación y validación
+
+**Tipo:** Corrección visual / identidad de marca.
+
+- Se adopta el isotipo blanco sobre fondo azul degradado con forma orgánica difuminada, aprobado para el favicon.
+- Se generan favicons para 16, 32, 48, 64, 180, 192 y 512 píxeles, más `favicon.ico` y respaldo `favicon.svg`.
+- Se actualiza `src/layouts/Layout.astro` a rutas `favicon-depofibra-humo-v4-*` para evitar versiones guardadas en caché.
+- Se actualizan también las rutas antiguas `favicon-depofibra-circulo-v3-*` por compatibilidad.
+- No se alteran los estilos de la web, el logo de cabecera ni el contenido SEO.
+
+**Validación:** comprobadas imágenes, tamaños y referencias en los archivos entregados. Pendiente de verificar en la demo tras el `Push origin`.
+
 ## Documentación del proyecto — 2026-11-13
 
 - Se incorpora este historial de cambios (`CHANGELOG.md`).
