@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/readme/portada.svg" alt="DEPOFIBRA · Nueva experiencia web para soluciones en poliéster reforzado con fibra de vidrio" width="100%" />
+  <img src="depofibra-portada.png" alt="DEPOFIBRA · Nueva experiencia web para soluciones en poliéster reforzado con fibra de vidrio" width="100%" />
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@
 ## El catálogo, en primer plano
 
 <p>
-  <img src=".github/readme/catalogo.svg" alt="Ilustraciones de las cuatro familias: depósitos, fosas sépticas, piscinas y cubas o cisternas" width="100%" />
+  <img src="depofibra-catalogo.png" alt="Ilustraciones de las cuatro familias: depósitos, fosas sépticas, piscinas y cubas o cisternas" width="100%" />
 </p>
 
 No queremos una web llena de información dispersa. Queremos que cada visitante encuentre el tipo de producto que busca y avance hacia una ficha útil, con información técnica verificable y una forma sencilla de solicitar presupuesto.
@@ -58,7 +58,7 @@ No queremos una web llena de información dispersa. Queremos que cada visitante 
 ### La experiencia que queremos construir
 
 <p>
-  <img src=".github/readme/experiencia.svg" alt="Objetivo del recorrido: explorar, elegir modelo, consultar y pedir presupuesto" width="100%" />
+  <img src="depofibra-experiencia.png" alt="Objetivo del recorrido: explorar, elegir modelo, consultar y pedir presupuesto" width="100%" />
 </p>
 
 ## Por dentro
